@@ -1,6 +1,8 @@
 package com.onlinestorewepr.entity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +41,15 @@ public class Order {
 
    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
    private List<OrderItem> orderItems;
+
+   public Order() {
+
+   }
+   public String getCreatedDate(){
+      Date date = created;
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+      return dateFormat.format(date);
+   }
 
    public int getId() {
       return id;
@@ -117,6 +128,18 @@ public class Order {
    }
 
    public void setUser(User user) {
+      this.user = user;
+   }
+
+   public Order(String name, String phone, String address, Date created, int total, String note, String payment, String status, User user) {
+      this.name = name;
+      this.phone = phone;
+      this.address = address;
+      this.created = created;
+      this.total = total;
+      this.note = note;
+      this.payment = payment;
+      this.status = status;
       this.user = user;
    }
 

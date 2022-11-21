@@ -125,4 +125,7 @@ public class ProductService {
   public List<Product> getProductPaging(int exist, int productPerPage){
     return productDAO.getProductPaging(exist,productPerPage);
   }
+  public void delete(int id){
+    productDAO.delete(id);
+  }
 }

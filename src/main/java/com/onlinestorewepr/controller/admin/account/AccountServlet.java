@@ -4,6 +4,7 @@ import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.service.AccountService;
 import com.onlinestorewepr.service.CategoryService;
+import com.onlinestorewepr.service.ProductService;
 import com.onlinestorewepr.service.UserService;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ public class AccountServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     List<User> accounts = accountService.getAll();
     req.setAttribute("accounts", accounts);
+    req.setAttribute("products", new ProductService().getAllProducts());
     req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
   }
 

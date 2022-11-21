@@ -46,6 +46,9 @@ public class AccountService {
         return userDAO.getAll();
     }
     public void remove(int id){
-         userDAO.delete(id);
+        userDAO.delete(id);
+    }
+    public User get(String username){
+        return userDAO.get(username);
     }
 }

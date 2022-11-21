@@ -39,44 +39,30 @@
                       <th>ID</th>
                       <th>Date</th>
                       <th>Customer</th>
-                      <th>Products</th>
-                      <th>Status</th>
+                      <th>Tie </th>
+                        <th>Total</th>
+
+                        <th>Status</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
-                    <tr>
-                      <td>order01</td>
-                      <td>17-10-2022</td>
-                      <td>Quảng</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Logo Shirt - Black XL, MaleFashion Short - Gray XL</strong></td>
-                      <td ><span class="badge bg-label-success me-1">Delivered</span></td>
-                      <td><a href="./update-order.jsp">Change</a></td>
-                    </tr>
-                    <tr>
-                      <td>order02</td>
-                      <td>17-10-2022</td>
-                      <td>Dĩ</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Hoodie</strong></td>
-                      <td ><span class="badge bg-label-info me-1">Delivering</span></td>
-                      <td><a href="./update-order.jsp">Change</a></td>
-                    </tr>
-                    <tr>
-                      <td>order03</td>
-                      <td>17-10-2022</td>
-                      <td>Minh</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Jacket</strong></td>
-                      <td ><span class="badge bg-label-warning me-1">Pending</span></td>
-                      <td><a href="./update-order.jsp">Change</a></td>
-                    </tr>
-                    <tr>
-                     <td>order04</td>
-                     <td>17-10-2022</td>
-                     <td>Khoa</td>
-                     <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Jacket</strong></td>
-                     <td ><span class="badge bg-label-danger me-1">cancelled</span></td>
-                     <td><a href="./update-order.jsp">Change</a></td>
-                   </tr>
+                  <c:forEach items="${orders}" var="order" varStatus="status">
+                      <tr>
+                          <td>${order.id}</td>
+                          <td>${order.getCreatedDate()}</td>
+                          <td>${order.name}</td>
+                          <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>
+                              <c:forEach items = "${order.orderItems}" var="orderItem">
+                                  ${orderItem.product.name},
+                              </c:forEach>
+                          </strong></td>
+                          <td>${order.total}</td>
+                          <td ><span class="badge bg-label-success me-1">${order.status}</span></td>
+                          <td><a href="${pageContext.request.contextPath}/admin/edit-order?id=${order.id}">Change</a></td>
+                      </tr>
+                  </c:forEach>
+
                   </tbody>
                 </table>
               </div>

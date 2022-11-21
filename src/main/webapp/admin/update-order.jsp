@@ -37,38 +37,43 @@
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="mb-0">Update Orders Details</h5>
-                      <a href="./orders.jsp" class="btn btn-outline-primary">Back</a>
+                      <a href="${pageContext.request.contextPath}/admin/orders" class="btn btn-outline-primary">Back</a>
                     </div>
                     <div class="card-body">
-                      <form>
+                      <form method="post" action="${pageContext.request.contextPath}/admin/${action}-order?id=${order.id}" enctype="multipart/form-data">
+                        <div class="row mb-3">
+                          <div class="col-sm-10">
+                            <input class="form-control" id="id" name="id" placeholder="ID" type="hidden" value="${order.id}"/>
+                          </div>
+                        </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">ID</label>
                           <div class="col-sm-10">
-                            <span class="form-control">order01</span>
+                            <span class="form-control">${order.id}</span>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">Order Date</label>
                           <div class="col-sm-10">
-                            <span class="form-control">17-10-2022</span>
+                            <span class="form-control">${order.getCreatedDate()}</span>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">Customer</label>
                           <div class="col-sm-10">
-                            <span class="form-control">Quảng</span>
+                            <span class="form-control">${order.name}</span>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="order-phone">Phone</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="order-phone" placeholder="Phone"/>
+                            <input type="text" class="form-control" id="order-phone" placeholder="Phone" value="${order.phone}"/>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="order-address">Address</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="order-address" placeholder="Address"/>
+                            <input type="text" class="form-control" id="order-address" placeholder="Address" value="${order.address}"/>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -85,18 +90,16 @@
                                   </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                <c:forEach items="${order.orderItems}" var="orderItem">
                                   <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Logo Shirt - Black XL</strong></td>
-                                    <td><strong>390.000</strong></td>
-                                    <td><strong class="ms-4">2</strong></td>
-                                    <td><strong>780.000</strong></td>
+                                    <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>${orderItem.product.name}</strong></td>
+                                    <td><strong>${orderItem.price}</strong></td>
+                                    <td><strong class="ms-4">${orderItem.quantity}</strong></td>
+                                    <td><strong>${orderItem.quantity*orderItem.price}</strong></td>
                                   </tr>
-                                  <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>MaleFashion Short - Gray XL</strong></td>
-                                    <td><strong>5.000</strong></td>
-                                    <td><strong class="ms-4">2</strong></td>
-                                    <td><strong>10.001</strong></td>
-                                  </tr>
+                                </c:forEach>
+
+
                                 </tbody>
                               </table>
                             </div>
@@ -105,17 +108,17 @@
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">Total</label>
                           <div class="col-sm-10">
-                            <span class="d-flex justify-content-sm-end fs-large me-4 text-primary"><strong>31.000</strong></span>
+                            <span class="d-flex justify-content-sm-end fs-large me-4 text-primary"><strong>${order.total}</strong></span>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">Note</label>
                           <div class="col-sm-10">
-                            <span class="form-control">Bớt 5 ngàn i shop ơi</span>
+                            <span class="form-control">${order.note}</span>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="order-status" class="col-sm-2 col-form-label">Status</label>
+                          <label for="order-status" class="col-sm-2 col-form-label">${order.status}</label>
                           <div class="col-sm-10">
                             <select id="order-status" class="form-select">
                               <option value="1">Pending</option>

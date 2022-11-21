@@ -38,7 +38,7 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <h4 class="py-3 mb-4">
-            <a href="${pageContext.request.contextPath}/admin">Managements > </a>
+            <a href="${pageContext.request.contextPath}/admin/">Managements > </a>
             <span class="fw-bold">Products</span>
           </h4>
           <div class="card">

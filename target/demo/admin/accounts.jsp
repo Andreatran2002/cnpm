@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
@@ -16,12 +16,21 @@
     <link rel="stylesheet" href="./assets/vendor/libs/apex-charts/apex-charts.css" />
     <script src="./assets/vendor/js/helpers.js"></script>
     <script src="./assets/js/config.js"></script>
+    <style>
+        th {
+            padding: 10px !important;
+        }
+        td {
+            padding: 10px !important;
+        }
+    </style>
 </head>
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <jsp:include page="./menu.jsp" />
+
         <!-- Layout container -->
         <div class="layout-page">
             <jsp:include page="./navbar.jsp" />
@@ -29,60 +38,60 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <h4 class="py-3 mb-4">
-                        <a href="${pageContext.request.contextPath}/index.jsp">Managements > </a>
-                        <span class="fw-bold">Account</span>
+                        <a href="${pageContext.request.contextPath}/admin/">Managements > </a>
+                        <span class="fw-bold">Accounts</span>
                     </h4>
                     <div class="card">
-<%--                        <h5 class="card-header d-flex justify-content-between">--%>
-<%--                            <span>Acount</span>--%>
-<%--                            <p class="text-${messageType}" style="font-size: 16px; font-weight: 400;">${message}</p>--%>
-<%--                        </h5>--%>
+                        <h5 class="card-header">Accounts</h5>
                         <div class="table-responsive text-nowrap">
-                            <table class="table table-hover" style="table-layout: fixed;">
-                                <thead>
-                                <tr>
-                                    <th style="width: 5%;">Index</th>
-                                    <th style="width: 15%;">Username</th>
-                                    <th style="width: 15%;">Name</th>
-                                    <th style="width: 10%; overflow: hidden; text-overflow: ellipsis;">Phone</th>
-                                    <th style="width: 5%; overflow: hidden; text-overflow: ellipsis;">Gender</th>
-                                    <th style="width: 20%; overflow: hidden; text-overflow: ellipsis;">Address</th>
-                                    <th style="width: 10%;"></th>
-                                    <th style="width: 10%; "></th>
-                                </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                <c:forEach items="${accounts}" var="account" varStatus="status">
-                                    <tr>
-                                        <td>${status.index + 1}</td>
-                                        <td>
-                                            <strong>${account.username}</strong>
-                                        </td>
-                                        <td style="overflow: hidden; text-overflow: ellipsis;">${account.name}</td>
-                                        <td style="overflow: hidden; text-overflow: ellipsis;">${account.phone}</td>
-                                        <td style="overflow: hidden; text-overflow: ellipsis;">${account.gender}</td>
-                                        <td style="overflow: hidden; text-overflow: ellipsis;">${account.address}</td>
-                                        <td><a href="${pageContext.request.contextPath}/admin/edit-account?id=${account.id}">Change</a></td>
-                                        <td>
-                                            <form
-                                                    onsubmit="return confirm('Are you sure to delete this item?');"
-                                                    action="${pageContext.request.contextPath}/admin/delete-account"
-                                                    method="post"
-                                            >
-                                                <input type="hidden" name="id" value="${account.id}">
-                                                <button
-                                                        class="text-danger"
-                                                        style="background-color: transparent; border: none;"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
 
+    <table class="table table-hover" style="table-layout: fixed;">
+        <thead>
+        <tr>
+            <th style="width: 5%;">Index</th>
+            <th style="width: 15%;">Username</th>
+            <th style="width: 15%;">Name</th>
+            <th style="width: 10%; overflow: hidden; text-overflow: ellipsis;">Phone</th>
+            <th style="width: 10%; overflow: hidden; text-overflow: ellipsis;">Gender</th>
+            <th style="width: 20%; overflow: hidden; text-overflow: ellipsis;">Address</th>
+            <th style="width: 10%;"></th>
+            <th style="width: 10%; "></th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        <c:forEach items="${accounts}" var="account" varStatus="status">
+            <tr>
+                <td>${status.index + 1}</td>
+                <td>
+                    <strong>${account.username}</strong>
+                </td>
+                <td style="overflow: hidden; text-overflow: ellipsis;">${account.name}</td>
+                <td style="overflow: hidden; text-overflow: ellipsis;">${account.phone}</td>
+                <td style="overflow: hidden; text-overflow: ellipsis;">${account.gender}</td>
+                <td style="overflow: hidden; text-overflow: ellipsis;">${account.address}</td>
+                <td><a href="${pageContext.request.contextPath}/admin/edit-account?username=${account.username}">Change</a></td>
+                <td>
+                    <form
+                            onsubmit="return confirm('Are you sure to delete this item?');"
+                            action="${pageContext.request.contextPath}/admin/delete-account"
+                            method="post"
+                    >
+                        <input type="hidden" name="username" value="${account.username}">
+                        <button
+                                class="text-danger"
+                                style="background-color: transparent; border: none;"
+                        >
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center my-3">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,13 +116,12 @@
 <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
 <script src="./assets/vendor/js/menu.js"></script>
-<!-- endbuild -->
-
-<!-- Vendors JS -->
+<!-- end-build -->
 
 <!-- Main JS -->
 <script src="./assets/js/main.js"></script>
 
+<!-- Page JS -->
 <!-- Active Menu Item -->
 <script>
     document.getElementById('menu-managements').classList.add('active', 'open')
