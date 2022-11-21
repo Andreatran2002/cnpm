@@ -218,7 +218,7 @@
                <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6">
                      <div class="shop__product__option__left">
-                        <p> ${products.size()} results</p>
+<%--                        <p> ${products.size()} results</p>--%>
                      </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6">
@@ -233,7 +233,7 @@
                   </div>
                </div>
             </div>
-            <div class="row">
+            <div class="row product-data-list" id="product-content">
                <c:forEach items="${products}" var="product" varStatus="status">
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="product__item ${product.discount>0?"sale":""}">
@@ -270,17 +270,17 @@
 
 
             </div>
-            <div class="row">
-               <div class="col-lg-12">
-                  <div class="product__pagination">
-                     <a class="active" href="#">1</a>
-                     <a href="#">2</a>
-                     <a href="#">3</a>
-                     <span>...</span>
-                     <a href="#">21</a>
-                  </div>
-               </div>
-            </div>
+<%--            <div class="row">--%>
+<%--               <div class="col-lg-12">--%>
+<%--                  <div class="product__pagination">--%>
+<%--                     <a class="active" href="#">1</a>--%>
+<%--                     <a href="#">2</a>--%>
+<%--                     <a href="#">3</a>--%>
+<%--                     <span>...</span>--%>
+<%--                     <a href="#">21</a>--%>
+<%--                  </div>--%>
+<%--               </div>--%>
+<%--            </div>--%>
          </div>
       </div>
    </div>
@@ -318,6 +318,60 @@
 <script src="./web/assets/js/mixitup.min.js"></script>
 <script src="./web/assets/js/owl.carousel.min.js"></script>
 <script src="./web/assets/js/main.js"></script>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+   $(window).scroll(function() {
+      // console.log($("#content").clientHeight)
+      if($(window).scrollTop() + $(window).height() >= $(document).height()){
+         loadMore();
+      }
+   });
+   function searchItem( key){
+      removeElementsByClass("product__item");
+
+      $.ajax({
+         url : "/load-product-ajax", //send to Controller
+         type : "get", //send it through get method
+         data : {
+            exits : amount
+         },
+         success : function(data) {
+            $("#product-content").append(data);
+         },
+         error : function(xhr) {
+//Do Something to handle error
+            console.log(xhr)
+         }
+      });
+   }
+   function loadMore() {
+      /* tạo viên amount để Gọi và đếm classname là product */
+      var amount = document.getElementsByClassName("product__item").length;
+
+      $.ajax({
+         url : "/load-product-ajax", //send to Controller
+         type : "get", //send it through get method
+         data : {
+            exits : amount
+         },
+         success : function(data) {
+            $("#product-content").append(data);
+         },
+         error : function(xhr) {
+//Do Something to handle error
+            console.log(xhr)
+         }
+      });
+   };
+   function removeElementsByClass(className){
+      const elements = document.getElementsByClassName(className);
+      while(elements.length > 0){
+         elements[0].parentNode.removeChild(elements[0]);
+      }
+   }
+</script>
 </body>
 
 </html>

@@ -1,10 +1,12 @@
 package com.onlinestorewepr.dao;
 
 import com.onlinestorewepr.entity.Cart;
+import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -79,6 +81,23 @@ public class CartDAO {
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
          cart = session.get(Cart.class, id);
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return cart;
+   }
+
+   public Cart findByUserId(int userid) {
+      Cart cart = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Cart c WHERE c.user.id = :userid";
+         Query query = session.createQuery(HQL);
+         query.setParameter("userid", userid);
+         List<Cart> carts = query.getResultList();
+         if (!carts.isEmpty()) {
+            cart = carts.get(0);
+         }
 
       } catch (Exception e) {
          e.printStackTrace();

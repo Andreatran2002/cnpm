@@ -50,6 +50,10 @@ public class ProductService {
     serviceResult = new ServiceResult();
   }
 
+  public List<Product> searchByName(String key){
+    return productDAO.searchByName(key);
+  }
+
   public void createProduct(int categoryId, String name, Part imagePart, String imagePath, String description, int price, int discount, int quantity, String size, String color, String brand) {
     String message = "", messageType = "";
 
@@ -99,6 +103,9 @@ public class ProductService {
   public Product getProduct(int id) {
     return productDAO.get(id);
   }
+  public List<Product> getByCategory(int cateid){
+    return productDAO.getByCategory(cateid);
+  }
 
 
   public List<Product> getAllProducts() {
@@ -115,7 +122,7 @@ public class ProductService {
 
     return products;
   }
-  public List<Product> getProductPaging(int page, int productPerPage){
-    productDAO.getProductPaging(page,productPerPage);
+  public List<Product> getProductPaging(int exist, int productPerPage){
+    return productDAO.getProductPaging(exist,productPerPage);
   }
 }

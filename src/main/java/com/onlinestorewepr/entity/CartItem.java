@@ -20,6 +20,12 @@ public class CartItem {
    @JoinColumn(name = "cartId", referencedColumnName = "id")
    private Cart cart;
 
+   public CartItem(int quantity, Product product, Cart cart) {
+      this.quantity = quantity;
+      this.product = product;
+      this.cart = cart;
+   }
+
    public int getId() {
       return id;
    }

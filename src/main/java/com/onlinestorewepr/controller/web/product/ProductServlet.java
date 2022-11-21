@@ -27,15 +27,15 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String key = req.getParameter("key");
         String cateIdReq = req.getParameter("cateid");
-        String pageReq = req.getParameter("page");
-        if (pageReq!= null){
-            Integer page = Integer.parseInt(pageReq);
-        }
+
+        List<Product> products = productService.getProductPaging(0, 9);
+
+
         if (cateIdReq!= null){
             Integer cateId = Integer.parseInt(cateIdReq);
+             products = productService.getByCategory(cateId);
         }
 
-        List<Product> products = productService.getAllProducts();
         List<Category> categories = categoryService.getAllCategories();
         req.setAttribute("products", products);
         req.setAttribute("categories", categories);

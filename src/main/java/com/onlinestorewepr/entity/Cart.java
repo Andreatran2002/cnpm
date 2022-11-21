@@ -19,6 +19,11 @@ public class Cart {
    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
    private List<CartItem> cartItems;
 
+   public Cart(int total, User user) {
+      this.total = total;
+      this.user = user;
+   }
+
    public int getId() {
       return id;
    }
