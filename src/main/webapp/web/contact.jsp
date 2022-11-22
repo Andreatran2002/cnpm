@@ -16,14 +16,14 @@
          rel="stylesheet">
 
    <!-- Css Styles -->
-   <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/nice-select.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/bootstrap.min.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/font-awesome.min.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/elegant-icons.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/magnific-popup.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/nice-select.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/owl.carousel.min.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/slicknav.min.css" type="text/css">
+   <link rel="stylesheet" href="./web/assets/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -33,8 +33,8 @@
 
 <!-- Map Begin -->
 <div class="map">
-   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111551.9926412813!2d-90.27317134641879!3d38.606612219170856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sbd!4v1597926938024!5m2!1sen!2sbd" height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-</div>
+   <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15673.937203378548!2d106.7719223!3d10.8507214!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x282f711441b6916f!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTxrAgcGjhuqFtIEvhu7kgdGh14bqtdCBUcC4gSOG7kyBDaMOtIE1pbmg!5e0!3m2!1svi!2s!4v1669107638415!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+   </div>
 <!-- Map End -->
 
 <!-- Contact Section Begin -->
@@ -51,13 +51,10 @@
                </div>
                <ul>
                   <li>
-                     <h4>America</h4>
-                     <p>195 E Parker Square Dr, Parker, CO 801 <br />+43 982-314-0958</p>
+                     <h4>Viet Nam</h4>
+                     <p>Số 1 Võ Văn Ngân<br />+89 888888888</p>
                   </li>
-                  <li>
-                     <h4>France</h4>
-                     <p>109 Avenue Léon, 63 Clermont-Ferrand <br />+12 345-423-9893</p>
-                  </li>
+
                </ul>
             </div>
          </div>
@@ -105,16 +102,16 @@
 </script>
 
 <!-- Js Plugins -->
-<script src="./assets/js/jquery-3.3.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.nicescroll.min.js"></script>
-<script src="./assets/js/jquery.magnific-popup.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/jquery.slicknav.js"></script>
-<script src="./assets/js/mixitup.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="./web/assets/js/jquery-3.3.1.min.js"></script>
+<script src="./web/assets/js/bootstrap.min.js"></script>
+<script src="./web/assets/js/jquery.nice-select.min.js"></script>
+<script src="./web/assets/js/jquery.nicescroll.min.js"></script>
+<script src="./web/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="./web/assets/js/jquery.countdown.min.js"></script>
+<script src="./web/assets/js/jquery.slicknav.js"></script>
+<script src="./web/assets/js/mixitup.min.js"></script>
+<script src="./web/assets/js/owl.carousel.min.js"></script>
+<script src="./web/assets/js/main.js"></script>
 </body>
 
 </html>

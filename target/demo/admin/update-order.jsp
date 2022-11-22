@@ -67,13 +67,13 @@
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="order-phone">Phone</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="order-phone" placeholder="Phone" value="${order.phone}"/>
+                            <input type="text" class="form-control" name="order-phone" id="order-phone" placeholder="Phone" value="${order.phone}"/>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="order-address">Address</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="order-address" placeholder="Address" value="${order.address}"/>
+                            <input type="text" class="form-control" name="order-address" id="order-address" placeholder="Address" value="${order.address}"/>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -118,13 +118,13 @@
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="order-status" class="col-sm-2 col-form-label">${order.status}</label>
+                          <label for="order-status" class="col-sm-2 col-form-label">Status</label>
                           <div class="col-sm-10">
-                            <select id="order-status" class="form-select">
-                              <option value="1">Pending</option>
-                              <option value="2">Delivering</option>
-                              <option value="3">Delivered</option>
-                              <option value="3">Cancelled</option>
+                            <select id="order-status" name="order-status" class="form-select" value="${order.status}">
+                              <option ${order.status==1?"selected":""} value="1">Pending</option>
+                              <option ${order.status==2?"selected":""}  value="2">Delivering</option>
+                              <option ${order.status==3?"selected":""}  value="3">Delivered</option>
+                              <option ${order.status==4?"selected":""}  value="4">Cancelled</option>
                             </select>
                           </div>
                         </div>

@@ -68,14 +68,14 @@
       <div class="row">
          <div class="col-lg-3 col-md-3">
             <div class="header__logo">
-               <a href="./index.jsp"><img src="./assets/img/logo.png" alt=""></a>
+               <a href="./"><img src="./assets/img/logo.png" alt=""></a>
             </div>
          </div>
          <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
                <ul>
-                  <li id="menu-home"><a href="./index.jsp">Home</a></li>
-                  <li id="menu-shop"><a href="./shop.jsp">Shop</a></li>
+                  <li id="menu-home"><a href="./">Home</a></li>
+                  <li id="menu-shop"><a href="./products">Shop</a></li>
                   <li id="menu-pages"><a href="./#">Pages</a>
                      <ul class="dropdown">
                         <li><a href="./about.jsp">About Us</a></li>
@@ -84,7 +84,7 @@
                         <li><a href="./checkout.jsp">Check Out</a></li>
                      </ul>
                   </li>
-                  <li id="menu-contact"><a href="./contact.jsp">Contacts</a></li>
+                  <li id="menu-contact"><a href="./contact">Contacts</a></li>
                </ul>
             </nav>
          </div>
