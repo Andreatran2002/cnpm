@@ -15,8 +15,8 @@ import java.util.List;
 
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
-    ProductService productService = new ProductService();
-    CategoryService categoryService = new CategoryService();
+//    ProductService productService = new ProductService();
+//    CategoryService categoryService = new CategoryService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,19 +26,19 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String key = req.getParameter("key");
-        String cateIdReq = req.getParameter("cateid");
-
-        List<Product> products = productService.getProductPaging(0, 9);
-
-
-        if (cateIdReq!= null){
-            Integer cateId = Integer.parseInt(cateIdReq);
-             products = productService.getByCategory(cateId);
-        }
-
-        List<Category> categories = categoryService.getAllCategories();
-        req.setAttribute("products", products);
-        req.setAttribute("categories", categories);
+//        String cateIdReq = req.getParameter("cateid");
+//
+//        List<Product> products = productService.getProductPaging(0, 9);
+//
+//
+//        if (cateIdReq!= null){
+//            Integer cateId = Integer.parseInt(cateIdReq);
+//             products = productService.getByCategory(cateId);
+//        }
+//
+//        List<Category> categories = categoryService.getAllCategories();
+//        req.setAttribute("products", products);
+//        req.setAttribute("categories", categories);
         req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
     }
 }

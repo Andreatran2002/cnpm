@@ -15,8 +15,8 @@ import java.util.List;
 
 @WebServlet("/contact")
 public class ContactServlet extends HttpServlet {
-    ProductService productService = new ProductService();
-    CategoryService categoryService = new CategoryService();
+//    ProductService productService = new ProductService();
+//    CategoryService categoryService = new CategoryService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,8 +25,6 @@ public class ContactServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         req.getRequestDispatcher("/web/contact.jsp").forward(req, resp);
     }
 }

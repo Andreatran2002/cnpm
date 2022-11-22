@@ -23,7 +23,7 @@ public class AccountServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     List<User> accounts = accountService.getAll();
     req.setAttribute("accounts", accounts);
-    req.setAttribute("products", new ProductService().getAllProducts());
+//    req.setAttribute("products", new ProductService().getAllProducts());
     req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
   }
 

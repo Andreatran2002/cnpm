@@ -9,23 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/delete-product")
+@WebServlet(value = {"/admin/product/delete"})
 public class DeleteProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-
-        ProductService productService = new ProductService();
-
-        if (id != 0) {
-            productService.delete(id);
-        }
-
-        req.setAttribute("message", productService.getServiceResult().getMessage());
-        req.setAttribute("messageType", productService.getServiceResult().getMessageType());
-        req.setAttribute("title", "Delete Information");
-        req.setAttribute("action", "/admin/products");
-
-        req.getRequestDispatcher("/admin/information.jsp").forward(req, resp);
+        ProductService productService = new ProductService(req, resp);
+        productService.DeleteProduct();
     }
 }
