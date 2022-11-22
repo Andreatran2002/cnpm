@@ -6,12 +6,17 @@ import com.onlinestorewepr.entity.Order;
 import com.onlinestorewepr.service.CategoryService;
 import com.onlinestorewepr.service.OrderService;
 import com.onlinestorewepr.service.OrderService;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,27 +39,36 @@ public class EditOrderServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int id = Integer.parseInt(req.getParameter("id"));
-    String phone = req.getParameter("phone").trim();
-    String address = req.getParameter("address").trim();
-    String status = req.getParameter("status").trim();
-
-
-    if (id != 0 && !phone.isEmpty() && !address.isEmpty() && !status.isEmpty() ) {
-      orderService.updateOrder(id, phone, address,status);
-    }
-    else {
-      orderService.getServiceResult().setMessage("Name and description cannot be empty");
-      orderService.getServiceResult().setMessageType("danger");
-    }
-
     Order order = orderService.getOrder(id);
+    DiskFileItemFactory diskFileItemFactory = new
+            DiskFileItemFactory();
+    ServletFileUpload servletFileUpload = new
+            ServletFileUpload(diskFileItemFactory);
+    servletFileUpload.setHeaderEncoding("UTF-8");
+    String phone ="", address="", status ="";
+    try {
+      resp.setContentType("text/html");
+      resp.setCharacterEncoding("UTF-8");
+      req.setCharacterEncoding("UTF-8");
+      List<FileItem> items = servletFileUpload.parseRequest(req);
+      for (FileItem item : items) {
+        if (item.getFieldName().equals("order-phone")) {
+          phone =item.getString("UTF-8");
+        }
+        if (item.getFieldName().equals("order-address")) {
+          address = item.getString("UTF-8");
+        }
+        if (item.getFieldName().equals("order-status")) {
+          status = item.getString("UTF-8");
+        }
+      }
+      orderService.updateOrder(order.getId(), phone, address, status );
+      System.out.println(phone);
+      resp.sendRedirect(req.getContextPath() + "/admin/orders");
+    } catch (FileUploadException e) {
+      e.printStackTrace();
+    } catch (Exception e) {e.printStackTrace();}
 
-    req.setAttribute("order", order);
-    req.setAttribute("action", "update");
-    req.setAttribute("message", orderService.getServiceResult().getMessage());
-    req.setAttribute("messageType", orderService.getServiceResult().getMessageType());
-
-    req.getRequestDispatcher("/admin/update-order.jsp").forward(req, resp);
   }
 
 }
