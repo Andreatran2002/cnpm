@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
    <div class="app-brand demo">
-      <a href="./index.jsp" class="app-brand-link">
+      <a href="${pageContext.request.contextPath}/admin/index.jsp" class="app-brand-link">
          <span class="app-brand-logo demo">
-            <img src="./assets/img/logo.png" alt="">
+            <img src="${pageContext.request.contextPath}/admin/assets/img/logo.png" alt="">
          </span>
       </a>
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -15,7 +15,7 @@
    <ul class="menu-inner py-1">
       <!-- Menu Items -->
       <li class="menu-item" id="menu-overview">
-         <a href="./index.jsp" class="menu-link">
+         <a href="${pageContext.request.contextPath}/admin/index.jsp" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Analytics">Overview</div>
          </a>
@@ -27,22 +27,22 @@
          </a>
          <ul class="menu-sub">
             <li class="menu-item" id="menu-managements-categories">
-               <a href="<%request.getContextPath();%>/admin/categories" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/category" class="menu-link">
                   <div data-i18n="Without menu">Categories</div>
                </a>
             </li>
             <li class="menu-item" id="menu-managements-products">
-               <a href="<%request.getContextPath();%>/admin/products" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/product" class="menu-link">
                   <div data-i18n="Without navbar">Products</div>
                </a>
             </li>
             <li class="menu-item" id="menu-managements-orders">
-               <a href="<%request.getContextPath();%>/admin/orders" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/orders" class="menu-link">
                   <div data-i18n="Without navbar">Orders</div>
                </a>
             </li>
             <li class="menu-item" id="menu-managements-accounts">
-               <a href="<%request.getContextPath();%>/admin/accounts" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/accounts" class="menu-link">
                   <div data-i18n="Without navbar">Accounts</div>
                </a>
             </li>
@@ -55,7 +55,7 @@
          </a>
          <ul class="menu-sub">
             <li class="menu-item" id="menu-account-profile">
-               <a href="./account-profile.jsp" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/account-profile.jsp" class="menu-link">
                   <div data-i18n="Account">Profile</div>
                </a>
             </li>
