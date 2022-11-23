@@ -138,8 +138,8 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
-	padding-bottom: 100px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .text-white h1,
@@ -404,7 +404,7 @@ ol {
 }
 
 .header__logo {
-	padding: 30px 0;
+	padding: 15px 0;
 }
 
 .header__logo a {
@@ -479,7 +479,7 @@ ol {
 }
 
 .header__menu ul li a {
-	font-size: 18px;
+	font-size: 20px;
 	color: #111111;
 	display: block;
 	font-weight: 600;
@@ -506,8 +506,26 @@ ol {
 .header__nav__option {
 	text-align: right;
 	padding: 30px 0;
+	display: flex;
+	align-items: center;
 }
-
+.header__nav-username{
+	position: relative;
+	display: flex;
+	align-items: center;
+	border-radius: 50%;
+	padding-right: 8px;
+}
+.header__nav-avatar{
+	margin-right: 23px;
+	padding-right: 4px;
+	/* background: red; */
+	width: 45px;
+	text-align: center;
+}
+.header__nav-avatar img{
+	border-radius: 50%;
+}
 .header__nav__option a {
 	display: inline-block;
 	margin-right: 26px;
@@ -700,10 +718,12 @@ ol {
 
 .banner__item__pic {
 	float: right;
+	width: 400px;
+	height: 400px;
 }
 
 .banner__item__text {
-	max-width: 300px;
+	/* max-width: 300px; */
 	position: absolute;
 	left: 0;
 	top: 140px;
@@ -910,8 +930,12 @@ ol {
 .product {
 	padding-top: 0;
 	padding-bottom: 60px;
+	display: inline-block;
+	width: 100%;
 }
-
+.product-buttons{
+	display: none;
+}
 .filter__controls {
 	text-align: center;
 	margin-bottom: 45px;
@@ -939,7 +963,18 @@ ol {
 	overflow: hidden;
 	margin-bottom: 40px;
 }
+.product__name{
+	font-size: 20px;
+}
+.product__name a{
+	color:#000;
+	text-decoration: none;
+}
 
+.product:hover .product-buttons{
+	display: block;
+	position: absolute;
+}
 .product__item.sale .product__item__pic .label {
 	color: #ffffff;
 	background: #111111;
@@ -1067,7 +1102,9 @@ ol {
 	-o-transition: all, 0.3s;
 	transition: all, 0.3s;
 }
-
+.product__item__button{
+	display: flex;
+}
 .product__item__text h6 {
 	color: #111111;
 	font-size: 15px;
@@ -1442,6 +1479,7 @@ ol {
 	height: auto;
 	border: none;
 	padding-right: 28px;
+	z-index: 11;
 }
 
 .shop__product__option__right .nice-select:after {
@@ -2055,7 +2093,7 @@ ol {
 
 .breadcrumb-option {
 	background: #f3f2ee;
-	padding: 40px 0;
+	padding: 10px 0;
 }
 
 .breadcrumb__text h4 {
@@ -2335,6 +2373,7 @@ ol {
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__pic {
 	float: left;
 	margin-right: 30px;
+	width: 20%;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text {
@@ -2518,6 +2557,54 @@ ol {
 /*---------------------
   Checkout
 -----------------------*/
+.payment{
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.4);
+}
+.payment.open{
+	display: flex;
+}
+.payment-container{
+	position: relative;
+	animation: FadeIn 0.6s;
+}
+.payment img{
+	max-width: calc(100%- 40px);
+	width: 400px;
+}
+img.ti-close{
+	width: 15px;
+}
+
+.payment-close{
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+}
+.payment-close:hover{
+	background-color: red;
+	color: #fff;
+	cursor: pointer;
+}
+
+@keyframes FadeIn{
+	from{
+		opacity: 0;
+		transform: translateX(-10px);
+	}
+	to{
+		opacity: 1;
+		transform: translateX(10px);
+	}
+}
 
 .coupon__code {
 	color: #0d0d0d;
@@ -3155,94 +3242,6 @@ ol {
 	font-weight: 700;
 }
 
-.blog__details__comment h4 {
-	color: #333333;
-	font-weight: 700;
-	margin-bottom: 35px;
-	text-align: center;
-}
-
-.blog__details__comment form input {
-	height: 50px;
-	width: 100%;
-	border: 1px solid #e1e1e1;
-	padding-left: 20px;
-	font-size: 15px;
-	color: #b7b7b7;
-	margin-bottom: 30px;
-	-webkit-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
-
-.blog__details__comment form input::-webkit-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form input::-moz-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form input:-ms-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form input::-ms-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form input::placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form input:focus {
-	border-color: #000000;
-}
-
-.blog__details__comment form textarea {
-	height: 120px;
-	width: 100%;
-	border: 1px solid #e1e1e1;
-	padding-left: 20px;
-	padding-top: 12px;
-	font-size: 15px;
-	color: #b7b7b7;
-	margin-bottom: 24px;
-	resize: none;
-	-webkit-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
-
-.blog__details__comment form textarea::-webkit-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form textarea::-moz-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form textarea:-ms-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form textarea::-ms-input-placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form textarea::placeholder {
-	color: #b7b7b7;
-}
-
-.blog__details__comment form textarea:focus {
-	border-color: #000000;
-}
-
-.blog__details__comment form button {
-	letter-spacing: 4px;
-	padding: 14px 35px;
-}
-
 /*---------------------
   Map
 -----------------------*/
@@ -3265,13 +3264,15 @@ ol {
 }
 
 .contact__text .section-title h2 {
-	font-size: 48px;
+	font-size: 36px;
 	margin-bottom: 18px;
 }
 
 .contact__text .section-title p {
 	color: #707070;
 	line-height: 26px;
+	font-size: 14px;
+	width: 80%;
 	margin-bottom: 0;
 }
 
@@ -3324,6 +3325,10 @@ ol {
 .contact__form input::placeholder {
 	color: #b7b7b7;
 }
+.contact__form:focus{
+	color: #007aff;
+	border: 6px;
+}
 
 .contact__form textarea {
 	height: 150px;
@@ -3361,12 +3366,20 @@ ol {
 	letter-spacing: 4px;
 	padding: 14px 35px;
 }
-
+.contact__text img{
+	display: none;
+}
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
 @media only screen and (min-width: 1200px) {
 	.container {
 		max-width: 1170px;
+	}
+	.contact__text img{
+		display:inline;
+	}
+	.contact__form .row.info{
+		margin-top: 15%;
 	}
 }
 
@@ -3387,6 +3400,9 @@ ol {
 	}
 	.testimonial__text {
 		padding: 130px 45px 175px;
+	}
+	.payment-container{
+		width: 250px;
 	}
 }
 
@@ -3461,6 +3477,7 @@ ol {
 /* Wide Mobile = 480px */
 
 @media only screen and (max-width: 767px) {
+
 	.canvas__open {
 		display: block;
 		font-size: 22px;
@@ -3547,7 +3564,8 @@ ol {
 		color: #111111;
 	}
 	.slicknav_nav {
-		display: block !important;
+		display: flex !important;
+		align-items: center;
 	}
 	.offcanvas__option {
 		text-align: center;
@@ -3848,4 +3866,172 @@ ol {
 	.categories__text:before {
 		height: 250px;
 	}
+}
+
+
+.product-ribbon.product-ribbon--style-1 {
+	width: 48px;
+	height: 48px;
+	border-radius: 100%;
+	text-align: center;
+	line-height: 48px;
+	font-size: 11px;
+	z-index: 10;
+}
+.product-ribbon.product-ribbon-right {
+	right: 15px;
+}
+.product-ribbon {
+	position: absolute;
+	top: 15px;
+}
+.bg-blue {
+	background-color: #007aff !important;
+	color: #FFF;
+}
+.text-uppercase {
+	text-transform: uppercase !important;
+}
+
+
+/* LOGIN */
+
+.login-wrap{
+	width:100%;
+	margin:auto;
+	max-width:525px;
+	min-height:670px;
+	position:relative;
+	background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+.login-html{
+	width:100%;
+	height:100%;
+	position:absolute;
+	padding:90px 70px 50px 70px;
+	background:rgba(40,57,101,.9);
+}
+.login-html .sign-in-htm,
+.login-html .sign-up-htm{
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	position:absolute;
+	transform:rotateY(180deg);
+	backface-visibility:hidden;
+	transition:all .4s linear;
+}
+.login-html .sign-in,
+.login-html .sign-up,
+.login-form .group .check{
+	display:none;
+}
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button{
+	text-transform:uppercase;
+}
+.login-html .tab{
+	font-size:22px;
+	margin-right:15px;
+	padding-bottom:5px;
+	margin:0 15px 10px 0;
+	display:inline-block;
+	border-bottom:2px solid transparent;
+}
+.login-html .sign-in:checked + .tab,
+.login-html .sign-up:checked + .tab{
+	color:#fff;
+	border-color:#1161ee;
+}
+.login-form{
+	min-height:345px;
+	position:relative;
+	perspective:1000px;
+	transform-style:preserve-3d;
+}
+.login-form .group{
+	margin-bottom:15px;
+}
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+	width:100%;
+	color:#fff;
+	display:block;
+}
+.login-form .group .input,
+.login-form .group .button{
+	border:none;
+	padding:15px 20px;
+	border-radius:25px;
+	background:rgba(255,255,255,.1);
+}
+.login-form .group input[data-type="password"]{
+	text-security:circle;
+	-webkit-text-security:circle;
+}
+.login-form .group .label{
+	color:#aaa;
+	font-size:12px;
+}
+.login-form .group .button{
+	background:#1161ee;
+}
+.login-form .group label .icon{
+	width:15px;
+	height:15px;
+	border-radius:2px;
+	position:relative;
+	display:inline-block;
+	background:rgba(255,255,255,.1);
+}
+.login-form .group label .icon:before,
+.login-form .group label .icon:after{
+	content:'';
+	width:10px;
+	height:2px;
+	background:#fff;
+	position:absolute;
+	transition:all .2s ease-in-out 0s;
+}
+.login-form .group label .icon:before{
+	left:3px;
+	width:5px;
+	bottom:6px;
+	transform:scale(0) rotate(0);
+}
+.login-form .group label .icon:after{
+	top:6px;
+	right:0;
+	transform:scale(0) rotate(0);
+}
+.login-form .group .check:checked + label{
+	color:#fff;
+}
+.login-form .group .check:checked + label .icon{
+	background:#1161ee;
+}
+.login-form .group .check:checked + label .icon:before{
+	transform:scale(1) rotate(45deg);
+}
+.login-form .group .check:checked + label .icon:after{
+	transform:scale(1) rotate(-45deg);
+}
+.login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
+	transform:rotate(0);
+}
+.login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
+	transform:rotate(0);
+}
+
+.hr{
+	height:2px;
+	margin:60px 0 50px 0;
+	background:rgba(255,255,255,.2);
+}
+.foot-lnk{
+	text-align:center;
 }

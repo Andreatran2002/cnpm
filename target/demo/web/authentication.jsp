@@ -1,75 +1,85 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-   <title>Đăng nhập</title>
+   <title>Đăng nhập/Đăng ký</title>
    <link rel="stylesheet" href="./assets/css/authentication.css">
 </head>
 <body>
 <div class="wrapper">
    <div class="cont">
-      <div class="form sign-in">
-         <h2>WELCOME BACK</h2>
+      <form class="form sign-in" method="post" action="login">
+         <h2>WELCOME TO MALE FASHION</h2>
          <div class="input-control">
-            <input type="email" placeholder="Username"/>
+            <input name="username" id="name" type="text" placeholder="Username" value="${username}"/>
          </div>
          <div class="input-control">
-            <input type="password" placeholder="Password"/>
+            <input name="password" id="pass" type="password" placeholder="Password" value="${password}"/>
          </div>
-         <p class="forgot-pass">Forgot password?</p>
-         <button type="button" class="submit">Sign In</button>
-      </div>
+         <div class="form-group text-center">
+            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+            <label for="remember"> Remember Me</label>
+         </div>
+         <p class="message-text">${message}</p>
+         <p class="forgot-pass">Quên mật khẩu?</p>
+         <button type="submit" class="submit">Đăng nhập</button>
+      </form>
       <div class="sub-cont">
          <div class="img">
             <div class="img__text m--up">
-               <h2>New here?</h2>
-               <p>Sign up and discover great amount of new opportunities!</p>
+               <h2>Bạn chưa có tài khoản?</h2>
+               <p>Đăng ký ngay nào!</p>
             </div>
             <div class="img__text m--in">
                <h2>One of us?</h2>
-               <p>If you already has an account, just sign in. We've missed you!</p>
+               <p>Nếu bạn đã có tài khoản,vui lòng đăng nhập tại đây!</p>
             </div>
             <div class="img__btn">
-               <span class="m--up">Sign Up</span>
-               <span class="m--in">Sign In</span>
+               <span class="m--up">Đăng ký</span>
+               <span class="m--in">Đăng nhập</span>
             </div>
          </div>
-         <div class="form sign-up">
-            <h2>TIME TO FEEL LIKE HOME</h2>
+         <form class="form sign-up" method="post" action="register">
+            <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
             <div class="input-control">
-               <input type="text" placeholder="Name"/>
+               <input name="fullName" id="nameRe" type="text" placeholder="Họ và tên"/>
             </div>
             <div class="input-control">
-               <input type="text" placeholder="Phone"/>
+               <input name="usernameNew" id="usernameR" type="text" placeholder="Tên đăng nhập"/>
             </div>
             <div class="input-control">
-               <input type="password" placeholder="Password"/>
+               <input name="phone" id="phone" type="text" placeholder="Số điện thoại"/>
+            </div>
+            <div class="input-control">
+               <input name="passwordNew" id="passwd" type="password"  placeholder="Mật khẩu"/>
             </div>
             <div class="input-control radio">
                   <span>
-                     <input type="radio" name="gender" id="gender-male">
-                     <label for="gender-male">Male</label>
+                     <input type="radio" name="gender" id="gender-male" value="Name">
+                     <label for="gender-male">Nam</label>
                   </span>
                <span>
-                     <input type="radio" name="gender" id="gender-female">
-                     <label for="gender-female">Female</label>
+                     <input type="radio" name="gender" id="gender-female" value="Nữ">
+                     <label for="gender-female">Nữ</label>
                   </span>
                <span>
-                     <input type="radio" name="gender" id="gender-others">
-                     <label for="gender-others">Others</label>
+                     <input type="radio" name="gender" id="gender-others" value="Khác">
+                     <label for="gender-others">Khác</label>
                   </span>
             </div>
-            <button type="button" class="submit">Sign Up</button>
-         </div>
+            <p class="message-text-fail">${messageRegisterFail}</p>
+            <p class="message-text-success">${messageRegisterSuccess}</p>
+            <button type="submit" class="submit">Đăng ký</button>
+         </form>
       </div>
    </div>
 </div>
 <script>
-    window.addEventListener('load', () => {
-        document.querySelector('.img__btn').addEventListener('click', function() {
-            document.querySelector('.cont').classList.toggle('s--signup');
-        });
-    })
+   window.addEventListener('load', () => {
+      document.querySelector('.img__btn').addEventListener('click', function() {
+         document.querySelector('.cont').classList.toggle('s--signup');
+      });
+   })
 </script>
 </body>
 </html>

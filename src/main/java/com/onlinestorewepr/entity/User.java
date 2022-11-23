@@ -23,6 +23,9 @@ public class User {
    @Column
    private String address;
 
+   @Column
+   private String image;
+
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "cartId", referencedColumnName = "id")
    private Cart cart;
@@ -85,6 +88,14 @@ public class User {
    public void setAddress(String address) {
       this.address = address;
    }
+   public String getImage() {
+      return image;
+   }
+
+   public void setImage(String image) {
+      this.image = image;
+   }
+
 
    public Cart getCart() {
       return cart;
@@ -98,6 +109,9 @@ public class User {
       return orders;
    }
 
+   public void setOrders(List<Order> orders) {
+      this.orders = orders;
+   }
    @Override
    public String toString() {
       return "User{" +
@@ -108,12 +122,9 @@ public class User {
               ", phone='" + phone + '\'' +
               ", gender='" + gender + '\'' +
               ", address='" + address + '\'' +
+              ", image='" + image + '\'' +
               ", cart=" + cart +
               ", orders=" + orders +
               '}';
-   }
-
-   public void setOrders(List<Order> orders) {
-      this.orders = orders;
    }
 }

@@ -7,8 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="OnlineStoreWEPR" />
-        <module name="cnpm" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cnpm" target="18" />
+    </bytecodeTargetLevel>
   </component>
 </project>

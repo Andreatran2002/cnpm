@@ -258,3 +258,33 @@ input {
    left: auto;
    right: 5px;
 }
+.message-text-fail{
+   margin-top: 17px;
+   align-items: center;
+   text-align: center;
+   color: red;
+   font-size: 15px;
+}
+.message-text{
+   margin-top: 17px;
+   align-items: center;
+   text-align: center;
+   color: red;
+   font-size: 15px;
+}
+.message-text-success{
+   margin-top: 17px;
+   align-items: center;
+   text-align: center;
+   color: green;
+   font-size: 15px;
+}
+.form-group{
+   display: flex;
+   font-size: 16px;
+   color: brown;
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   padding: 12px 0;
+}

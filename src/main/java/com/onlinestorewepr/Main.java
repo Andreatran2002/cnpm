@@ -1,35 +1,21 @@
 package com.onlinestorewepr;
 
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.service.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Random;
+import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.User;
 
 public class Main {
   public static void main(String[] args) {
+    UserDAO userDAO = new UserDAO();
+    User user = new User();
 
-    AccountService accountService = new AccountService();
-//    ProductService d = new ProductService();
-    Random rand = new Random(); //instance of random class
-    String[] sizes = new String[]{"m", "s", "xl", "xxl", "l"};
-    String[] brands = new String[]{"Noname", "Anne", "Kimi", "Lada", "Ecle"};
-    String[] colors = new String[]{"blue", "orange", "red", "green", "black","brown"};
-    int price = 0 ;
-//    for(int i = 0 ; i< 2; i++){
-//
-//      d.createProduct(3,"San pham "+i, null,
-//              "", "Day la san pham thu "+ i+50,
-//              rand.nextInt(1600),rand.nextInt(100),rand.nextInt(89),
-//              sizes[ rand.nextInt(sizes.length)],colors[ rand.nextInt(colors.length)],brands[ rand.nextInt(brands.length)]
-//              );
-//    }
+    user.setName("Dĩ");
+    user.setAddress("Binh Dinh");
+    user.setAdmin(false);
+    user.setGender("Nam");
+    user.setUsername("dihuynh123");
+    user.setPassword("123456");
+    user.setPhone("03726396211");
 
-    OrderService orderService = new OrderService();
-    AccountService userService = new AccountService();
-//    orderService.createOrder("Andrea Tran", "0788892441","45 ly thuong kiet",0,
-//            "Gui sau 18h la khong nhan", "Truc tiep", "PENDING","andreatran");
-//    orderService.
+    userDAO.insert(user);
   }
 }

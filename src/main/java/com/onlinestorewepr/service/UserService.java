@@ -1,22 +1,15 @@
 package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.UserDAO;
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class UserService {
-    private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO;
     private ServiceResult serviceResult;
 
     HttpServletResponse resp;
@@ -29,10 +22,9 @@ public class UserService {
         userDAO = new UserDAO();
     }
 
-
     public User authenticate(String username, String password) {
         User user = userDAO.get(username);
-        if (user != null) {
+        if (user != null && !user.isAdmin()) {
             if (password.equals(user.getPassword())) {
                 return user;
             }
@@ -40,8 +32,7 @@ public class UserService {
         return null;
     }
 
-
-    public void userRegister() throws IOException, ServletException {
+    public void userRegister() throws IOException,ServletException{
         String name = req.getParameter("fullName");
         String username = req.getParameter("usernameNew");
         String password = req.getParameter("passwordNew");
@@ -167,6 +158,21 @@ public class UserService {
         user.setGender(gender);
         user.setAddress(address);
     }
+    public void editAdminProfile(User user){
+        String username = req.getParameter("username");
+        String name = req.getParameter("name");
+        String password = req.getParameter("password");
+        String gender = req.getParameter("gender");
+        String phone = req.getParameter("phone");
+        String address = req.getParameter("address");
+
+        user.setName(name);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setPhone(phone);
+        user.setGender(gender);
+        user.setAddress(address);
+    }
 
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
@@ -175,5 +181,16 @@ public class UserService {
         userDAO.update(user);
         showProfile();
     }
-
+    public void updateAdminProfile() throws ServletException, IOException{
+        resp.setContentType("text/html;charset=UTF-8");
+        User user = (User) req.getSession().getAttribute("adminLogged");
+        editAdminProfile(user);
+        userDAO.update(user);
+        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
+    }
+    public List<User> getAllUser(){
+        List<User> users = null;
+        users = userDAO.getAll();
+        return users;
+    }
 }
