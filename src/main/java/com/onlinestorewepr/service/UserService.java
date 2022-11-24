@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class UserService {
     private UserDAO userDAO;
@@ -36,27 +37,30 @@ public class UserService {
         String name = req.getParameter("fullName");
         String username = req.getParameter("usernameNew");
         String password = req.getParameter("passwordNew");
+        String retypePass = req.getParameter("passwordNewRetype");
         String phone =req.getParameter("phone");
         String gender = req.getParameter("gender");
 
         User userCreated = userDAO.findUserCreated(username);
         String message = "";
+        boolean hasErr = false;
         if(name==null || phone==null ||username == null ||password==null || username.length()==0 || password.length()==0){
             message ="Vui lòng nhập Đầy đủ thông tin Đăng ký!";
-            req.setAttribute("messageRegisterFail",message);
-            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            hasErr = true;
         }
 //      Kiểm tra xem có tồn tại hay chưa
         else if(userCreated!=null){
             message= "Tên tài khoản đã tồn tại!";
-            req.setAttribute("messageRegisterFail",message);
-            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            hasErr = true;
+        }
+        else if(!Objects.equals(retypePass, password)){
+            message = "Vui lòng nhập Password trùng với nhau!";
+            hasErr = true;
         }
         else {
             User userNew = new User();
             if(username != null){
                 userNew.setUsername(username);
-
             }
             if(password!= null && !password.equals("")){
                 userNew.setPassword(password);
@@ -64,14 +68,18 @@ public class UserService {
             userNew.setName(name);
             userNew.setGender(gender);
             userNew.setPhone(phone);
-
             userDAO.insert(userNew);
-
             message= "Tạo thành công! Đăng nhập để bắt đầu";
-            if (message != null) {
-                req.setAttribute("messageRegisterSuccess", message);
-                req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
-            }
+        }
+        //Check Error
+        if(hasErr)
+        {
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+        }
+        else {
+            req.setAttribute("messageRegisterSuccess", message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
     }
 
@@ -84,6 +92,7 @@ public class UserService {
         response.addCookie(pass);
         response.setContentType("text/html");
     }
+
     public void login() throws IOException, ServletException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -94,16 +103,17 @@ public class UserService {
         User user = authenticate(username, password);
         boolean isRememberMe = "on".equals(remember);
 
+        //Check login
         if(username == null ||password==null || username.length()==0 || password.length()==0){
             hasErr= true;
-            errMessage ="Vui lòng nhập Tên đăng nhập & Mật khẩu";
+            errMessage ="Tên đăng nhập & Mật khẩu không được trống!";
         }
         else {
             try{
                 if (user == null)
                 {
                     hasErr = true;
-                    errMessage ="Tên đăng nhập hoặc mật khẩu không đúng!";
+                    errMessage ="Tên Đăng nhập hoặc Mật khẩu không đúng!";
                 }
             }
             catch (Exception e){
@@ -112,14 +122,18 @@ public class UserService {
                 errMessage = e.getMessage();
             }
         }
+
+        //Display status on web
         if(hasErr)
         {
             req.setAttribute("message",errMessage);
             req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
         else {
+            //Create session when login is successful
             HttpSession session = req.getSession();
             session.setAttribute("userLogged",user);
+            //Check Remember me to create Cookie
             if(isRememberMe)
             {
                 saveRememberMe(resp,username,password);
@@ -139,7 +153,6 @@ public class UserService {
     public void showProfile() throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         req.getRequestDispatcher("/web/profile.jsp").forward(req,resp);
-//        resp.sendRedirect(req.getContextPath()+"/web/profile.jsp");
     }
 
     public void showEditUserProfile() throws ServletException, IOException{

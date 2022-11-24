@@ -53,6 +53,9 @@
             <div class="input-control">
                <input name="passwordNew" id="passwd" type="password"  placeholder="Mật khẩu"/>
             </div>
+            <div class="input-control">
+               <input name="passwordNewRetype" id="passwdRetype" type="password"  placeholder="Nhập lại Mật khẩu"/>
+            </div>
             <div class="input-control radio">
                   <span>
                      <input type="radio" name="gender" id="gender-male" value="Name">
