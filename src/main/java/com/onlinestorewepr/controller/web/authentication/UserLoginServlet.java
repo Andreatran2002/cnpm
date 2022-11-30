@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", value = {"/login","/web/login"})
+@WebServlet(name = "LoginServlet", value = {"/web/login"})
 public class UserLoginServlet extends HttpServlet {
     private UserDAO loginDao;
     @Override

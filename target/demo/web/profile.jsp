@@ -56,10 +56,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center" id="profile-head">
-                                <img src="assets/img/instagram/instagram-1.jpg" alt="Admin" class="rounded-circle" width="150">
+                                <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4>${userLogged.name}</h4>
-<%--                                    <p class="text-secondary mb-1">18/01/2002</p>--%>
                                     <p class="text-muted font-size-sm">${userLogged.address}</p>
                                 </div>
                             </div>
@@ -72,13 +71,6 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Họ & tên</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">${userLogged.name}</div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">${userLogged.name}</div>
                             </div>
@@ -111,8 +103,11 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <a class="btn btn-info" target="" href="update-profile">Sửa thông tin</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-info" target="" href="change-password">Đổi mật khẩu</a>
                                 </div>
                             </div>
                         </div>

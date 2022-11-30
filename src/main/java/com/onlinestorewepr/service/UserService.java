@@ -2,6 +2,7 @@ package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
+import com.onlinestorewepr.util.MessageUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class UserService {
     private UserDAO userDAO;
     private ServiceResult serviceResult;
+    private MessageUtil message;
 
     HttpServletResponse resp;
     HttpServletRequest req;
@@ -20,6 +22,7 @@ public class UserService {
     {
         this.req = req;
         this.resp = resp;
+        this.message = new MessageUtil();
         userDAO = new UserDAO();
     }
 
@@ -37,30 +40,111 @@ public class UserService {
         String name = req.getParameter("fullName");
         String username = req.getParameter("usernameNew");
         String password = req.getParameter("passwordNew");
-        String retypePass = req.getParameter("passwordNewRetype");
         String phone =req.getParameter("phone");
         String gender = req.getParameter("gender");
 
         User userCreated = userDAO.findUserCreated(username);
         String message = "";
-        boolean hasErr = false;
-        if(name==null || phone==null ||username == null ||password==null || username.length()==0 || password.length()==0){
-            message ="Vui lòng nhập Đầy đủ thông tin Đăng ký!";
-            hasErr = true;
+        if(name==null || phone==null ||username == null ||password==null || gender == null){
+            if (Objects.equals(name, ""))
+            {
+                message ="Vui lòng điền họ và tên!";
+            }
+            else if (Objects.equals(username, ""))
+            {
+                message ="Vui lòng điền tên đăng nhập!";
+            }
+            else if (Objects.equals(phone, ""))
+            {
+                message ="Vui lòng điền số điện thoại!";
+            }
+            else if (Objects.equals(password, ""))
+            {
+                message ="Vui lòng điền mật khẩu";
+            }
+            else if (gender == null)
+            {
+                message = "Vui lòng chọn giới tính";
+            }
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+        }
+        // Kiem tra so dien thoai
+        boolean check = true;
+        for (int i = 0; i < phone.length(); i++)
+        {
+            if ( !(phone.charAt(i) <= '9' && phone.charAt(i) >= '0' ) )
+            {
+                check = false;
+                message = "Số điện thoại không hợp lệ! Vui lòng nhập lại số điện thoại!";
+                req.setAttribute("messageRegisterFail",message);
+                req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            }
+        }
+        if (check)
+        {
+            if (phone.length() != 10)
+            {
+                message = "Độ dài số điện thoại phải là 10 số! Vui lòng nhập lại!";
+                req.setAttribute("messageRegisterFail",message);
+                req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            }
+        }
+
+        // Kiem tra mat khau
+        if (password.length() < 8)
+        {
+            message = "Mật khẩu phải tối thiểu 8 kí tự! Vui lòng nhập lại!";
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+        }
+        if (password.contains(name))
+        {
+            message = "Mật khẩu không được chứa tên riêng! Vui lòng nhập lại!";
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+        }
+        boolean number = false, lowercase = false, uppercase = false, special = false;
+        for (int i = 0; i < password.length(); i++)
+        {
+            char x = password.charAt(i);
+            if (x <= '9' && x >= '0') number = true;
+            else if (x <= 'z' && x >= 'a') lowercase = true;
+            else if (x <= 'Z' && x >= 'A') uppercase = true;
+            else special = true;
+        }
+        if (number == false || lowercase == false || uppercase == false || special == false)
+        {
+            if (number == false)
+            {
+                message = "Mật khẩu phải bao gồm các chữ số! Vui lòng nhập lại!";
+            }
+            else if (lowercase == false)
+            {
+                message = "Mật khẩu phải bao gồm các chữ thường! Vui lòng nhập lại!";
+            }
+            else if (uppercase == false)
+            {
+                message = "Mật khẩu phải bao gồm các chữ in hoa! Vui lòng nhập lại!";
+            }
+            else if (special == false)
+            {
+                message = "Mật khẩu phải bao gồm kí tự đặc biệt! Vui lòng nhập lại!";
+            }
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
 //      Kiểm tra xem có tồn tại hay chưa
         else if(userCreated!=null){
             message= "Tên tài khoản đã tồn tại!";
-            hasErr = true;
-        }
-        else if(!Objects.equals(retypePass, password)){
-            message = "Vui lòng nhập Password trùng với nhau!";
-            hasErr = true;
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
         else {
             User userNew = new User();
             if(username != null){
                 userNew.setUsername(username);
+
             }
             if(password!= null && !password.equals("")){
                 userNew.setPassword(password);
@@ -68,18 +152,14 @@ public class UserService {
             userNew.setName(name);
             userNew.setGender(gender);
             userNew.setPhone(phone);
+
             userDAO.insert(userNew);
+
             message= "Tạo thành công! Đăng nhập để bắt đầu";
-        }
-        //Check Error
-        if(hasErr)
-        {
-            req.setAttribute("messageRegisterFail",message);
-            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
-        }
-        else {
-            req.setAttribute("messageRegisterSuccess", message);
-            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            if (message != null) {
+                req.setAttribute("messageRegisterSuccess", message);
+                req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+            }
         }
     }
 
@@ -171,21 +251,7 @@ public class UserService {
         user.setGender(gender);
         user.setAddress(address);
     }
-    public void editAdminProfile(User user){
-        String username = req.getParameter("username");
-        String name = req.getParameter("name");
-        String password = req.getParameter("password");
-        String gender = req.getParameter("gender");
-        String phone = req.getParameter("phone");
-        String address = req.getParameter("address");
 
-        user.setName(name);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setPhone(phone);
-        user.setGender(gender);
-        user.setAddress(address);
-    }
 
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
@@ -194,16 +260,44 @@ public class UserService {
         userDAO.update(user);
         showProfile();
     }
-    public void updateAdminProfile() throws ServletException, IOException{
-        resp.setContentType("text/html;charset=UTF-8");
-        User user = (User) req.getSession().getAttribute("adminLogged");
-        editAdminProfile(user);
-        userDAO.update(user);
-        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
-    }
-    public List<User> getAllUser(){
-        List<User> users = null;
-        users = userDAO.getAll();
-        return users;
+
+    public void changeUserPassword() throws ServletException,IOException{
+        String username = req.getParameter("username");
+        String oldPass = req.getParameter("password-old");
+        String newPass = req.getParameter("password-new");
+        String passRetype = req.getParameter("password-retype");
+        System.out.println(username+oldPass);
+
+        User user = authenticate(username,oldPass);
+        String messageBody, messageType;
+
+        if(user == null){
+            messageBody = "Mật khẩu cũ không đúng, vui lòng nhập lại!";
+            messageType = "danger";
+        }
+        else {
+            if(Objects.equals(oldPass, newPass)){
+                messageBody = "Mật khẩu mới không đuợc trùng với mật khẩu cũ!";
+                messageType = "danger";
+            }
+            else if (!Objects.equals(newPass, passRetype)){
+                messageBody = "Mật khẩu nhập lại không chính xác!";
+                messageType = "danger";
+            }
+            else {
+                resp.setContentType("text/html;charset=UTF-8");
+                User usernew = (User) req.getSession().getAttribute("userLogged");
+                usernew.setPassword(newPass);
+                userDAO.update(usernew);
+                messageBody = "Thay đổi thành công!";
+                messageType = "success";
+            }
+        }
+        message.setBody(messageBody);
+        message.setType(messageType);
+
+//        req.setAttribute("action", "add");
+        req.setAttribute("message", message);
+        req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }
 }

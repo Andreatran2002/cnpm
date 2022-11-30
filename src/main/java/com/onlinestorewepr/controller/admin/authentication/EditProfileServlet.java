@@ -1,5 +1,6 @@
 package com.onlinestorewepr.controller.admin.authentication;
 
+import com.onlinestorewepr.service.AdminService;
 import com.onlinestorewepr.service.UserService;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,8 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        UserService userService = new UserService(req,resp);
-        userService.updateAdminProfile();
+        AdminService adminService = new AdminService(req,resp);
+        adminService.updateAdminProfile();
     }
 
     @Override

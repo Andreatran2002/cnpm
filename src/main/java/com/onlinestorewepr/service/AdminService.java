@@ -40,27 +40,28 @@ public class AdminService {
 
         User user = authenticate(username,password);
         String errMessage = "";
-        boolean hasErr = false;
+        boolean hasError = false;
 
         if(username == null ||password==null || username.length()==0 || password.length()==0){
-            hasErr= true;
-            errMessage ="Vui lòng nhập Tên đăng nhập & Mật khẩu";
+            hasError= true;
+            errMessage ="Vui lòng nhập Tên đăng nhập & Mật khẩu!";
         }
         else {
             try{
                 if (user == null)
                 {
-                    hasErr = true;
-                    errMessage ="Tên đăng nhập hoặc mật khẩu không đúng!";
+                    hasError = true;
+                    errMessage ="Tên đăng nhập hoặc Mật khẩu không đúng!";
                 }
             }
             catch (Exception e){
                 e.printStackTrace();
-                hasErr = true;
+                hasError = true;
                 errMessage = e.getMessage();
             }
         }
-        if(hasErr)
+
+        if(hasError)
         {
             req.setAttribute("message",errMessage);
             req.getRequestDispatcher("/admin/login.jsp").forward(req,resp);
@@ -69,7 +70,30 @@ public class AdminService {
             HttpSession session = req.getSession();
             session.setAttribute("adminLogged",user);
             session.setMaxInactiveInterval(1000);
-            req.getRequestDispatcher("/admin/products").forward(req,resp);
+            req.getRequestDispatcher("/admin/index.jsp").forward(req,resp);
         }
+    }
+
+    public void updateAdminProfile() throws ServletException, IOException{
+        resp.setContentType("text/html;charset=UTF-8");
+        User user = (User) req.getSession().getAttribute("adminLogged");
+        editAdminProfile(user);
+        userDAO.update(user);
+        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
+    }
+    public void editAdminProfile(User user){
+        String username = req.getParameter("username");
+        String name = req.getParameter("name");
+        String password = req.getParameter("password");
+        String gender = req.getParameter("gender");
+        String phone = req.getParameter("phone");
+        String address = req.getParameter("address");
+
+        user.setName(name);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setPhone(phone);
+        user.setGender(gender);
+        user.setAddress(address);
     }
 }

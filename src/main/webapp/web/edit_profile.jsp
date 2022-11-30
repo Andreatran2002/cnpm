@@ -56,11 +56,10 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img src="assets/img/instagram/instagram-2.jpg" alt="Admin" class="rounded-circle" width="150">
+                <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
                 <div class="mt-3">
-                  <h4>Huỳnh Tiến Dĩ</h4>
-                  <p class="text-secondary mb-1">18/01/2002</p>
-                  <p class="text-muted font-size-sm">Bình Định</p>
+                  <h4>${userLogged.name}</h4>
+                  <p class="text-muted font-size-sm">${userLogged.address}</p>
                 </div>
               </div>
             </div>
@@ -69,6 +68,14 @@
         <div class="col-lg-8">
           <div class="card">
             <form class="card-body" method="post" action="update-profile">
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Username</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input type="text" class="form-control" id="user-name" name="username" disabled value="${userLogged.username}">
+                </div>
+              </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Họ & tên</h6>
@@ -83,14 +90,6 @@
                 </div>
                 <div class="col-sm-9 text-secondary">
                   <input type="text" class="form-control" id="phone" name="phone">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Username</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="user-name" name="username" disabled value="${userLogged.name}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -112,7 +111,7 @@
               <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">
-                  <button type="submit" class="submit">Lưu thay đổi</button>
+                  <button type="submit" class="submit btn btn-info">Lưu thay đổi</button>
                 </div>
               </div>
             </form>

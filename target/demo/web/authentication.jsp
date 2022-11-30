@@ -54,7 +54,7 @@
                <input name="passwordNew" id="passwd" type="password"  placeholder="Mật khẩu"/>
             </div>
             <div class="input-control">
-               <input name="passwordNewRetype" id="passwdRetype" type="password"  placeholder="Mật khẩu"/>
+               <input name="passwordNewRetype" id="passwdRetype" type="password"  placeholder="Nhập lại Mật khẩu"/>
             </div>
             <div class="input-control radio">
                   <span>
@@ -70,8 +70,10 @@
                      <label for="gender-others">Khác</label>
                   </span>
             </div>
-            <p class="message-text-fail">${messageRegisterFail}</p>
-            <p class="message-text-success">${messageRegisterSuccess}</p>
+            <c:choose>
+               <c:when test="${messageRegisterFail!=null}"><p class="message-text-fail">${messageRegisterFail}</p></c:when>
+               <c:otherwise><p class="message-text-success">${messageRegisterSuccess}</p></c:otherwise>
+            </c:choose>
             <button type="submit" class="submit">Đăng ký</button>
          </form>
       </div>

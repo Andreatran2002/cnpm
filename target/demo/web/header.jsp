@@ -86,14 +86,21 @@
          </div>
          <div class="col-lg-3 col-md-3">
             <div class="header__nav__option">
-               <div class="header__nav-username">Hi!<b> ${userLogged.name}</b></div>
-               <div class="header__nav-avatar">
-                  <a href="profile.jsp"><img src="assets/img/instagram/instagram-1.jpg" alt=""></a>
-               </div>
-               <a href="#" class="search-switch"><img src="./assets/img/icon/search.png" alt=""></a>
-               <a href="#"><img src="./assets/img/icon/cart.png" alt=""> <span>0</span></a>
-               <%--               <a href="cartdetail?username=${userLogged.username}&type="view""><img src="assets/img/icon/cart.png" alt=""> <span></span></a>--%>
-               <div class="price">$0.00</div>
+               <c:choose>
+                  <c:when test="${userLogged!=null}">
+                     <div class="header__nav-username">Hi!<b> ${userLogged.name}</b></div>
+                     <div class="header__nav-avatar">
+                        <a href="profile.jsp"><img src="${userLogged.image}" alt=""></a>
+                     </div>
+                     <a href="#" class="search-switch"><img src="./assets/img/icon/search.png" alt=""></a>
+                     <a href="#"><img src="./assets/img/icon/cart.png" alt=""> <span>0</span></a>
+                     <%--               <a href="cartdetail?username=${userLogged.username}&type="view""><img src="assets/img/icon/cart.png" alt=""> <span></span></a>--%>
+                     <div class="price">$0.00</div>
+                  </c:when>
+                  <c:otherwise>
+                     <a href="login">Sign/Sign Up</a>
+                  </c:otherwise>
+               </c:choose>
             </div>
          </div>
       </div>

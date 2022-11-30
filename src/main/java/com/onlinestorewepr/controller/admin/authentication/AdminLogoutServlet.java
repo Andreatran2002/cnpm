@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet( name = "LogoutAdmninServlet", value = {"/admin/admin-logout","/admin-logout"})
+@WebServlet( name = "LogoutAdmninServlet", value = {"/admin/admin-logout"})
 public class AdminLogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -17,6 +17,6 @@ public class AdminLogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().removeAttribute("adminLogged");
-        req.getRequestDispatcher("/login-admin").forward(req,resp);
+        req.getRequestDispatcher("/admin/login-admin").forward(req,resp);
     }
 }

@@ -39,7 +39,7 @@
           <h4>Thông tin cá nhân, đơn hàng</h4>
           <div class="breadcrumb__links">
             <a href="index.jsp">Home</a>
-            <span>Chỉnh sửa thông tin cá nhân</span>
+            <span>Thay đổi mật khẩu</span>
           </div>
         </div>
       </div>
@@ -50,76 +50,73 @@
 
 <!-- Contact Section Begin -->
 <div class="container">
-    <div class="spad">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
-                <div class="mt-3">
-                  <h4>${userLogged.name}</h4>
-                  <p class="text-muted font-size-sm">${userLogged.address}</p>
-                </div>
+  <div class="spad">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
+              <div class="mt-3">
+                <h4>${userLogged.name}</h4>
+                <p class="text-muted font-size-sm">${userLogged.address}</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-8">
-          <div class="card">
-            <form class="card-body" method="post" action="update-profile">
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Username</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="user-name" name="username" disabled value="${userLogged.username}">
-                </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card">
+          <form class="card-body" method="post" action="change-password">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Tên đăng nhập</h6>
               </div>
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Họ & tên</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-name" name="name">
-                </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="username" name="username" value="${userLogged.username}">
               </div>
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Phone</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="phone" name="phone">
-                </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mật khẩu cũ</h6>
               </div>
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Giới tính</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-sex" name="sex">
-                </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="password-old" name="password-old">
               </div>
-              <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Địa chỉ</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-address" name="address">
-                </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mật khẩu mới</h6>
               </div>
-              <div class="row">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9 text-secondary">
-                  <button type="submit" class="submit btn btn-info">Lưu thay đổi</button>
-                </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="password-new" name="password-new">
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nhập lại mật khẩu mới</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="password-retype" name="password-retype">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                <button type="submit" class="submit btn btn-info">Lưu thay đổi</button>
+              </div>
+            </div>
+          </form>
+          <c:if test="${message != null}">
+            <div class="col-sm-12 d-flex justify-content-end my-3">
+              <p class="text-${message.type}">${message.body}</p>
+            </div>
+          </c:if>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 <!-- Contact Section End -->
 

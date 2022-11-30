@@ -13,6 +13,7 @@ import java.io.IOException;
 public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("/admin/login.jsp").forward(request,response);
     }
 
