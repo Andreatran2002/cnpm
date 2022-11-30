@@ -68,7 +68,7 @@
       <div class="row">
          <div class="col-lg-3 col-md-3">
             <div class="header__logo">
-               <a href="./"><img src="./web/assets/img/logo.png" alt=""></a>
+               <a href="./"><img src="${pageContext.request.contextPath}/web/assets/img/logo.png" alt=""></a>
             </div>
          </div>
          <div class="col-lg-6 col-md-6">
@@ -90,10 +90,10 @@
          </div>
          <div class="col-lg-3 col-md-3">
             <div class="header__nav__option">
-               <a href="#" class="search-switch"><img src="./web/assets/img/icon/search.png" alt=""></a>
-               <a href="#"><img src="./web/assets/img/icon/heart.png" alt=""></a>
-               <a href="${pageContext.request.contextPath}/cart"><img src="./web/assets/img/icon/cart.png" alt=""> <span>${quantity}</span></a>
-               <div class="price">$${total}</div>
+               <a href="#" class="search-switch"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>
+               <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a>
+               <a href="${pageContext.request.contextPath}/cart"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png" alt=""> <span>0</span></a>
+               <div class="price">$0.00</div>
             </div>
          </div>
       </div>

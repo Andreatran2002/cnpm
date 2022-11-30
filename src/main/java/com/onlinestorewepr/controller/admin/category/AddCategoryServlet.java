@@ -19,6 +19,7 @@ public class AddCategoryServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
     CategoryService categoryService = new CategoryService(req, resp);
     categoryService.AddCategory();
   }

@@ -1,36 +1,37 @@
 package com.onlinestorewepr;
 
-import com.onlinestorewepr.dao.CategoryDAO;
+import com.onlinestorewepr.dao.*;
+import com.onlinestorewepr.entity.Cart;
+import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.dao.ProductDAO;
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.entity.Product;
-import com.onlinestorewepr.service.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Random;
 
 public class Main {
+  private static void insertData() {
+    User user = new UserDAO().get("quangtv");
+    Cart cart = user.getCart();
+    System.out.println(cart);
+    CartItem c1 = new CartItem(2, new ProductDAO().get(3), cart);
+    CartItem c2 = new CartItem(1, new ProductDAO().get(3), cart);
+    CartItemDAO cartItemDAO = new CartItemDAO();
+    cartItemDAO.insert(c1);
+    cartItemDAO.insert(c2);
+  }
   public static void main(String[] args) {
+    User user = new UserDAO().get("quangtv");
+    System.out.println("Username: " + user.getName());
+    List<CartItem> cartItems = user.getCart().getCartItems();
 
-//    AccountService accountService = new AccountService();
-    ProductDAO d = new ProductDAO();
-    CategoryDAO categoryDAO = new CategoryDAO();
-    Random rand = new Random(); //instance of random class
-    String[] sizes = new String[]{"m", "s", "xl", "xxl", "l"};
-    String[] brands = new String[]{"Noname", "Anne", "Kimi", "Lada", "Ecle"};
-    String[] colors = new String[]{"blue", "orange", "red", "green", "black","brown"};
-    int price = 0 ;
-    for(int i = 0 ; i< 30; i++){
-
-      d.insert(new Product("San pham "+i,"", "Day la san pham thu "+ i,
-              rand.nextInt(1600),rand.nextInt(100),rand.nextInt(50),
-              sizes[ rand.nextInt(sizes.length)],colors[ rand.nextInt(colors.length)],brands[ rand.nextInt(brands.length)],true,categoryDAO.get(3)
-              ));
+    if (cartItems.size() > 0) {
+      for (int i = 0; i < cartItems.size(); i++) {
+        System.out.println("Cart item line " + i);
+        System.out.println("Product name: " + cartItems.get(i).getProduct().getName());
+        System.out.println("Product quantity: " + cartItems.get(i).getQuantity());
+      }
     }
-
-//    orderService.createOrder("Andrea Tran", "0788892441","45 ly thuong kiet",0,
-//            "Gui sau 18h la khong nhan", "Truc tiep", "PENDING","andreatran");
-//    orderService.
+    else {
+      System.out.println("Cart items is empty");
+    }
   }
 }
