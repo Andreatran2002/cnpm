@@ -4,14 +4,31 @@ import com.onlinestorewepr.dao.CartDAO;
 import com.onlinestorewepr.dao.CartItemDAO;
 import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.Product;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class CartItemService {
+    private HttpServletRequest req;
+    private HttpServletResponse resp;
     private CartItemDAO cartItemDAO;
     private CartDAO cartDAO;
     private ProductDAO productDAO;
     private UserDAO userDAO;
     private ServiceResult serviceResult;
+
+    public CartItemService(HttpServletRequest req, HttpServletResponse resp) {
+        this.req = req;
+        this.resp = resp;
+        userDAO = new UserDAO();
+        cartDAO = new CartDAO();
+        productDAO = new ProductDAO();
+        cartItemDAO = new CartItemDAO();
+        serviceResult= new ServiceResult();
+    }
 
     public ServiceResult getServiceResult() {
         return serviceResult;
@@ -21,51 +38,69 @@ public class CartItemService {
         this.serviceResult = serviceResult;
     }
 
-    public CartItemService() {
-        userDAO = new UserDAO();
-        cartDAO = new CartDAO();
-        productDAO = new ProductDAO();
-        cartItemDAO = new CartItemDAO();
-        serviceResult= new ServiceResult();
-    }
 
-    public void createCartItem(int cartId, int productId, int quantity  ) {
-        String message ="", messageType  ="";
-        //check cartid and productid
-        if (cartDAO.get(cartId) != null && productDAO.get(productId) != null) {
-            if (cartItemDAO.findByProductId(cartId, productId) != null){
-                CartItem item = cartItemDAO.findByProductId(cartId, productId) ;
-                updateCartItem(item .getId(), item.getProduct().getId(),item.getCart().getId(), quantity);
-            }
-            else {
-                try {
-                    CartItem cartItem = new CartItem(quantity, productDAO.get(productId), cartDAO.get(cartId));
-                    cartItemDAO.insert(cartItem);
 
-                    message = "A new cartItem was created successfully!";
-                    messageType = "success";
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    message = "An error occurred when creating a new cartItem! Please try again.";
+    public void createCartItem( ) {
+        try{
+            //        System.out.println();
+            String message = "",messageType ="";
+            String username = req.getParameter("username").trim();
+            String productId = req.getParameter("productid").trim();
+            String quantity = req.getParameter("quantity").trim();
+            System.out.println(username);
+            if (username != null && productId != null && quantity != null){
+                Cart cart = cartDAO.findByUser(username) ;
+                System.out.println(cart.getTotal());
+
+                Product product = productDAO.get(Integer.parseInt(productId));
+                System.out.println(product.getName());
+
+                if (cart != null && product != null) {
+                    CartItem item ;
+                    if (cartItemDAO.findByProductId(cart.getId(), Integer.parseInt(productId) ) != null){
+                         item = cartItemDAO.findByProductId(cart.getId(), Integer.parseInt(productId) );
+
+                        updateCartItem(item .getId(), item.getProduct().getId(),item.getCart().getId(), Integer.parseInt(quantity)+item.getQuantity());
+                    }
+                    else {
+                         item = new CartItem(Integer.parseInt(quantity), product, cart);
+                        cartItemDAO.insert(item);
+                    }
+                    cart.setTotal(cart.getTotal()+Integer.parseInt(quantity)*item.getProduct().getPrice());
+                    cartDAO.update(cart);
+
+
+                } else {
+                    message = String.format("User or product is not valid");
                     messageType = "danger";
                 }
             }
+            else{
+                System.out.println("Khong co dux liu");
+            }
+            req.setAttribute("message",message);
+            req.setAttribute("messageType",messageType);
 
-        } else {
-            message = String.format("A cartItem with productid %s  already exists! Please choose another user", productId);
-            messageType = "danger";
+            System.out.println(message);
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        serviceResult.setMessage(message);
-        serviceResult.setMessageType(messageType);
     }
 
-    public void deleteCartItem(int id) {
-        CartItem cartItem = cartItemDAO.get(id);
+    public void deleteCartItem() {
         String message, messageType;
-        if (cartItem != null) {
+
+        String id = req.getParameter("id").trim();
+        if (id != null){
+            CartItem cartItem = cartItemDAO.get(Integer.parseInt(id));
+            if (cartItem != null) {
                 try {
-                    cartItemDAO.delete(id);
+                    Cart cart = cartItem.getCart();
+                    cart.setTotal(cart.getTotal()- cartItem.getQuantity()*cartItem.getProduct().getPrice());
+                    cartDAO.update(cart);
+                    cartItemDAO.delete(Integer.parseInt(id));
+
                     message = "CartItem was deleted successfully!";
                     messageType = "primary";
                 } catch (Exception e) {
@@ -74,21 +109,32 @@ public class CartItemService {
                     messageType = "danger";
                 }
 
-        } else {
-            message = String.format("CartItem with id %s does not exist", id);
+            } else {
+                message = String.format("CartItem with id %s does not exist", id);
+                messageType = "danger";
+            }
+
+
+        }
+        else {
+            message = "Missing id params.";
             messageType = "danger";
         }
-
         serviceResult.setMessage(message);
         serviceResult.setMessageType(messageType);
+
     }
 
     public void updateCartItem(int id, int productid , int cartid , int quantity ) {
+
         CartItem cartItem = cartItemDAO.get(id);
         String message = "", messageType = "";
         if (cartItem != null) {
             try {
                 cartItem.setQuantity(quantity);
+                Cart cart = cartItem.getCart();
+                cart.setTotal(cart.getTotal()- (cartItem.getQuantity()-quantity )*cartItem.getProduct().getPrice());
+                cartDAO.update(cart);
                 cartItemDAO.update(cartItem);
                 message = "CartItem's info was changed successfully!";
                 messageType = "success";

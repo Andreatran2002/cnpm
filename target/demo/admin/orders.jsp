@@ -39,7 +39,7 @@
                       <th>ID</th>
                       <th>Date</th>
                       <th>Customer</th>
-                      <th>Tie </th>
+                      <th>Products </th>
                         <th>Total</th>
 
                         <th>Status</th>

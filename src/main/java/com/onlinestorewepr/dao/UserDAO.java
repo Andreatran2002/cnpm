@@ -84,15 +84,7 @@ public class UserDAO {
       }
       return user;
    }
-   public User getByID (int id) {
-      User user = null;
-      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         user = session.get(User.class, id);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return user;
-   }
+
 
 //   public User checkAccount(String username,String pass) {
 //      User user = null;

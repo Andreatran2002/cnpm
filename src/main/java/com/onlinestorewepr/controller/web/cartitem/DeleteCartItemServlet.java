@@ -1,7 +1,6 @@
-package com.onlinestorewepr.controller.web.cart;
+package com.onlinestorewepr.controller.web.cartitem;
 
-
-import com.onlinestorewepr.service.CartService;
+import com.onlinestorewepr.service.CartItemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,14 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("/cart/add")
-public class AddCartServlet extends HttpServlet {
+@WebServlet("/cart-item/delete")
+public class DeleteCartItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartService cartService = new CartService(req,resp);
-
+        CartItemService cartService = new CartItemService(req,resp);
+        cartService.deleteCartItem();
 
     }
 

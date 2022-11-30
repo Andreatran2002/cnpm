@@ -83,11 +83,15 @@ public class ProductDAO {
 
    public List<Product> getAll() {
       List<Product> products = null;
+      System.out.println("products");
+
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          CriteriaBuilder builder = session.getCriteriaBuilder();
          CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
          criteriaQuery.from(Product.class);
          products = session.createQuery(criteriaQuery).getResultList();
+         System.out.println(products);
+
       } catch (Exception e) {
          e.printStackTrace();
       }

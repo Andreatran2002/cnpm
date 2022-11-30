@@ -58,8 +58,8 @@
          <div class="col-lg-3">
             <div class="shop__sidebar">
                <div class="shop__sidebar__search">
-                  <form action="#">
-                     <input type="text" placeholder="Search...">
+                  <form action="">
+                     <input  type="text" placeholder="Search..." id="search_key">
                      <button type="submit"><span class="icon_search"></span></button>
                   </form>
                </div>
@@ -74,7 +74,7 @@
                               <div class="shop__sidebar__categories">
                                  <ul class="nice-scroll">
                                     <c:forEach items="${categories}" var="cate" varStatus="status">
-                                    <li><a href="${pageContext.request.contextPath}/products?cateid=${cate.id}">${cate.name}</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event ,'cateid', ${cate.id})">${cate.name}</a></li>
                                     </c:forEach>
 
                                  </ul>
@@ -106,12 +106,12 @@
                            <div class="card-body">
                               <div class="shop__sidebar__price">
                                  <ul>
-                                    <li><a href="#">$0.00 - $50.00</a></li>
-                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                    <li><a href="#">250.00+</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price', 1)">$0.00 - $50.00</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price',2)">$50.00 - $100.00</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price', 3)">$100.00 - $150.00</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price', 4)">$150.00 - $200.00</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price', 5)">$200.00 - $250.00</a></li>
+                                    <li><a href="#" onclick="triggerFilter(event,'price', 6)">250.00+</a></li>
                                  </ul>
                               </div>
                            </div>
@@ -125,28 +125,28 @@
                            <div class="card-body">
                               <div class="shop__sidebar__size">
                                  <label for="xs">xs
-                                    <input type="radio" id="xs">
+                                    <input type="radio" id="xs" onclick="triggerFilter(event, 'size', 'xs')">
                                  </label>
                                  <label for="sm">s
-                                    <input type="radio" id="sm">
+                                    <input type="radio" id="sm" onclick="triggerFilter(event, 'size', 'sm')">
                                  </label>
                                  <label for="md">m
-                                    <input type="radio" id="md">
+                                    <input type="radio" id="md" onclick="triggerFilter(event, 'size', 'md')">
                                  </label>
                                  <label for="xl">xl
-                                    <input type="radio" id="xl">
+                                    <input type="radio" id="xl" onclick="triggerFilter(event, 'size', 'xl')">
                                  </label>
                                  <label for="2xl">2xl
-                                    <input type="radio" id="2xl">
+                                    <input type="radio" id="2xl" onclick="triggerFilter(event, 'size', '2xl')">
                                  </label>
                                  <label for="xxl">xxl
-                                    <input type="radio" id="xxl">
+                                    <input type="radio" id="xxl" onclick="triggerFilter(event, 'size', 'xxl')">
                                  </label>
                                  <label for="3xl">3xl
-                                    <input type="radio" id="3xl">
+                                    <input type="radio" id="3xl" onclick="triggerFilter(event, 'size', '3xl')">
                                  </label>
                                  <label for="4xl">4xl
-                                    <input type="radio" id="4xl">
+                                    <input type="radio" id="4xl" onclick="triggerFilter(event, 'size', '4xl')">
                                  </label>
                               </div>
                            </div>
@@ -190,24 +190,6 @@
                            </div>
                         </div>
                      </div>
-<%--                     <div class="card">--%>
-<%--                        <div class="card-heading">--%>
-<%--                           <a data-toggle="collapse" data-target="#collapseSix">Tags</a>--%>
-<%--                        </div>--%>
-<%--                        <div id="collapseSix" class="collapse show" data-parent="#accordionExample">--%>
-<%--                           <div class="card-body">--%>
-<%--                              <div class="shop__sidebar__tags">--%>
-<%--                                 <a href="#">Product</a>--%>
-<%--                                 <a href="#">Bags</a>--%>
-<%--                                 <a href="#">Shoes</a>--%>
-<%--                                 <a href="#">Fashio</a>--%>
-<%--                                 <a href="#">Clothing</a>--%>
-<%--                                 <a href="#">Hats</a>--%>
-<%--                                 <a href="#">Accessories</a>--%>
-<%--                              </div>--%>
-<%--                           </div>--%>
-<%--                        </div>--%>
-<%--                     </div>--%>
                   </div>
                </div>
             </div>
@@ -218,22 +200,23 @@
                <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6">
                      <div class="shop__product__option__left">
-<%--                        <p> ${products.size()} results</p>--%>
+                        <p> ${typesearch}</p>
                      </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6">
                      <div class="shop__product__option__right">
                         <p>Sort by Price:</p>
                         <select>
-                           <option value="">Low To High</option>
-                           <option value="">$0 - $55</option>
-                           <option value="">$55 - $100</option>
+                           <option onclick="triggerFilter(event, 'sort', 0)" value="">Default</option>
+                           <option onclick="triggerFilter(event, 'sort', 1)" value="">Low To High</option>
+                           <option onclick="triggerFilter(event, 'sort', 2)" value="">High To Low</option>
                         </select>
                      </div>
                   </div>
                </div>
             </div>
             <div class="row product-data-list" id="product-content">
+
                <c:forEach items="${products}" var="product" varStatus="status">
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="product__item ${product.discount>0?"sale":""}">
@@ -247,8 +230,7 @@
                         </div>
                         <div class="product__item__text">
                            <h6>${product.name}</h6>
-
-                           <a href="#" class="add-cart">+ Add To Cart</a>
+                           <a href="#" class="add-cart" onclick="addtocart(${product.id})">+ Add To Cart</a>
                            <div class="rating">
                               <i class="fa fa-star-o"></i>
                               <i class="fa fa-star-o"></i>
@@ -323,9 +305,20 @@
 <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+   const queryString = window.location.search;
+   const urlParams = new URLSearchParams(queryString);
+   const inputSearch = document.querySelector("#search_key")
+
+
+   // $("#search_key").on('change keydown paste input', function(){
+   //       console.log($("#search_key").val())
+   //    removeElementsByClass("product__item")
+   // });
+
+
    $(window).scroll(function() {
-      // console.log($("#content").clientHeight)
       if($(window).scrollTop() + $(window).height() >= $(document).height()){
+
          loadMore();
       }
    });
@@ -347,15 +340,15 @@
          }
       });
    }
-   function loadMore() {
-      /* tạo viên amount để Gọi và đếm classname là product */
-      var amount = document.getElementsByClassName("product__item").length;
+   function addtocart( productId){
 
       $.ajax({
-         url : "/load-product-ajax", //send to Controller
+         url : "/cart-item/add", //send to Controller
          type : "get", //send it through get method
          data : {
-            exits : amount
+            username : "andreatran",
+            productid : productId ,
+            quantity : 1
          },
          success : function(data) {
             $("#product-content").append(data);
@@ -365,6 +358,32 @@
             console.log(xhr)
          }
       });
+   }
+
+
+   function loadMore() {
+
+
+      if (!urlParams.has('cateid') && !urlParams.has('key') && !urlParams.has('size') && !urlParams.has('color')){
+         /* tạo viên amount để Gọi và đếm classname là product */
+         var amount = document.getElementsByClassName("product__item").length;
+
+         $.ajax({
+            url : "/load-product-ajax", //send to Controller
+            type : "get", //send it through get method
+            data : {
+               exist : amount
+            },
+            success : function(data) {
+               $("#product-content").append(data);
+            },
+            error : function(xhr) {
+//Do Something to handle error
+               console.log(xhr)
+            }
+         });
+      }
+
    };
 
    function removeElementsByClass(className){
@@ -373,6 +392,46 @@
          elements[0].parentNode.removeChild(elements[0]);
       }
    }
+
+   let queryObject = {
+
+   }
+
+   const getQueryObject = () => {
+      queryObject = queryString.substring(1).split("&").reduce((prev, curr) => {
+
+         if(curr === "")
+            return prev
+         const key = curr.split("=")[0]
+         const value = curr.split("=")[1]
+         return {...prev, [key]: value}
+      },{})
+
+      inputSearch.value = decodeURI(queryObject?.key) || ''
+   }
+
+   getQueryObject()
+
+   function triggerFilter(e, key, value) {
+      e.preventDefault()
+
+      queryObject = {...queryObject, [key]: value}
+
+      const queryString = Object.keys(queryObject).reduce((prev, curr) => {
+
+         return prev + '&' + curr + "=" + queryObject[curr]
+      },'')
+
+      console.log(queryString)
+      window.location.search = queryString
+   }
+
+
+   inputSearch.addEventListener("keydown", (e) => {
+      if(e.keyCode === 13) {
+         triggerFilter(e, 'key', e.target.value)
+      }
+   })
 </script>
 </body>
 
