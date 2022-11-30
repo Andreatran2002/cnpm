@@ -1,19 +1,11 @@
 package com.onlinestorewepr;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.onlinestorewepr.dao.*;
 import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.CartItem;
-import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.User;
-import com.onlinestorewepr.service.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import com.onlinestorewepr.dao.ProductDAO;
 import java.util.List;
-import java.util.Random;
 
 public class Main {
   private static void insertData() {
@@ -41,8 +33,5 @@ public class Main {
     else {
       System.out.println("Cart items is empty");
     }
-
-//    insertData();
-
   }
 }

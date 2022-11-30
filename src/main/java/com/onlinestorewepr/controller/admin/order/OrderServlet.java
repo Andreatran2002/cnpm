@@ -15,12 +15,8 @@ import java.util.List;
 public class OrderServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    OrderService orderService = new OrderService();
-    List<Order> orders = orderService.getAllOrders();
-    System.out.println(orders);
-
-    req.setAttribute("orders", orders);
-    req.getRequestDispatcher("/admin/orders.jsp").forward(req, resp);
+    OrderService orderService = new OrderService(req,resp);
+    orderService.ListOrder();
   }
 
 }

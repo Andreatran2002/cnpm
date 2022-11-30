@@ -22,53 +22,18 @@ import java.util.List;
 
 @WebServlet("/admin/edit-order")
 public class EditOrderServlet extends HttpServlet {
-  OrderService orderService = new OrderService();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int id = Integer.parseInt(req.getParameter("id"));
-    if (id != 0) {
-      Order order = orderService.getOrder(id);
-      req.setAttribute("order", order);
-      req.setAttribute("action", "edit");
-    }
-
-    req.getRequestDispatcher("/admin/update-order.jsp").forward(req, resp);
+    OrderService orderService = new OrderService(req,resp);
+    orderService.ShowEditOrderServlet();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int id = Integer.parseInt(req.getParameter("id"));
-    Order order = orderService.getOrder(id);
-    DiskFileItemFactory diskFileItemFactory = new
-            DiskFileItemFactory();
-    ServletFileUpload servletFileUpload = new
-            ServletFileUpload(diskFileItemFactory);
-    servletFileUpload.setHeaderEncoding("UTF-8");
-    String phone ="", address="", status ="";
-    try {
-      resp.setContentType("text/html");
-      resp.setCharacterEncoding("UTF-8");
-      req.setCharacterEncoding("UTF-8");
-      List<FileItem> items = servletFileUpload.parseRequest(req);
-      for (FileItem item : items) {
-        if (item.getFieldName().equals("order-phone")) {
-          phone =item.getString("UTF-8");
-        }
-        if (item.getFieldName().equals("order-address")) {
-          address = item.getString("UTF-8");
-        }
-        if (item.getFieldName().equals("order-status")) {
-          status = item.getString("UTF-8");
-        }
-      }
-      orderService.updateOrder(order.getId(), phone, address, status );
-      System.out.println(phone);
-      resp.sendRedirect(req.getContextPath() + "/admin/orders");
-    } catch (FileUploadException e) {
-      e.printStackTrace();
-    } catch (Exception e) {e.printStackTrace();}
 
+    OrderService orderService = new OrderService(req,resp);
+    orderService.UpdateOrder();
   }
 
 }

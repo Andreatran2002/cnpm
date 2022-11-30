@@ -23,9 +23,9 @@
       </div>
    </div>
    <div class="offcanvas__nav__option">
-      <a href="#" class="search-switch"><img src="./assets/img/icon/search.png" alt=""></a>
-      <a href="#"><img src="./assets/img/icon/heart.png" alt=""></a>
-      <a href="#"><img src="./assets/img/icon/cart.png" alt=""> <span>0</span></a>
+      <a href="#" class="search-switch"><img src="./web/assets/img/icon/search.png" alt=""></a>
+      <a href="#"><img src="./web/assets/img/icon/heart.png" alt=""></a>
+      <a href="#"><img src="./web/assets/img/icon/cart.png" alt=""> <span>0</span></a>
       <div class="price">$0.00</div>
    </div>
    <div id="mobile-menu-wrap"></div>
@@ -92,7 +92,7 @@
             <div class="header__nav__option">
                <a href="#" class="search-switch"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>
                <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a>
-               <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png" alt=""> <span>0</span></a>
+               <a href="${pageContext.request.contextPath}/cart"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png" alt=""> <span>0</span></a>
                <div class="price">$0.00</div>
             </div>
          </div>
