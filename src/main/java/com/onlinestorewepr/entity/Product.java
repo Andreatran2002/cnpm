@@ -13,7 +13,7 @@ public class Product {
    @Column
    private String name;
    @Column
-   private String image;
+   private String image="";
    @Column(columnDefinition = "LONGTEXT")
    private String description;
    @Column
@@ -29,7 +29,7 @@ public class Product {
    @Column
    private String brand;
    @Column
-   private boolean available;
+   private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "categoryId")

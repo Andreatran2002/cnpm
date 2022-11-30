@@ -4,6 +4,10 @@ import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.User;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -174,6 +178,54 @@ public class UserService {
         editUserProfile(user);
         userDAO.update(user);
         showProfile();
+    }
+    public void ListUser()throws ServletException, IOException{
+        List<User> accounts = userDAO.getAll();
+        req.setAttribute("accounts", accounts);
+        req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
+    }
+    public void ShowEditUser()throws ServletException, IOException{
+        String username = req.getParameter("username");
+        if (username != null) {
+            User account = userDAO.get(username);
+            req.setAttribute("account", account);
+            req.setAttribute("action", "edit");
+            req.getRequestDispatcher("/admin/update-account.jsp").forward(req, resp);
+
+        }
+    }
+    public void EditUser()throws ServletException, IOException{
+        String username = req.getParameter("username") ;
+        User user = userDAO.get(username);
+        DiskFileItemFactory diskFileItemFactory = new
+                DiskFileItemFactory();
+        ServletFileUpload servletFileUpload = new
+                ServletFileUpload(diskFileItemFactory);
+        servletFileUpload.setHeaderEncoding("UTF-8");
+        try {
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            List<FileItem> items = servletFileUpload.parseRequest(req);
+            for (FileItem item : items) {
+                if (item.getFieldName().equals("account-phone")) {
+                    user.setPhone(item.getString("UTF-8"));
+                }
+                if (item.getFieldName().equals("account-fullname")) {
+                    user.setName(item.getString("UTF-8"));
+                }
+                if (item.getFieldName().equals("account-address")) {
+                    user.setAddress(item.getString("UTF-8"));
+                }
+                if (item.getFieldName().equals("account-gender")) {
+                    user.setGender(item.getString("UTF-8"));
+                }
+            }
+            userDAO.update(user );
+            resp.sendRedirect(req.getContextPath() + "/admin/accounts");
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        } catch (Exception e) {e.printStackTrace();}
     }
 
 }

@@ -1,5 +1,8 @@
 package com.onlinestorewepr.controller.web.product;
 
+import com.onlinestorewepr.dao.CategoryDAO;
+import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.service.CategoryService;
@@ -15,8 +18,7 @@ import java.util.List;
 
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
-//    ProductService productService = new ProductService();
-//    CategoryService categoryService = new CategoryService();
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,20 +27,7 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String key = req.getParameter("key");
-//        String cateIdReq = req.getParameter("cateid");
-//
-//        List<Product> products = productService.getProductPaging(0, 9);
-//
-//
-//        if (cateIdReq!= null){
-//            Integer cateId = Integer.parseInt(cateIdReq);
-//             products = productService.getByCategory(cateId);
-//        }
-//
-//        List<Category> categories = categoryService.getAllCategories();
-//        req.setAttribute("products", products);
-//        req.setAttribute("categories", categories);
-        req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
+        ProductService productService = new ProductService(req,resp);
+        productService.GetProductPage();
     }
 }

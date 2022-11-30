@@ -15,27 +15,11 @@ import java.io.PrintWriter;
 
 @WebServlet("/cart-item/add")
 public class AddCartItemServlet extends HttpServlet {
-    CartItemService cartItemService = new CartItemService();
-    CartService cartService = new CartService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = req.getParameter("userid").trim();
-        String productId = req.getParameter("productid").trim();
-        String quantity = req.getParameter("quantity").trim();
-        PrintWriter out = resp.getWriter();
-
-        if (userId != null && productId!= null && quantity != null ){
-            Cart cart = cartService.getCartByUser(Integer.parseInt(userId));
-            if (cart!= null){
-                cartItemService.createCartItem(cart.getId(),Integer.parseInt(productId), Integer.parseInt(quantity) );
-
-            } else {
-                cartService.createCart(Integer.parseInt(userId));
-                cartItemService.createCartItem(cart.getId(),Integer.parseInt(productId), Integer.parseInt(quantity) );
-            }
-        }
-
-        out.println(cartItemService.getServiceResult());
+        CartItemService cartService = new CartItemService(req,resp);
+        System.out.println("add cart");
+        cartService.createCartItem();
 
     }
 

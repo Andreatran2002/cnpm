@@ -88,12 +88,13 @@ public class CartDAO {
       return cart;
    }
 
-   public Cart findByUserId(int userid) {
+   public Cart findByUser(String username) {
+      System.out.println("find by user" + username);
       Cart cart = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT c FROM Cart c WHERE c.user.id = :userid";
+         String HQL = "SELECT c FROM Cart c WHERE c.user.username = :username";
          Query query = session.createQuery(HQL);
-         query.setParameter("userid", userid);
+         query.setParameter("username", username);
          List<Cart> carts = query.getResultList();
          if (!carts.isEmpty()) {
             cart = carts.get(0);

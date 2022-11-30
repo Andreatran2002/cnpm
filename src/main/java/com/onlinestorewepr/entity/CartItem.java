@@ -26,6 +26,10 @@ public class CartItem {
       this.cart = cart;
    }
 
+   public CartItem() {
+
+   }
+
    public int getId() {
       return id;
    }
