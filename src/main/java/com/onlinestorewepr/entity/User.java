@@ -33,6 +33,20 @@ public class User {
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private List<Order> orders;
 
+   public User() {}
+
+   public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, Cart cart, List<Order> orders) {
+      this.username = username;
+      this.password = password;
+      this.isAdmin = isAdmin;
+      this.name = name;
+      this.phone = phone;
+      this.gender = gender;
+      this.address = address;
+      this.cart = cart;
+      this.orders = orders;
+   }
+
    public String getUsername() {
       return username;
    }

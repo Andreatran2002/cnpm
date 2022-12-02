@@ -2,7 +2,6 @@ package com.onlinestorewepr.controller.admin.account;
 
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.User;
-import com.onlinestorewepr.service.AccountService;
 import com.onlinestorewepr.service.CategoryService;
 import com.onlinestorewepr.service.ProductService;
 import com.onlinestorewepr.service.UserService;
@@ -17,14 +16,12 @@ import java.util.List;
 
 @WebServlet("/admin/accounts")
 public class AccountServlet extends HttpServlet {
-  AccountService accountService = new AccountService();
+
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    List<User> accounts = accountService.getAll();
-    req.setAttribute("accounts", accounts);
-//    req.setAttribute("products", new ProductService().getAllProducts());
-    req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
+    UserService userService = new UserService(req,resp);
+    userService.ListUser();
   }
 
   @Override

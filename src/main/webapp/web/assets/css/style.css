@@ -2460,7 +2460,7 @@ ol {
 }
 
 .cart__discount {
-	margin-bottom: 60px;
+	margin-bottom: 36px;
 }
 
 .cart__discount h6 {
@@ -2552,6 +2552,10 @@ ol {
 	padding: 12px 10px;
 	text-align: center;
 	letter-spacing: 2px;
+}
+
+.cart_total span {
+	font-size: 20px;
 }
 
 /*---------------------
