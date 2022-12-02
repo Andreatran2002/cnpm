@@ -9,12 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column
    private int id;
-
    @Column
    private String name;
    @Column
@@ -23,9 +21,6 @@ public class Order {
    private String address;
    @Column
    private Date created;
-
-
-
    @Column
    private int total;
    @Column

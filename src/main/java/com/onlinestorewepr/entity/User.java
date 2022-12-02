@@ -23,12 +23,29 @@ public class User {
    @Column
    private String address;
 
+   @Column
+   private String image;
+
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "cartId", referencedColumnName = "id")
    private Cart cart;
 
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private List<Order> orders;
+
+   public User() {}
+
+   public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, Cart cart, List<Order> orders) {
+      this.username = username;
+      this.password = password;
+      this.isAdmin = isAdmin;
+      this.name = name;
+      this.phone = phone;
+      this.gender = gender;
+      this.address = address;
+      this.cart = cart;
+      this.orders = orders;
+   }
 
    public String getUsername() {
       return username;
@@ -85,6 +102,14 @@ public class User {
    public void setAddress(String address) {
       this.address = address;
    }
+   public String getImage() {
+      return image;
+   }
+
+   public void setImage(String image) {
+      this.image = image;
+   }
+
 
    public Cart getCart() {
       return cart;
@@ -98,6 +123,9 @@ public class User {
       return orders;
    }
 
+   public void setOrders(List<Order> orders) {
+      this.orders = orders;
+   }
    @Override
    public String toString() {
       return "User{" +
@@ -108,12 +136,9 @@ public class User {
               ", phone='" + phone + '\'' +
               ", gender='" + gender + '\'' +
               ", address='" + address + '\'' +
+              ", image='" + image + '\'' +
               ", cart=" + cart +
               ", orders=" + orders +
               '}';
-   }
-
-   public void setOrders(List<Order> orders) {
-      this.orders = orders;
    }
 }
