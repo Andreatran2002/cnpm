@@ -129,11 +129,11 @@ public class UserDAO {
       }
       return user;
    }
-   public static void main(String[] args) {
-      UserDAO userDAO =new UserDAO();
-      User user = userDAO.findUserCreated("admsin");
-      System.out.println(user);
-
-   }
+//   public static void main(String[] args) {
+//      UserDAO userDAO =new UserDAO();
+//      User user = userDAO.findUserCreated("admsin");
+//      System.out.println(user);
+//
+//   }
 
 }
