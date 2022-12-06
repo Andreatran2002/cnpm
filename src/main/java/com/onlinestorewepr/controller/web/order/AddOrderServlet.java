@@ -1,6 +1,6 @@
-package com.onlinestorewepr;
+package com.onlinestorewepr.controller.web.order;
 
-import org.apache.commons.io.IOUtils;
+import com.onlinestorewepr.service.UserOrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
-@WebServlet(value = {"/test-body"})
-public class TestBodyPost extends HttpServlet {
+@WebServlet(name = "AddOrderServlet", value = {"/order/add"})
+public class AddOrderServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String body = IOUtils.toString(req.getReader());
-    System.out.println(body);
+    UserOrderService userOrderService = new UserOrderService(req, resp);
+    userOrderService.addOrder();
   }
 }

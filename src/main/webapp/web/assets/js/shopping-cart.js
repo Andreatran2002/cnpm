@@ -46,4 +46,21 @@ window.addEventListener('load', () => {
     discountElm.innerText = -discount + ' đ'
     totalElm.innerText = total + ' đ'
   }
+
+  // Checkout
+  const submitBtn = document.getElementById('checkout-button')
+  submitBtn.addEventListener('click', (e) => {
+    let cartItems = []
+    lineCheckboxs.forEach((checkbox) => {
+      if (checkbox.checked) {
+        cartItems.push(checkbox.closest('tr').dataset.cartitemId)
+      }
+    })
+    if (cartItems.length) {
+      let url = location.origin + `/checkout?cart_items=${cartItems.join(',')}`
+      location.replace(url)
+    } else {
+      alert("There must be at least one product selected in your cart")
+    }
+  })
 })

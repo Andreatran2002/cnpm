@@ -11,24 +11,18 @@ import java.util.List;
 public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
    private String phone;
-   @Column
    private String address;
-   @Column
    private Date created;
-   @Column
+   private int subTotal;
+   private int shippingFee;
    private int total;
-   @Column
    private String note;
-   @Column
    private String payment;
-   @Column
    private String status;
+
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "username", referencedColumnName = "username")
@@ -40,6 +34,22 @@ public class Order {
    public Order() {
 
    }
+
+   public Order(String name, String phone, String address, Date created, int subTotal, int shippingFee, int total, String note, String payment, String status, User user, List<OrderItem> orderItems) {
+      this.name = name;
+      this.phone = phone;
+      this.address = address;
+      this.created = created;
+      this.subTotal = subTotal;
+      this.shippingFee = shippingFee;
+      this.total = total;
+      this.note = note;
+      this.payment = payment;
+      this.status = status;
+      this.user = user;
+      this.orderItems = orderItems;
+   }
+
    public String getCreatedDate(){
       Date date = created;
       DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -84,6 +94,22 @@ public class Order {
 
    public void setCreated(Date created) {
       this.created = created;
+   }
+
+   public int getSubTotal() {
+      return subTotal;
+   }
+
+   public void setSubTotal(int subTotal) {
+      this.subTotal = subTotal;
+   }
+
+   public int getShippingFee() {
+      return shippingFee;
+   }
+
+   public void setShippingFee(int shippingFee) {
+      this.shippingFee = shippingFee;
    }
 
    public int getTotal() {
