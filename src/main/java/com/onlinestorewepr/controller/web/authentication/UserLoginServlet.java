@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", value = {"/web/login"})
+@WebServlet(name = "LoginServlet", value = {"/login"})
 public class UserLoginServlet extends HttpServlet {
     private UserDAO loginDao;
     @Override
@@ -21,10 +21,14 @@ public class UserLoginServlet extends HttpServlet {
            for(Cookie i: cookies){
                if(i.getName().equals("username")){
                    request.setAttribute("username",i.getValue());
+                   System.out.print(i.getValue());
                }
                if(i.getName().equals("password")){
                    request.setAttribute("password",i.getValue());
+                   System.out.print(i.getValue());
+
                }
+
            }
        }
         request.getRequestDispatcher("/web/authentication.jsp").forward(request,response);

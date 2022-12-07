@@ -60,7 +60,7 @@ public class CartItemService {
                     if (cartItemDAO.findByProductId(cart.getId(), Integer.parseInt(productId) ) != null){
                          item = cartItemDAO.findByProductId(cart.getId(), Integer.parseInt(productId) );
 
-                        updateCartItem(item .getId(), item.getProduct().getId(),item.getCart().getId(), Integer.parseInt(quantity)+item.getQuantity());
+                        updateCartItem(item.getId());
                     }
                     else {
                          item = new CartItem(Integer.parseInt(quantity), product, cart);
@@ -125,22 +125,28 @@ public class CartItemService {
 
     }
 
-    public void updateCartItem(int id, int productid , int cartid , int quantity ) {
-
-        CartItem cartItem = cartItemDAO.get(id);
+    public void updateCartItem(int id  ) {
+        String quantity = req.getParameter("quantity").trim();
         String message = "", messageType = "";
+
+        if ( quantity == null){
+            message = "An error occurred when updating a cartItem! Please try again.";
+            messageType = "danger";
+            return ;
+        }
+        CartItem cartItem = cartItemDAO.get(id);
         if (cartItem != null) {
             try {
-                cartItem.setQuantity(quantity);
+                cartItem.setQuantity(Integer.parseInt(quantity));
                 Cart cart = cartItem.getCart();
-                cart.setTotal(cart.getTotal()- (cartItem.getQuantity()-quantity )*cartItem.getProduct().getPrice());
+                cart.setTotal(cart.getTotal()- (cartItem.getQuantity()-Integer.parseInt(quantity))*cartItem.getProduct().getPrice());
                 cartDAO.update(cart);
                 cartItemDAO.update(cartItem);
                 message = "CartItem's info was changed successfully!";
                 messageType = "success";
             } catch (Exception e) {
                 e.printStackTrace();
-                message = "An error occurred when creating a new cartItem! Please try again.";
+                message = "An error occurred when update a cartItem! Please try again.";
                 messageType = "danger";
             }
 

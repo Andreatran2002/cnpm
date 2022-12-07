@@ -62,7 +62,7 @@ public class CartService {
   public void viewCart() throws ServletException, IOException {
     // Get user login from session
     // Fake login info
-    String username = "quangtv";
+    String username = "andreatran";
 
     User user = new UserDAO().get(username);
     if (user != null) {

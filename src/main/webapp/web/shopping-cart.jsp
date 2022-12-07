@@ -109,12 +109,12 @@
                 <td class="quantity__item">
                   <div class="quantity">
                     <div class="pro-qty-2">
-                      <input class="line-quantity" type="number" min="0" value="${cartItem.quantity}">
+                      <input class="line-quantity"  name="input_quantity" type="number" min="0" value="${cartItem.quantity}">
                     </div>
                   </div>
                 </td>
                 <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
-                <td class="cart__close"><i class="fa fa-close"></i></td>
+                <td class="cart__close"><i class="fa fa-close" onclick="deleteCartItem(${cartItem.id})"></i></td>
               </tr>
             </c:forEach>
             </tbody>
@@ -175,5 +175,47 @@
 <script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
 <script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/web/assets/js/shopping-cart.js"></script>
+
+<script>
+  <%--$('input[name=inputquantity]').change(function(e) {--%>
+  <%-- updateItem(${cartItem.id},e.target.value);--%>
+  <%--});--%>
+  // functino
+  function updateItem( id, quantity){
+
+    $.ajax({
+      url : "/cart-item/update", //send to Controller
+      type : "get", //send it through get method
+      data : {
+        id : id,
+        quantity : quantity
+      },
+      success : function(data) {
+      },
+      error : function(xhr) {
+//Do Something to handle error
+        console.log(xhr)
+      }
+    });
+
+  }
+  function deleteCartItem( id){
+
+    $.ajax({
+      url : "/cart-item/delete", //send to Controller
+      type : "get", //send it through get method
+      data : {
+        id : id,
+      },
+      success : function(data) {
+      },
+      error : function(xhr) {
+//Do Something to handle error
+        console.log(xhr)
+      }
+    });
+
+  }
+</script>
 </body>
 </html>
