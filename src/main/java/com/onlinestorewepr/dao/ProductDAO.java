@@ -121,7 +121,7 @@ public class ProductDAO {
                   HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
                   break;
             }
-            query = session.createQuery(HQL).setMaxResults(limit).setFirstResult(offset);
+            query = session.createQuery(HQL);
             query.setParameter("cateid", Integer.parseInt(cateid));
 
          }else {
@@ -141,7 +141,7 @@ public class ProductDAO {
                   HQL = "select c from Product c where c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
                   break;
             }
-            query = session.createQuery(HQL).setMaxResults(limit).setFirstResult(offset);
+            query = session.createQuery(HQL);
 
          }
 
@@ -150,15 +150,15 @@ public class ProductDAO {
          query.setParameter("price_from", from);
          query.setParameter("price_to", to);
          query.setParameter("name", "%"+name+"%");
+         count = query.getResultList().size();
 
 
-          products = query.getResultList();
+          products = query.setMaxResults(limit).setFirstResult(offset).getResultList();
 
 
       } catch (Exception e) {
          e.printStackTrace();
       }
-      count = products.size();
 
       return products;
    }

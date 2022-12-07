@@ -205,10 +205,10 @@
                   <div class="col-lg-6 col-md-6 col-sm-6">
                      <div class="shop__product__option__right">
                         <p>Sort by Price:</p>
-                        <select>
-                           <option onclick="triggerFilter(event, 'sort', 0)" value="">Default</option>
-                           <option onclick="triggerFilter(event, 'sort', 1)" value="">Low To High</option>
-                           <option onclick="triggerFilter(event, 'sort', 2)" value="">High To Low</option>
+                        <select id="sortOption" onchange="(e => triggerFilter(e, 'sort' ,e.target.value))(event)">
+                           <option value="0">Default</option>
+                           <option value="1">Low To High</option>
+                           <option value="2">High To Low</option>
                         </select>
                      </div>
                   </div>
@@ -256,7 +256,7 @@
                <div class="col-lg-12">
                   <div class="product__pagination">
                         <c:forEach begin="0" end="${countP}"  varStatus="status">
-                        <a class="active" onclick="triggerFilter(event,'page', ${status.index + 1})" href="">${status.index + 1}</a>
+                        <a class="pageindex" onclick="triggerFilter(event,'page', ${status.index + 1})" href="">${status.index + 1}</a>
                      </c:forEach>
 
                   </div>
@@ -307,6 +307,7 @@
    const urlParams = new URLSearchParams(queryString);
    const inputSearch = document.querySelector("#search_key")
    const infoFilter = document.querySelector("#infoFilter")
+   const sortOption = document.querySelector("#sortOption")
 
    // $("#search_key").on('change keydown paste input', function(){
    //       console.log($("#search_key").val())
@@ -406,7 +407,12 @@
       },{})
 
 
-      inputSearch.value = decodeURI(queryObject?.key) || ''
+      inputSearch.value = decodeURI(queryObject?.key|| '')
+
+      const optionValue = document.querySelector(".current")
+      const optionArr = ["Default", "Low To High", "High To Low"]
+      optionValue.innerHTML = optionArr[queryObject?.sort|| 0]
+
    }
 
    getQueryObject()
@@ -414,9 +420,11 @@
    function triggerFilter(e, key, value) {
       e.preventDefault()
 
+      if(key !== "page")       delete queryObject["page"]
+
+
       queryObject = {...queryObject, [key]: value}
 
-      delete queryObject["page"]
 
       const queryString = Object.keys(queryObject).reduce((prev, curr) => {
 

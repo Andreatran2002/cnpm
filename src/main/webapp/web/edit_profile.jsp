@@ -81,7 +81,7 @@
                   <h6 class="mb-0">Họ & tên</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-name" name="name">
+                  <input type="text" class="form-control" id="customer-name" name="name" value="${userLogged.name}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -89,7 +89,7 @@
                   <h6 class="mb-0">Phone</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="phone" name="phone">
+                  <input type="text" class="form-control" id="phone" name="phone"value="${userLogged.phone}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -97,7 +97,7 @@
                   <h6 class="mb-0">Giới tính</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-sex" name="sex">
+                  <input type="text" class="form-control" id="customer-sex" name="sex" value="${userLogged.gender}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -105,7 +105,7 @@
                   <h6 class="mb-0">Địa chỉ</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-address" name="address">
+                  <input type="text" class="form-control" id="customer-address" name="address" value="${userLogged.address}">
                 </div>
               </div>
               <div class="row">

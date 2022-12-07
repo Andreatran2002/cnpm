@@ -64,23 +64,23 @@
             <div class="row">
                <div class="col-lg-3 col-md-3">
                   <div class="header__logo">
-                     <a href="./"><img src="${pageContext.request.contextPath}/web/assets/img/logo.png" alt=""></a>
+                     <a href="./home"><img src="${pageContext.request.contextPath}/web/assets/img/logo.png" alt=""></a>
                   </div>
                </div>
                <div class="col-lg-6 col-md-6">
                   <nav class="header__menu mobile-menu">
                      <ul>
-                        <li id="menu-home"><a href="./index.jsp">Home</a></li>
-                        <li id="menu-shop"><a href="./shop.jsp">Shop</a></li>
+                        <li id="menu-home"><a href="./home">Home</a></li>
+                        <li id="menu-shop"><a href="./shop">Shop</a></li>
                         <li id="menu-pages"><a href="./#">Pages</a>
                            <ul class="dropdown">
-                              <li><a href="./about.jsp">About Us</a></li>
-                              <li><a href="./shop-details.jsp">Shop Details</a></li>
-                              <li><a href="./shopping-cart.jsp">Shopping Cart</a></li>
-                              <li><a href="./checkout.jsp">Check Out</a></li>
+                              <li><a href="./about">About Us</a></li>
+                              <li><a href="./shop">Shop Details</a></li>
+                              <li><a href="./cart">Shopping Cart</a></li>
+                              <li><a href="./checkout">Check Out</a></li>
                            </ul>
                         </li>
-                        <li id="menu-contact"><a href="./contact.jsp">Contacts</a></li>
+                        <li id="menu-contact"><a href="./contact">Contacts</a></li>
                      </ul>
                   </nav>
                </div>
