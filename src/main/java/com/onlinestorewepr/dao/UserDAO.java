@@ -1,11 +1,11 @@
 package com.onlinestorewepr.dao;
 
 import com.onlinestorewepr.entity.User;
-import com.onlinestorewepr.service.UserService;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -84,7 +84,22 @@ public class UserDAO {
       }
       return user;
    }
+   public User findUserByEmail(String email) {
+      User user = null;
 
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT u FROM User u WHERE u.email = :email";
+         Query query = session.createQuery(HQL);
+         query.setParameter("email", email);
+         List<User> users = query.getResultList();
+         if (!users.isEmpty()) {
+            user = users.get(0);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return user;
+   }
 
 //   public User checkAccount(String username,String pass) {
 //      User user = null;
@@ -129,11 +144,10 @@ public class UserDAO {
       }
       return user;
    }
+
 //   public static void main(String[] args) {
 //      UserDAO userDAO =new UserDAO();
-//      User user = userDAO.findUserCreated("admsin");
+//      User user = userDAO.findByEmail("phand613@gmail.com");
 //      System.out.println(user);
-//
 //   }
-
 }

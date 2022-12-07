@@ -22,6 +22,5 @@ public class UseRegisterServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         UserService userService = new UserService(req,resp);
         userService.userRegister();
-
     }
 }

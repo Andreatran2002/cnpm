@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/admin/*")
+@WebFilter(urlPatterns = {"/admin/product/*","/admin/category/*","/admin/order/*","/admin/account/*"})
 public class AdminLoginFilter extends HttpFilter implements Filter {
 //    private static final String[] loginRequireURLs = {"web/profile","web/update-profile"};
 
