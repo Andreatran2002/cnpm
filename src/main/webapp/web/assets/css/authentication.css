@@ -10,7 +10,7 @@ body {
    font-family: "Nunito Sans", sans-serif;
    font-size: 18px;
    -webkit-font-smoothing: antialiased;
-   background: #ededed;
+   background: #e0d2b0;
 }
 
 input,
@@ -33,7 +33,7 @@ button {
    overflow: hidden;
    position: relative;
    width: 900px;
-   height: 550px;
+   height: 590px;
    margin: 0 auto;
    background: #fff;
 }
@@ -183,13 +183,15 @@ h2 {
 .input-control {
    display: flex;
    width: 400px;
-   margin: 12px auto 0;
-   padding: 10px 24px;
+   margin: 6px auto 0;
+   padding: 8px 24px;
    border: 1px solid #ccc;
 }
+
 .input-control.radio {
    border: none;
    padding: 8px 0;
+   justify-content: center;
 }
 
 .input-control span {
@@ -209,13 +211,14 @@ input {
    margin-top: 5px;
    padding-bottom: 5px;
    font-size: 16px;
+   width: 80%;
 }
 
 .forgot-pass {
    margin-top: 15px;
    text-align: center;
    font-size: 15px;
-   color: #cfcfcf;
+   color: #5e2516;
 }
 .submit {
    margin: 28px auto;

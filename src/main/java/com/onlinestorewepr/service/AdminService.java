@@ -44,14 +44,14 @@ public class AdminService {
 
         if(username == null ||password==null || username.length()==0 || password.length()==0){
             hasError= true;
-            errMessage ="Vui lòng nhập Tên đăng nhập & Mật khẩu!";
+            errMessage = "Please enter Username & Password!";
         }
         else {
             try{
                 if (user == null)
                 {
                     hasError = true;
-                    errMessage ="Tên đăng nhập hoặc Mật khẩu không đúng!";
+                    errMessage = "Username or Password is incorrect!";
                 }
             }
             catch (Exception e){
@@ -70,7 +70,7 @@ public class AdminService {
             HttpSession session = req.getSession();
             session.setAttribute("adminLogged",user);
             session.setMaxInactiveInterval(1000);
-            req.getRequestDispatcher("/admin/index.jsp").forward(req,resp);
+           resp.sendRedirect("/admin/index.jsp");
         }
     }
 

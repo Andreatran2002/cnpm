@@ -36,10 +36,10 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="breadcrumb__text">
-          <h4>Thông tin cá nhân, đơn hàng</h4>
+          <h4>Personal information</h4>
           <div class="breadcrumb__links">
             <a href="index.jsp">Home</a>
-            <span>Chỉnh sửa thông tin cá nhân</span>
+            <span>Edit Personal information</span>
           </div>
         </div>
       </div>
@@ -52,22 +52,25 @@
 <div class="container">
     <div class="spad">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4 mb-3">
           <div class="card">
             <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
+              <div class="d-flex flex-column align-items-center text-center" id="profile-head">
+                <c:choose>
+                  <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
+<%--                  <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>--%>
+                </c:choose>
                 <div class="mt-3">
                   <h4>${userLogged.name}</h4>
                   <p class="text-muted font-size-sm">${userLogged.address}</p>
                 </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-8">
+        <div class="col-md-8">
           <div class="card">
-            <form class="card-body" method="post" action="update-profile">
+            <form class="card-body" method="post" action="update-profile" enctype="multipart/form-data">
               <div class="row mb-3">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Username</h6>
@@ -78,10 +81,10 @@
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Họ & tên</h6>
+                  <h6 class="mb-0">Full name</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-name" name="name">
+                  <input type="text" class="form-control" id="customer-name" name="name" value="${userLogged.name}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -89,29 +92,57 @@
                   <h6 class="mb-0">Phone</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="phone" name="phone">
+                  <input type="text" class="form-control" id="phone" name="phone" value="${userLogged.phone}">
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Giới tính</h6>
+                  <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-sex" name="sex">
+                  <input type="email" class="form-control" id="email" name="email" value="${userLogged.email}">
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Địa chỉ</h6>
+                  <h6 class="mb-0">Gender</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="customer-address" name="address">
+                  <input type="text" class="form-control" id="customer-sex" name="sex" value="${userLogged.gender}">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Address</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input type="text" class="form-control" id="customer-address" name="address" value="${userLogged.address}">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" for="image">Choose image</label>
+                <div class="col-sm-9">
+                  <input
+                          accept="image/png, image/gif, image/jpeg"
+                          class="form-control"
+                          id="image"
+                          name="image"
+                          type="file"
+                  ${action == "add" ? "required" : ""}
+                  />
+                  <img
+<%--                          alt="Preview Product Image"--%>
+                          class="img-thumbnail mt-3"
+                          id="preview-img"
+                          style="width: 200px;"
+                          src="${pageContext.request.contextPath}/${userLogged.image}"
+                  >
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">
-                  <button type="submit" class="submit btn btn-info">Lưu thay đổi</button>
+                  <button type="submit" class="submit btn btn-info">Save change</button>
                 </div>
               </div>
             </form>
@@ -119,7 +150,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 <!-- Contact Section End -->
 

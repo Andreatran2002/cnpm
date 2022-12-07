@@ -3,25 +3,26 @@ package com.onlinestorewepr.controller.web.user;
 import com.onlinestorewepr.service.UserService;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "UpdateUserProfileServlet",value = {"/update-profile"})
-public class UpdateUserProfileServlet extends HttpServlet {
+/**
+ * Servlet implementation class ForgotPassword
+ */
+@WebServlet("/web/forgotPassword")
+public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        req.getRequestDispatcher("/web/edit_profile.jsp").forward(req,resp);
+        req.getRequestDispatcher("/web/forgetpass.jsp").forward(req,resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        UserService userService = new UserService(req,resp);
-        userService.updateUserProfile();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserService userService = new UserService(request,response);
+        userService.sendEmail();
     }
+
 }

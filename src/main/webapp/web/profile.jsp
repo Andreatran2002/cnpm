@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -36,10 +37,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__text">
-                    <h4>Thông tin cá nhân, đơn hàng</h4>
+                    <h4>Personal information, orders</h4>
                     <div class="breadcrumb__links">
                         <a href="index.jsp">Home</a>
-                        <span>Thông tin cá nhân, đơn hàng</span>
+                        <span>Personal information, orders</span>
                     </div>
                 </div>
             </div>
@@ -56,7 +57,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center" id="profile-head">
-                                <img src="${userLogged.image}" alt="Admin" class="rounded-circle" width="150">
+                                <c:choose>
+                                    <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
+                                    <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
+                                </c:choose>
                                 <div class="mt-3">
                                     <h4>${userLogged.name}</h4>
                                     <p class="text-muted font-size-sm">${userLogged.address}</p>
@@ -70,14 +74,14 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Họ & tên</h6>
+                                    <h6 class="mb-0">Full name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">${userLogged.name}</div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Số điện thoại</h6>
+                                    <h6 class="mb-0">Phone number</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${userLogged.phone}
@@ -86,7 +90,16 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Giới tính</h6>
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${userLogged.email}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Gender</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${userLogged.gender}
@@ -95,7 +108,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Địa chỉ</h6>
+                                    <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${userLogged.address}
@@ -104,100 +117,16 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a class="btn btn-info" target="" href="update-profile">Sửa thông tin</a>
+                                    <a class="btn btn-info" target="" href="update-profile">Edit Profile</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a class="btn btn-info" target="" href="change-password">Đổi mật khẩu</a>
+                                    <a class="btn btn-info" target="" href="change-password">Change password</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-<%--            Hiển thị đơn hàng đã mua--%>
-<%--            <div class="row">--%>
-<%--                <div class="container mt-5">--%>
-<%--                    <div class="d-flex justify-content-center row">--%>
-<%--                        <div class="col-md-10">--%>
-<%--                            <div class="rounded">--%>
-<%--                                <div class="table-responsive table-borderless">--%>
-<%--                                    <table class="table">--%>
-<%--                                        <thead>--%>
-<%--                                        <tr>--%>
-<%--                                            <th class="text-center">--%>
-<%--                                                <div class="toggle-btn">--%>
-<%--                                                    <div class="inner-circle"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </th>--%>
-<%--                                            <th>Mã đơn hàng</th>--%>
-<%--                                            <th>Company name</th>--%>
-<%--                                            <th>Trạng thái</th>--%>
-<%--                                            <th>Tổng tiền</th>--%>
-<%--                                            <th>Ngày đặt hàng</th>--%>
-<%--                                            <th></th>--%>
-<%--                                        </tr>--%>
-<%--                                        </thead>--%>
-<%--                                        <tbody class="table-body">--%>
-<%--                                        <tr class="cell-1">--%>
-<%--                                            <td class="text-center">--%>
-<%--                                                <div class="toggle-btn">--%>
-<%--                                                    <div class="inner-circle"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </td>--%>
-<%--                                            <td>#SO-13487</td>--%>
-<%--                                            <td>Gasper Antunes</td>--%>
-<%--                                            <td><span class="badge badge-success">Fullfilled</span></td>--%>
-<%--                                            <td>$2674.00</td>--%>
-<%--                                            <td>Today</td>--%>
-<%--                                            <td><button>Hủy đơn hàng</button></td>--%>
-<%--                                        </tr>--%>
-<%--                                        <tr class="cell-1">--%>
-<%--                                            <td class="text-center">--%>
-<%--                                                <div class="toggle-btn">--%>
-<%--                                                    <div class="inner-circle"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </td>--%>
-<%--                                            <td>#SO-13453</td>--%>
-<%--                                            <td>Aartsen van</td>--%>
-<%--                                            <td><span class="badge badge-info">Confirmed</span></td>--%>
-<%--                                            <td>$3454.00</td>--%>
-<%--                                            <td>Yesterday</td>--%>
-<%--                                            <td><button>Hủy đơn hàng</button></td>--%>
-<%--                                        </tr>--%>
-<%--                                        <tr class="cell-1">--%>
-<%--                                            <td class="text-center">--%>
-<%--                                                <div class="toggle-btn">--%>
-<%--                                                    <div class="inner-circle"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </td>--%>
-<%--                                            <td>#SO-13498</td>--%>
-<%--                                            <td>Trashes Habard</td>--%>
-<%--                                            <td><span class="badge badge-danger">Partially shipped</span></td>--%>
-<%--                                            <td>$6274.00</td>--%>
-<%--                                            <td>May 12,2020</td>--%>
-<%--                                            <td><button>Hủy đơn hàng</button></td>--%>
-<%--                                        </tr>--%>
-<%--                                        <tr class="cell-1">--%>
-<%--                                            <td class="text-center">--%>
-<%--                                                <div class="toggle-btn">--%>
-<%--                                                    <div class="inner-circle"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </td>--%>
-<%--                                            <td>#SO-16499</td>--%>
-<%--                                            <td>Samban Hubart</td>--%>
-<%--                                            <td><span class="badge badge-success">Fullfilled</span></td>--%>
-<%--                                            <td>$6375.00</td>--%>
-<%--                                            <td>May 11,2020</td>--%>
-<%--                                            <td><button>Hủy đơn hàng</button></td>--%>
-<%--                                        </tr>--%>
-<%--                                        </tbody>--%>
-<%--                                    </table>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
         </div>
     </div>
 

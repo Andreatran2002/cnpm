@@ -26,6 +26,9 @@ public class User {
    private String email;
 
    @Column
+   private String email;
+
+   @Column
    private String image;
 
    @OneToOne(cascade = CascadeType.ALL)
@@ -105,6 +108,12 @@ public class User {
    public void setAddress(String address) {
       this.address = address;
    }
+   public String getEmail() {
+      return email;
+   }
+   public void setEmail(String email) {
+      this.email = email;
+   }
    public String getImage() {
       return image;
    }
@@ -145,6 +154,7 @@ public class User {
               ", isAdmin=" + isAdmin +
               ", name='" + name + '\'' +
               ", phone='" + phone + '\'' +
+              ", phone='" + email + '\'' +
               ", gender='" + gender + '\'' +
               ", address='" + address + '\'' +
               ", image='" + image + '\'' +
@@ -152,4 +162,5 @@ public class User {
               ", orders=" + orders +
               '}';
    }
+
 }
