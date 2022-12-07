@@ -81,6 +81,7 @@ public class UserService {
                 message = "Vui lòng chọn giới tính";
             }
             req.setAttribute("messageRegisterFail",message);
+            req.setAttribute("action", "signup");
             req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
         // Kiem tra so dien thoai
@@ -237,9 +238,10 @@ public class UserService {
             if (objRedirectURL != null) {
                 String redirectURL = (String) objRedirectURL;
                 session.removeAttribute("redirectURL");
-                resp.sendRedirect(redirectURL);
+                resp.sendRedirect("/home");
             } else {
-                showProfile();
+              // showProfile();//
+
             }
         }
     }

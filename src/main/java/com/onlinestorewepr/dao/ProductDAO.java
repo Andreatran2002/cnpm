@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
+   public int count = 0 ;
    public void insert(Product product) {
       Transaction transaction = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -95,20 +96,73 @@ public class ProductDAO {
       } catch (Exception e) {
          e.printStackTrace();
       }
+      count = products.size();
       return products;
    }
-   public List<Product> getProductPaging(int offset, int limit) {
+   public List<Product> getProductPaging(int offset, int limit, String cateid , String size ,String name , int from, int to , int orderType ) {
       List<Product> products = null;
+      Query query = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         CriteriaBuilder builder = session.getCriteriaBuilder();
-         CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
-         criteriaQuery.from(Product.class);
-         products = session.createQuery(criteriaQuery).setMaxResults(limit).setFirstResult(offset).getResultList();
+         String HQL = "";
+         if (cateid !=""){
+            switch (orderType ){
+               case 0 :
+                  HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and  c.size like :size and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
+
+                  break;
+               case 1 :
+                  HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.price ASC ";
+
+                  break;
+               case 2 :
+                  HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.price DESC ";
+                  break;
+               default :
+                  HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
+                  break;
+            }
+            query = session.createQuery(HQL).setMaxResults(limit).setFirstResult(offset);
+            query.setParameter("cateid", Integer.parseInt(cateid));
+
+         }else {
+            switch (orderType ){
+               case 0 :
+                  HQL = "select c from Product c where   c.name like :name and  c.size like :size and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
+
+                  break;
+               case 1 :
+                  HQL = "select c from Product c where c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.price ASC ";
+
+                  break;
+               case 2 :
+                  HQL = "select c from Product c where c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.price DESC ";
+                  break;
+               default :
+                  HQL = "select c from Product c where c.name like :name and c.size like :size  and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
+                  break;
+            }
+            query = session.createQuery(HQL).setMaxResults(limit).setFirstResult(offset);
+
+         }
+
+
+         query.setParameter("size", "%"+size+"%");
+         query.setParameter("price_from", from);
+         query.setParameter("price_to", to);
+         query.setParameter("name", "%"+name+"%");
+
+
+          products = query.getResultList();
+
+
       } catch (Exception e) {
          e.printStackTrace();
       }
+      count = products.size();
+
       return products;
    }
+
 
    public Product get(int id) {
       Product product = null;
@@ -140,20 +194,5 @@ public class ProductDAO {
 
       return product;
    }
-   public List<Product> searchByName(String key){
-      List<Product> products = null;
 
-      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT c FROM Product c WHERE c.name like :name";
-         Query query = session.createQuery(HQL);
-         query.setParameter("name", "%"+key+"%");
-          products = query.getResultList();
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-
-
-      return products;
-   }
 }

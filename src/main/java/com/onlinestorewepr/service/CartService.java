@@ -61,6 +61,11 @@ public class CartService {
   }
 
   public void viewCart() throws ServletException, IOException {
+    // Get user login from session
+    // Fake login info
+//    String username = "andreatran";
+//
+//    User user = new UserDAO().get(username);
     HttpSession session = req.getSession();
     User user = (User)session.getAttribute("userLogged");
     if (user != null) {

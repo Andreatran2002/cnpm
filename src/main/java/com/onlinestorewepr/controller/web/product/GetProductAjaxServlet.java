@@ -27,7 +27,7 @@ public class GetProductAjaxServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductService productService = new ProductService(req,resp);
-        productService.GetProductAjax();
+//        productService.GetProductAjax();
 
     }
 }

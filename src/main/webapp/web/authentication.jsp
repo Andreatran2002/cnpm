@@ -3,11 +3,11 @@
 <html>
 <head>
    <title>Đăng nhập/Đăng ký</title>
-   <link rel="stylesheet" href="./assets/css/authentication.css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/authentication.css">
 </head>
 <body>
 <div class="wrapper">
-   <div class="cont">
+   <div class="cont s--${action}">
       <form class="form sign-in" method="post" action="login">
          <h2>WELCOME TO MALE FASHION</h2>
          <div class="input-control">
