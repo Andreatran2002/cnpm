@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@MultipartConfig
-@WebServlet(name = "UpdateUserProfileServlet",value = {"/web/update-profile"})
+@WebServlet(name = "UpdateUserProfileServlet",value = {"/update-profile"})
 public class UpdateUserProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

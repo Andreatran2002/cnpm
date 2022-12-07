@@ -6,6 +6,7 @@ import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
 
@@ -147,7 +148,7 @@ public class ProductService {
           // ------------------
 
           productDAO.insert(product);
-          messageBody = "A new category was created successfully!";
+          messageBody = "A new product was created successfully!";
           messageType = "success";
         } catch (Exception ex) {
           ex.printStackTrace();
@@ -233,11 +234,16 @@ public class ProductService {
     if (id != 0) {
       Product product = productDAO.get(id);
       if (product != null) {
-        // delete image
-        CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
-        productDAO.delete(id);
-        messageBody = "Product was deleted successfully!";
-        messageType = "primary";
+        if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
+          // delete image
+          CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
+          productDAO.delete(id);
+          messageBody = "Product was deleted successfully!";
+          messageType = "primary";
+        } else {
+          messageBody = "Cannot delete this category, this product is already in some cart or order.";
+          messageType = "danger";
+        }
       }
       else {
         messageBody = "Product doesn't exist";
@@ -258,99 +264,135 @@ public class ProductService {
   }
   public void GetProductPage() throws ServletException, IOException {
     String key = req.getParameter("key");
+    String page = req.getParameter("page");
+    String price = req.getParameter("price");
     String cateIdReq = req.getParameter("cateid");
-    String color = req.getParameter("color");
     String size = req.getParameter("size");
-    String sortMoney = req.getParameter("sort");
+    String sort = req.getParameter("sort");
+//    User user = (User) req.getSession().getAttribute("userLogged");
+
     Cart cart = cartDAO.findByUser("andreatran");
 
-    List<Product> products = productDAO.getProductPaging(0, 9);
-    req.setAttribute("typesearch","All product");
-
-
-    if (cateIdReq!= null){
-      Integer cateId = Integer.parseInt(cateIdReq);
-      products = productDAO.getByCategory(cateId);
-
-      req.setAttribute("typesearch","Product by category : "+ categoryDAO.get(cateId).getName());
+    int from = 0 , to = 999999999;
+    if (key== null){
+      key= "";
     }
-    if (key!= null || color !=null || size!= null || sortMoney!= null){
-       products = productDAO.getAll();
-      if (key != null  ){
-        products = products.stream()
-                .filter(p -> p.getName().contains(key)).collect(Collectors.toList());
-
-      }
-      if ( color!= null ){
-        products = products.stream()
-                .filter(p -> p.getColor().contains(color)).collect(Collectors.toList());
-      }
-      if ( size!= null ){
-        products = products.stream()
-                .filter(p -> p.getSize().contains(size)).collect(Collectors.toList());
-      }
-
-      products.sort((a, b) -> Double.compare( b.getPrice(),a.getPrice()));
+    if (page== null){
+      page= "1";
     }
+    if (cateIdReq== null){
+      cateIdReq= "";
+    }
+    if (size== null){
+      size= "";
+    }
+    if (sort == null){
+      sort   ="0";
+    }
+    if (price==null){
+      price = "-1";
+    }
+    switch (price){
+      case "1":
+        from=0;
+        to = 200000;
+        break;
+      case "2":
+        from = 200000;
+        to = 500000;
+        break;
 
+      case "3":
+        from = 500000;
+        to = 2000000;
+        break;
 
+      case "4":
+        from = 2000000;
+        to = 5000000;
+        break;
 
+      case "5":
+        from = 5000000;
+        to = 10000000;
+        break;
 
+      case "6":
+        from = 10000000;
+        to = 999999999;
+        break;
+
+      default:
+        from = 0 ;
+        to = 999999999;
+        break;
+
+    }
     List<Category> categories = categoryDAO.getAll();
+
+    List<Product> products =
+            productDAO.getProductPaging((Integer.parseInt(page) -1)*9, 9, cateIdReq, size,key,from , to , Integer.parseInt(sort));
+    int count  = productDAO.count;
+
+    req.setAttribute("typesearch",count + " results found ");
+
     req.setAttribute("products", products);
+    System.out.print(count);
+    req.setAttribute("countP", count/9);
+
     req.setAttribute("total", cart.getTotal());
     req.setAttribute("quantity", cart.getCartItems().size());
 
     req.setAttribute("categories", categories);
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
-  public void GetProductAjax() throws IOException {
-
-    String exist = req.getParameter("exist");
-    int amount = 0 ;
-    if (exist!= null){
-      amount = Integer.parseInt(exist);
-    }
-    resp.setCharacterEncoding("UTF-8");
-    List<Product> products = productDAO.getProductPaging(amount, 9);
-
-
-    PrintWriter out = resp.getWriter();
-        for (Product product : products) {
-            out.println("       <div class=\"col-lg-4 col-md-6 col-sm-6\">\n" +
-                    "                     <div class=\"product__item "+(product.getDiscount()>0?"sale":"") +"\">\n" +
-                    "                        <div class=\"product__item__pic set-bg\" data-setbg=\"./web/assets/img/product/product-2.jpg\">\n" +
-                    "                           <ul class=\"product__hover\">\n" +
-                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/heart.png\" alt=\"\"></a></li>\n" +
-                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/compare.png\" alt=\"\"> <span>Compare</span></a>\n" +
-                    "                              </li>\n" +
-                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/search.png\" alt=\"\"></a></li>\n" +
-                    "                           </ul>\n" +
-                    "                        </div>\n" +
-                    "                        <div class=\"product__item__text\">\n" +
-                    "                           <h6>"+product.getName()+"</h6>\n" +
-                    "                           <a href=\"#\" class=\"add-cart\">+ Add To Cart</a>\n" +
-                    "                           <div class=\"rating\">\n" +
-                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-                    "                           </div>\n" +
-                    "                           <h5>"+product.getPrice()+"</h5>\n" +
-                    "                           <div class=\"product__color__select\">\n" +
-                    "\n" +
-                    "                              <label class=\"active "+product.getColor()+"\" for=\"pc-5\">\n" +
-                    "                                 <input type=\"radio\" id=\"pc-5\">\n" +
-                    "                              </label>\n" +
-                    "\n" +
-                    "                           </div>\n" +
-                    "                        </div>\n" +
-                    "                     </div>\n" +
-                    "                  </div>");
-        }
-
-  }
+//  public void GetProductAjax() throws IOException {
+//
+//    String exist = req.getParameter("exist");
+//    int amount = 0 ;
+//    if (exist!= null){
+//      amount = Integer.parseInt(exist);
+//    }
+//    resp.setCharacterEncoding("UTF-8");
+//    List<Product> products = productDAO.getProductPaging(amount, 9);
+//
+//
+//    PrintWriter out = resp.getWriter();
+//        for (Product product : products) {
+//            out.println("       <div class=\"col-lg-4 col-md-6 col-sm-6\">\n" +
+//                    "                     <div class=\"product__item "+(product.getDiscount()>0?"sale":"") +"\">\n" +
+//                    "                        <div class=\"product__item__pic set-bg\" data-setbg=\"./web/assets/img/product/product-2.jpg\">\n" +
+//                    "                           <ul class=\"product__hover\">\n" +
+//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/heart.png\" alt=\"\"></a></li>\n" +
+//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/compare.png\" alt=\"\"> <span>Compare</span></a>\n" +
+//                    "                              </li>\n" +
+//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/search.png\" alt=\"\"></a></li>\n" +
+//                    "                           </ul>\n" +
+//                    "                        </div>\n" +
+//                    "                        <div class=\"product__item__text\">\n" +
+//                    "                           <h6>"+product.getName()+"</h6>\n" +
+//                    "                           <a href=\"#\" class=\"add-cart\">+ Add To Cart</a>\n" +
+//                    "                           <div class=\"rating\">\n" +
+//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
+//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
+//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
+//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
+//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
+//                    "                           </div>\n" +
+//                    "                           <h5>"+product.getPrice()+"</h5>\n" +
+//                    "                           <div class=\"product__color__select\">\n" +
+//                    "\n" +
+//                    "                              <label class=\"active "+product.getColor()+"\" for=\"pc-5\">\n" +
+//                    "                                 <input type=\"radio\" id=\"pc-5\">\n" +
+//                    "                              </label>\n" +
+//                    "\n" +
+//                    "                           </div>\n" +
+//                    "                        </div>\n" +
+//                    "                     </div>\n" +
+//                    "                  </div>");
+//        }
+//
+//  }
 
   public void FilterProduct(){
     String exist = req.getParameter("exist");

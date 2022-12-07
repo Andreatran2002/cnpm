@@ -22,6 +22,8 @@ public class User {
    private String gender;
    @Column
    private String address;
+   @Column
+   private String email;
 
    @Column
    private String email;
@@ -38,7 +40,7 @@ public class User {
 
    public User() {}
 
-   public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, Cart cart, List<Order> orders) {
+   public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, String email, Cart cart, List<Order> orders) {
       this.username = username;
       this.password = password;
       this.isAdmin = isAdmin;
@@ -46,6 +48,7 @@ public class User {
       this.phone = phone;
       this.gender = gender;
       this.address = address;
+      this.email = email;
       this.cart = cart;
       this.orders = orders;
    }
@@ -119,6 +122,14 @@ public class User {
       this.image = image;
    }
 
+
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
 
    public Cart getCart() {
       return cart;

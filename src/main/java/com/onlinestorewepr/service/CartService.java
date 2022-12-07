@@ -11,6 +11,7 @@ import com.onlinestorewepr.util.MessageUtil;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -62,16 +63,19 @@ public class CartService {
   public void viewCart() throws ServletException, IOException {
     // Get user login from session
     // Fake login info
-    String username = "quangtv";
-
-    User user = new UserDAO().get(username);
+//    String username = "andreatran";
+//
+//    User user = new UserDAO().get(username);
+    HttpSession session = req.getSession();
+    User user = (User)session.getAttribute("userLogged");
     if (user != null) {
-      req.setAttribute("cart", user.getCart());
-      req.setAttribute("cartItems", user.getCart().getCartItems());
+      Cart cart = new CartDAO().get(user.getCart().getId());
+      req.setAttribute("cart", cart);
+      req.setAttribute("cartItems", cart.getCartItems());
       req.getRequestDispatcher("/web/shopping-cart.jsp").forward(req, resp);
-      return;
+    } else {
+      resp.sendRedirect(req.getContextPath() + "/login");
     }
-    resp.sendRedirect(req.getContextPath() + "/login");
   }
 }
 

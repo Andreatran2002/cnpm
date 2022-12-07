@@ -1,6 +1,10 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.Category;
+import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
@@ -23,6 +27,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+<<<<<<< HEAD
+=======
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+>>>>>>> main
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -96,7 +106,11 @@ public class UserService {
                 message = "Please choose gender!";
             }
             req.setAttribute("messageRegisterFail",message);
+<<<<<<< HEAD
             req.setAttribute("action","signup");
+=======
+            req.setAttribute("action", "signup");
+>>>>>>> main
             req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
 
@@ -267,6 +281,7 @@ public class UserService {
             }
 //            Object objRedirectURL = session.getAttribute("redirectURL");
             session.setMaxInactiveInterval(1000);
+<<<<<<< HEAD
 //            if (objRedirectURL != null) {
 //                String redirectURL = (String) objRedirectURL;
 //                session.removeAttribute("redirectURL");
@@ -275,6 +290,16 @@ public class UserService {
 //                showProfile();
 //            }
             resp.sendRedirect("/web/index.jsp");
+=======
+            if (objRedirectURL != null) {
+                String redirectURL = (String) objRedirectURL;
+                session.removeAttribute("redirectURL");
+                resp.sendRedirect("/home");
+            } else {
+              // showProfile();//
+
+            }
+>>>>>>> main
         }
     }
 
@@ -379,6 +404,17 @@ public class UserService {
         }
     }
 
+    public String getLoggedUsername() {
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("username")) {
+                    return c.getValue();
+                }
+            }
+        }
+        return null;
+    }
     public void changeUserPassword() throws ServletException,IOException{
         String username = req.getParameter("username");
         String oldPass = req.getParameter("password-old");

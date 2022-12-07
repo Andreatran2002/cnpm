@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/home")
+@WebServlet(value = {"/home",""})
 public class HomeServlet extends HttpServlet {
-//    ProductService productService = new ProductService();
-//    CategoryService categoryService = new CategoryService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,10 +23,7 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<Product> products = productService.getProductPaging(0, 9);
-//        List<Category> categories = categoryService.getAllCategories();
-//        req.setAttribute("products", products);
-//        req.setAttribute("categories", categories);
+
         req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
     }
 }

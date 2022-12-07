@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "LogoutServlet",value = {"/web/logout"})
+@WebServlet(name = "LogoutServlet",value = {"/logout"})
 public class UserLogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -17,6 +17,6 @@ public class UserLogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().removeAttribute("userLogged");
-        req.getRequestDispatcher("/web/login").forward(req,resp);
+        req.getRequestDispatcher("/login").forward(req,resp);
     }
 }

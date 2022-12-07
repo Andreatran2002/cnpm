@@ -70,7 +70,7 @@
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.address}</td>
                 <td><a href="${pageContext.request.contextPath}/admin/accounts/update?username=${account.username}">Change</a></td>
 
-            </tr>s
+            </tr>
         </c:forEach>
         </tbody>
     </table>

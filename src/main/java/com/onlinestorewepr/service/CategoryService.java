@@ -123,9 +123,14 @@ public class CategoryService {
     if (id != 0) {
       Category category = categoryDAO.get(id);
       if (category != null) {
-        categoryDAO.delete(id);
-        messageBody = "Category was deleted successfully!";
-        messageType = "primary";
+        if (category.getProducts().isEmpty()) {
+          categoryDAO.delete(id);
+          messageBody = "Category was deleted successfully!";
+          messageType = "primary";
+        } else {
+          messageBody = "Cannot delete this category, this category has currently contains some products.";
+          messageType = "danger";
+        }
       }
       else {
         messageBody = "Category doesn't exist";

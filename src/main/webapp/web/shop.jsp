@@ -130,8 +130,8 @@
                                  <label for="sm">s
                                     <input type="radio" id="sm" onclick="triggerFilter(event, 'size', 'sm')">
                                  </label>
-                                 <label for="md">m
-                                    <input type="radio" id="md" onclick="triggerFilter(event, 'size', 'md')">
+                                 <label for="m">m
+                                    <input type="radio" id="m" onclick="triggerFilter(event, 'size', 'm')">
                                  </label>
                                  <label for="xl">xl
                                     <input type="radio" id="xl" onclick="triggerFilter(event, 'size', 'xl')">
@@ -139,9 +139,7 @@
                                  <label for="2xl">2xl
                                     <input type="radio" id="2xl" onclick="triggerFilter(event, 'size', '2xl')">
                                  </label>
-                                 <label for="xxl">xxl
-                                    <input type="radio" id="xxl" onclick="triggerFilter(event, 'size', 'xxl')">
-                                 </label>
+
                                  <label for="3xl">3xl
                                     <input type="radio" id="3xl" onclick="triggerFilter(event, 'size', '3xl')">
                                  </label>
@@ -152,44 +150,44 @@
                            </div>
                         </div>
                      </div>
-                     <div class="card">
-                        <div class="card-heading">
-                           <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                        </div>
-                        <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                           <div class="card-body">
-                              <div class="shop__sidebar__color">
-                                 <label class="c-1" for="sp-1">
-                                    <input type="radio" id="sp-1">
-                                 </label>
-                                 <label class="c-2" for="sp-2">
-                                    <input type="radio" id="sp-2">
-                                 </label>
-                                 <label class="c-3" for="sp-3">
-                                    <input type="radio" id="sp-3">
-                                 </label>
-                                 <label class="c-4" for="sp-4">
-                                    <input type="radio" id="sp-4">
-                                 </label>
-                                 <label class="c-5" for="sp-5">
-                                    <input type="radio" id="sp-5">
-                                 </label>
-                                 <label class="c-6" for="sp-6">
-                                    <input type="radio" id="sp-6">
-                                 </label>
-                                 <label class="c-7" for="sp-7">
-                                    <input type="radio" id="sp-7">
-                                 </label>
-                                 <label class="c-8" for="sp-8">
-                                    <input type="radio" id="sp-8">
-                                 </label>
-                                 <label class="c-9" for="sp-9">
-                                    <input type="radio" id="sp-9">
-                                 </label>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+<%--                     <div class="card">--%>
+<%--                        <div class="card-heading">--%>
+<%--                           <a data-toggle="collapse" data-target="#collapseFive">Colors</a>--%>
+<%--                        </div>--%>
+<%--                        <div id="collapseFive" class="collapse show" data-parent="#accordionExample">--%>
+<%--                           <div class="card-body">--%>
+<%--                              <div class="shop__sidebar__color">--%>
+<%--                                 <label class="c-1" for="sp-1">--%>
+<%--                                    <input type="radio" id="sp-1">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-2" for="sp-2">--%>
+<%--                                    <input type="radio" id="sp-2">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-3" for="sp-3">--%>
+<%--                                    <input type="radio" id="sp-3">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-4" for="sp-4">--%>
+<%--                                    <input type="radio" id="sp-4">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-5" for="sp-5">--%>
+<%--                                    <input type="radio" id="sp-5">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-6" for="sp-6">--%>
+<%--                                    <input type="radio" id="sp-6">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-7" for="sp-7">--%>
+<%--                                    <input type="radio" id="sp-7">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-8" for="sp-8">--%>
+<%--                                    <input type="radio" id="sp-8">--%>
+<%--                                 </label>--%>
+<%--                                 <label class="c-9" for="sp-9">--%>
+<%--                                    <input type="radio" id="sp-9">--%>
+<%--                                 </label>--%>
+<%--                              </div>--%>
+<%--                           </div>--%>
+<%--                        </div>--%>
+<%--                     </div>--%>
                   </div>
                </div>
             </div>
@@ -254,17 +252,16 @@
 
 
             </div>
-<%--            <div class="row">--%>
-<%--               <div class="col-lg-12">--%>
-<%--                  <div class="product__pagination">--%>
-<%--                     <a class="active" href="#">1</a>--%>
-<%--                     <a href="#">2</a>--%>
-<%--                     <a href="#">3</a>--%>
-<%--                     <span>...</span>--%>
-<%--                     <a href="#">21</a>--%>
-<%--                  </div>--%>
-<%--               </div>--%>
-<%--            </div>--%>
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="product__pagination">
+                        <c:forEach begin="0" end="${countP}"  varStatus="status">
+                        <a class="active" onclick="triggerFilter(event,'page', ${status.index + 1})" href="">${status.index + 1}</a>
+                     </c:forEach>
+
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
    </div>
@@ -323,24 +320,24 @@
          loadMore();
       }
    });
-   function searchItem( key){
-      removeElementsByClass("product__item");
-
-      $.ajax({
-         url : "/load-product-ajax", //send to Controller
-         type : "get", //send it through get method
-         data : {
-            exits : amount
-         },
-         success : function(data) {
-            $("#product-content").append(data);
-         },
-         error : function(xhr) {
-//Do Something to handle error
-            console.log(xhr)
-         }
-      });
-   }
+//    function searchItem( key){
+//       removeElementsByClass("product__item");
+//
+//       $.ajax({
+//          url : "/load-product-ajax", //send to Controller
+//          type : "get", //send it through get method
+//          data : {
+//             exits : amount
+//          },
+//          success : function(data) {
+//             $("#product-content").append(data);
+//          },
+//          error : function(xhr) {
+// //Do Something to handle error
+//             console.log(xhr)
+//          }
+//       });
+//    }
    function addtocart( productId){
 
       $.ajax({
@@ -394,9 +391,7 @@
       }
    }
 
-   let queryObject = {
-
-   }
+   let queryObject = {}
 
    const getQueryObject = () => {
       queryObject = queryString.substring(1).split("&").reduce((prev, curr) => {
@@ -410,8 +405,8 @@
          return {...prev, [key]: value}
       },{})
 
-      inputSearch.value = decodeURI(queryObject?.key) || ''
 
+      inputSearch.value = decodeURI(queryObject?.key) || ''
    }
 
    getQueryObject()
@@ -420,6 +415,8 @@
       e.preventDefault()
 
       queryObject = {...queryObject, [key]: value}
+
+      delete queryObject["page"]
 
       const queryString = Object.keys(queryObject).reduce((prev, curr) => {
 

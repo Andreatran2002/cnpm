@@ -2,8 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+<<<<<<< HEAD
    <title>Sign In/Sign Up</title>
    <link rel="stylesheet" href="./assets/css/authentication.css">
+=======
+   <title>Đăng nhập/Đăng ký</title>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/authentication.css">
+>>>>>>> main
 </head>
 <body>
 <div class="wrapper">

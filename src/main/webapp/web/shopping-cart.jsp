@@ -88,7 +88,7 @@
             </thead>
             <tbody>
             <c:forEach items="${cartItems}" var="cartItem">
-              <tr data-cartitem-id="${cartItem.id}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
+              <tr data-cartitem-id="${cartItem.id}" data-product-id="${cartItem.product.id}" data-max-quantity="${cartItem.product.quantity}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
                 <td><input type="checkbox" class="line-choose" id=""></td>
                 <td class="product__cart__item">
                   <div class="product__cart__item__pic">
@@ -109,12 +109,12 @@
                 <td class="quantity__item">
                   <div class="quantity">
                     <div class="pro-qty-2">
-                      <input class="line-quantity" type="number" min="0" value="${cartItem.quantity}">
+                      <input class="line-quantity"  name="input_quantity" type="number" min="0" value="${cartItem.quantity}">
                     </div>
                   </div>
                 </td>
                 <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
-                <td class="cart__close"><i class="fa fa-close"></i></td>
+                <td class="cart__close"><i class="fa fa-close" onclick="deleteCartItem(${cartItem.id})"></i></td>
               </tr>
             </c:forEach>
             </tbody>
@@ -141,7 +141,7 @@
             <li id="discount">Discount <span style="font-size: 14px; font-weight: 600; color: gray; text-decoration: line-through;">0</span></li>
             <li id="total">Total <span>0</span></li>
           </ul>
-          <a href="#" class="primary-btn">Proceed to checkout</a>
+          <a id="checkout-button" href="javascript:" class="primary-btn">Proceed to checkout</a>
         </div>
       </div>
     </div>
@@ -175,5 +175,47 @@
 <script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
 <script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/web/assets/js/shopping-cart.js"></script>
+
+<script>
+  <%--$('input[name=inputquantity]').change(function(e) {--%>
+  <%-- updateItem(${cartItem.id},e.target.value);--%>
+  <%--});--%>
+  // functino
+  function updateItem( id, quantity){
+
+    $.ajax({
+      url : "/cart-item/update", //send to Controller
+      type : "get", //send it through get method
+      data : {
+        id : id,
+        quantity : quantity
+      },
+      success : function(data) {
+      },
+      error : function(xhr) {
+//Do Something to handle error
+        console.log(xhr)
+      }
+    });
+
+  }
+  function deleteCartItem( id){
+
+    $.ajax({
+      url : "/cart-item/delete", //send to Controller
+      type : "get", //send it through get method
+      data : {
+        id : id,
+      },
+      success : function(data) {
+      },
+      error : function(xhr) {
+//Do Something to handle error
+        console.log(xhr)
+      }
+    });
+
+  }
+</script>
 </body>
 </html>
