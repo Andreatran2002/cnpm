@@ -1,6 +1,10 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.Category;
+import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.MessageUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -11,6 +15,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -313,6 +323,17 @@ public class UserService {
         } catch (Exception e) {e.printStackTrace();}
     }
 
+    public String getLoggedUsername() {
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("username")) {
+                    return c.getValue();
+                }
+            }
+        }
+        return null;
+    }
     public void changeUserPassword() throws ServletException,IOException{
         String username = req.getParameter("username");
         String oldPass = req.getParameter("password-old");

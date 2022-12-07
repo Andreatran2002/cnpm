@@ -10,7 +10,6 @@ public class Cart {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column
    private int id;
-   @Column
    private int total;
 
    @OneToOne(mappedBy = "cart")

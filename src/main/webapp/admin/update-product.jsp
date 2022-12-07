@@ -62,8 +62,8 @@
                         <label class="col-sm-2 col-form-label" for="available">Status</label>
                         <div class="col-sm-10">
                           <select required type="number" name ="available" class="form-control" id="available">
-                            <option value="1" ${product.available == true ? "selected" : ""}}>Available</option>
-                            <option value="0" ${product.available == true ? "selected" : ""}}>Cessation of business</option>
+                            <option value="1" ${product.available == true ? "selected" : ""}>Available</option>
+                            <option value="0" ${product.available == false ? "selected" : ""}>Cessation of business</option>
                           </select>
                         </div>
                       </div>

@@ -147,7 +147,7 @@ public class ProductService {
           // ------------------
 
           productDAO.insert(product);
-          messageBody = "A new category was created successfully!";
+          messageBody = "A new product was created successfully!";
           messageType = "success";
         } catch (Exception ex) {
           ex.printStackTrace();
@@ -233,11 +233,16 @@ public class ProductService {
     if (id != 0) {
       Product product = productDAO.get(id);
       if (product != null) {
-        // delete image
-        CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
-        productDAO.delete(id);
-        messageBody = "Product was deleted successfully!";
-        messageType = "primary";
+        if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
+          // delete image
+          CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
+          productDAO.delete(id);
+          messageBody = "Product was deleted successfully!";
+          messageType = "primary";
+        } else {
+          messageBody = "Cannot delete this category, this product is already in some cart or order.";
+          messageType = "danger";
+        }
       }
       else {
         messageBody = "Product doesn't exist";
