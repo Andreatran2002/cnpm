@@ -2,6 +2,7 @@ package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.*;
 import com.onlinestorewepr.entity.*;
+import com.onlinestorewepr.util.EmailUtil;
 import com.onlinestorewepr.util.MessageUtil;
 
 import javax.servlet.ServletException;
@@ -50,12 +51,10 @@ public class UserOrderService {
     this.messageUtil = new MessageUtil();
   }
 
-  public void viewCheckout() {
+  public void viewCheckout() throws IOException {
     // Fake user login
-    User user = new UserDAO().get("quangtv");
-    HttpSession mySession = req.getSession(true);
-    mySession.setAttribute("userLogged", user);
-
+    HttpSession session = req.getSession();
+    User user = (User)session.getAttribute("userLogged");
     if (user != null) {
       try {
         Cart cart = user.getCart();
@@ -74,6 +73,9 @@ public class UserOrderService {
       } catch (Exception ex) {
         ex.printStackTrace();
       }
+    }
+    else {
+      resp.sendRedirect("/login");
     }
   }
 
@@ -147,13 +149,27 @@ public class UserOrderService {
 
           // => success
           if (payment.equals("cod")) {
-            body = "Thank you for ordering!<br> Your order has been received. Your product(s) will be delivered within a few days.";
+            body = "Thank you for ordering!<br> Your order has been received and will be delivered within a few days.";
           } else {
             body = "Thank you for ordering!<br> Your order has been received.  <br>Our staff will contact you to confirm payment!";
           }
           action = "/order";
           actionTitle = "Go to order management page";
 
+          // Send email notify
+          String emailSubject = "New Order (#" + order.getId() + ") from Male Fashion Store for " + order.getTotal() + "đ";
+          StringBuilder emailBody = new StringBuilder("*** This is an automated message - please do not reply directly to this email ***\n");
+          emailBody.append("Customer: ").append(fullname).append("\n");
+          emailBody.append("Phone: ").append(phone).append("\n");
+          emailBody.append("Address: ").append(address).append("\n");
+          emailBody.append("Your order details:");
+
+          for (OrderItem orderItem : orderItems) {
+            emailBody.append("\n - ").append(orderItem.getProduct().getName()).append(" x ").append(orderItem.getQuantity());
+          }
+          emailBody.append("\nThank you for ordering!");
+
+          EmailUtil.sendEmail(email, emailSubject, emailBody.toString(), "tranvanquangforever@gmail.com", "fmhwuvwkglyggykn");
         } else {
           body = "Input data is invalid! Please try again";
           action = "/cart";
