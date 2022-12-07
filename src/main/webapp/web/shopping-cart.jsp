@@ -88,7 +88,7 @@
             </thead>
             <tbody>
             <c:forEach items="${cartItems}" var="cartItem">
-              <tr data-cartitem-id="${cartItem.id}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
+              <tr data-cartitem-id="${cartItem.id}" data-product-id="${cartItem.product.id}" data-max-quantity="${cartItem.product.quantity}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
                 <td><input type="checkbox" class="line-choose" id=""></td>
                 <td class="product__cart__item">
                   <div class="product__cart__item__pic">
@@ -141,7 +141,7 @@
             <li id="discount">Discount <span style="font-size: 14px; font-weight: 600; color: gray; text-decoration: line-through;">0</span></li>
             <li id="total">Total <span>0</span></li>
           </ul>
-          <a href="#" class="primary-btn">Proceed to checkout</a>
+          <a id="checkout-button" href="javascript:" class="primary-btn">Proceed to checkout</a>
         </div>
       </div>
     </div>
