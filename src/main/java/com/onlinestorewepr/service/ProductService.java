@@ -13,6 +13,7 @@ import com.onlinestorewepr.util.MessageUtil;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -269,9 +270,9 @@ public class ProductService {
     String cateIdReq = req.getParameter("cateid");
     String size = req.getParameter("size");
     String sort = req.getParameter("sort");
-//    User user = (User) req.getSession().getAttribute("userLogged");
-
-    Cart cart = cartDAO.findByUser("andreatran");
+    User user = (User) req.getSession().getAttribute("userLogged");
+    HttpSession session = req.getSession();
+    Cart cart = cartDAO.findByUser(user.getUsername());
 
     int from = 0 , to = 999999999;
     if (key== null){

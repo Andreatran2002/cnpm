@@ -89,7 +89,6 @@ public class CartDAO {
    }
 
    public Cart findByUser(String username) {
-      System.out.println("find by user" + username);
       Cart cart = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "SELECT c FROM Cart c WHERE c.user.username = :username";
