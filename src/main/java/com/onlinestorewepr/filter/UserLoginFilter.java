@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/web/profile","/web/update-profile"})
+@WebFilter(urlPatterns = {"/profile","/update-profile","/cart-item/*","/shop"})
 public class UserLoginFilter extends HttpFilter implements Filter {
 //    private static final String[] loginRequireURLs = {"web/profile","web/update-profile"};
 

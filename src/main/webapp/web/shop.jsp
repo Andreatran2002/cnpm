@@ -219,7 +219,7 @@
                <c:forEach items="${products}" var="product" varStatus="status">
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="product__item ${product.discount>0?"sale":""}">
-                        <div class="product__item__pic set-bg" data-setbg="./web/assets/img/product/product-2.jpg">
+                        <div class="product__item__pic set-bg" data-setbg="${product.image}">
                            <ul class="product__hover">
                               <li><a href="#"><img src="./web/assets/img/icon/heart.png" alt=""></a></li>
                               <li><a href="#"><img src="./web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a>
@@ -345,7 +345,6 @@
          url : "/cart-item/add", //send to Controller
          type : "get", //send it through get method
          data : {
-            username : "andreatran",
             productid : productId ,
             quantity : 1
          },
