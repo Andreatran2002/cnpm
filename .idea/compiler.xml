@@ -9,8 +9,5 @@
         <module name="OnlineStoreWEPR" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="cnpm" target="18" />
-    </bytecodeTargetLevel>
   </component>
 </project>

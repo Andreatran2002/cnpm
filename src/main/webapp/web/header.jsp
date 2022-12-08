@@ -88,10 +88,13 @@
                   <div class="header__nav__option">
                      <c:choose>
                         <c:when test="${userLogged!=null}">
-                           <div class="header__nav-username">Hi!<b> ${userLogged.name}</b></div>
                            <div class="header__nav-avatar">
-                              <a href="profile.jsp"><img src="${userLogged.image}" alt=""></a>
+                              <c:choose>
+                                 <c:when test="${userLogged.image!=null}"> <a href="./profile"><img src="${userLogged.image}" alt=""></a></c:when>
+                                 <c:otherwise><a href="./profile"><img src="./assets/img/profile/no-avartar.png" alt=""></a></c:otherwise>
+                              </c:choose>
                            </div>
+                           <div class="header__nav-username"><b>${userLogged.username}</b></div>
                            <a href="#" class="search-switch"><img
                                  src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>
                            <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png"
@@ -110,4 +113,5 @@
             <div class="canvas__open"><i class="fa fa-bars"></i></div>
          </div>
       </header>
+
       <!-- Header Section End -->

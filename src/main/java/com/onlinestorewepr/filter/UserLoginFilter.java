@@ -25,7 +25,7 @@ public class UserLoginFilter extends HttpFilter implements Filter {
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/login").forward(request,response);
+            request.getRequestDispatcher("/web/authentication.jsp").forward(request,response);
         }
     }
 

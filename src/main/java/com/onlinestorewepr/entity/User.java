@@ -25,6 +25,7 @@ public class User {
    @Column
    private String email;
 
+
    @Column
    private String image;
 
@@ -105,6 +106,7 @@ public class User {
    public void setAddress(String address) {
       this.address = address;
    }
+
    public String getImage() {
       return image;
    }
@@ -145,6 +147,7 @@ public class User {
               ", isAdmin=" + isAdmin +
               ", name='" + name + '\'' +
               ", phone='" + phone + '\'' +
+              ", phone='" + email + '\'' +
               ", gender='" + gender + '\'' +
               ", address='" + address + '\'' +
               ", image='" + image + '\'' +
@@ -152,4 +155,5 @@ public class User {
               ", orders=" + orders +
               '}';
    }
+
 }
