@@ -45,10 +45,12 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                   <h5 class="mb-0">Update <strong>MaleFashion Hoodie</strong> Details</h5>
                   <a href="${pageContext.request.contextPath}/admin/product" class="btn btn-outline-primary">Back</a>
-                </div>
+                 </div>
                 <div class="card-body">
                   <form
-                      method="post"
+                          onsubmit="return confirm('Are you sure to update this product?');"
+
+                          method="post"
                       action="${pageContext.request.contextPath}/admin/product/${action}"
                       enctype="multipart/form-data"
                   >

@@ -126,6 +126,36 @@ public class CartItemService {
 
 
     }
+    public void deleteCartItem(int id) throws IOException {
+        String message, messageType;
+
+        CartItem cartItem = cartItemDAO.get(id);
+        if (cartItem != null) {
+            try {
+                Cart cart = cartItem.getCart();
+                cart.setTotal(cart.getTotal()- cartItem.getQuantity()*cartItem.getProduct().getPrice());
+                cartDAO.update(cart);
+                cartItemDAO.delete(id);
+
+                message = "CartItem was deleted successfully!";
+                messageType = "primary";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                message = "An error occurred when creating a new cartItem! Please try again.";
+                messageType = "danger";
+            }
+
+        } else {
+            message = String.format("CartItem with id %s does not exist", id);
+            messageType = "danger";
+        }
+        serviceResult.setMessage(message);
+        serviceResult.setMessageType(messageType);
+        resp.sendRedirect(req.getContextPath() + "/cart");
+
+
+    }
 
     public void updateCartItem(int id  ) {
         String quantity = req.getParameter("quantity").trim();
@@ -144,6 +174,9 @@ public class CartItemService {
                 cart.setTotal(cart.getTotal()- (cartItem.getQuantity()-Integer.parseInt(quantity))*cartItem.getProduct().getPrice());
                 cartDAO.update(cart);
                 cartItemDAO.update(cartItem);
+                if ( cartItem.getQuantity() == 0){
+                    deleteCartItem(id);
+                }
                 message = "CartItem's info was changed successfully!";
                 messageType = "success";
             } catch (Exception e) {

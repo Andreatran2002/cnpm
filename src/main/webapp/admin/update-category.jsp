@@ -54,6 +54,7 @@
                 <div class="card-body">
                   <form
                       method="post"
+                      onsubmit="return confirm('Are you sure to update this category?');"
                       action="${pageContext.request.contextPath}/admin/category/${action}"
                   >
                     <div class="row mb-3">
