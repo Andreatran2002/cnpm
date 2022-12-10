@@ -125,6 +125,17 @@ public class ProductService {
     req.setAttribute("categories", categories);
     req.getRequestDispatcher("/admin/update-product.jsp").forward(req, resp);
   }
+  public void ShowHomePage() throws ServletException, IOException {
+    ProductDAO productDAO = new ProductDAO();
+
+    req.setAttribute("action", "add");
+    req.setAttribute("bestSellers", productDAO.getBestSeller());
+    req.setAttribute("newArrivals", productDAO.getNewArrival());
+    req.setAttribute("hotSales", productDAO.getHotSale());
+
+    req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
+
+  }
 
   public void AddProduct() throws ServletException, IOException {
     String messageBody = "", messageType = "";

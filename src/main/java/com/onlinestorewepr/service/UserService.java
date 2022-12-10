@@ -1,11 +1,9 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.dao.CartDAO;
 import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
-import com.onlinestorewepr.entity.CartItem;
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.entity.Product;
-import com.onlinestorewepr.entity.User;
+import com.onlinestorewepr.entity.*;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -263,8 +261,11 @@ public class UserService {
         }
         else {
             //Create session when login is successful
+            Cart cart = new  CartDAO().findByUser(user.getUsername());
+
             HttpSession session = req.getSession();
             session.setAttribute("userLogged",user);
+            session.setAttribute("cart",cart);
             //Check Remember me to create Cookie
             if(isRememberMe)
             {
@@ -272,25 +273,9 @@ public class UserService {
             }
 //            Object objRedirectURL = session.getAttribute("redirectURL");
             session.setMaxInactiveInterval(1000);
-//<<<<<<< HEAD
-//            if (objRedirectURL != null) {
-//                String redirectURL = (String) objRedirectURL;
-//                session.removeAttribute("redirectURL");
-//                resp.sendRedirect(redirectURL);
-//            } else {
-//                showProfile();
-//            }
-            resp.sendRedirect("/web/index.jsp");
-//=======
-//            if (objRedirectURL != null) {
-//                String redirectURL = (String) objRedirectURL;
-//                session.removeAttribute("redirectURL");
-//                resp.sendRedirect("/home");
-//            } else {
-//              // showProfile();//
-//
-//            }
-//>>>>>>> main
+
+            resp.sendRedirect("/");
+
         }
     }
 

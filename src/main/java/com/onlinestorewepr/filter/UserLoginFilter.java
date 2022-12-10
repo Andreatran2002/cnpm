@@ -1,5 +1,10 @@
 package com.onlinestorewepr.filter;
 
+import com.onlinestorewepr.dao.CartDAO;
+import com.onlinestorewepr.entity.Cart;
+import com.onlinestorewepr.entity.User;
+import com.onlinestorewepr.service.CartService;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/profile","/update-profile","/cart-item/*","/shop"})
+@WebFilter(urlPatterns = {"/profile","/update-profile","/cart-item/*","/shop","/order/*"})
 public class UserLoginFilter extends HttpFilter implements Filter {
 //    private static final String[] loginRequireURLs = {"web/profile","web/update-profile"};
 
@@ -20,8 +25,9 @@ public class UserLoginFilter extends HttpFilter implements Filter {
         HttpServletRequest request =  req;
         HttpServletResponse response = resp;
         HttpSession session = request.getSession();
-        Object obj = session.getAttribute("userLogged");
-        if(obj!=null){
+        User user = (User) session.getAttribute("userLogged");
+
+        if(user !=null){
             chain.doFilter(request,response);
         }
         else {

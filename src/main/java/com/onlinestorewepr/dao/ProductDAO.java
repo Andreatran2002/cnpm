@@ -46,6 +46,46 @@ public class ProductDAO {
       return products;
    }
 
+   public List<Product> getBestSeller(){
+      List<Product> products = null;
+
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c.product FROM OrderItem c group by c.product order by count(c.id) desc ";
+         Query query =  session.createQuery(HQL);
+         products = query.setMaxResults(8).getResultList();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return products;
+   }
+   public List<Product> getNewArrival(){
+      List<Product> products = null;
+
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Product c order by c.id desc ";
+         Query query =  session.createQuery(HQL);
+         products = query.setMaxResults(4).getResultList();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return products;
+   }
+   public List<Product> getHotSale(){
+      List<Product> products = null;
+
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Product c where c.discount != 0  order by c.discount  ";
+         Query query =  session.createQuery(HQL);
+         products = query.setFirstResult(4).getResultList();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return products;
+   }
+
 
    public void update(Product product) {
       Transaction transaction = null;

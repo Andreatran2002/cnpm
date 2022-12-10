@@ -55,6 +55,7 @@
                   <form
                       method="post"
                       enctype="multipart/form-data"
+                      onsubmit="return confirm('Are you sure to update this user ?');"
                       action="${pageContext.request.contextPath}/admin/accounts/update?username=${account.username}"
                   >
 

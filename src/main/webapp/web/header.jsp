@@ -95,13 +95,13 @@
                               </c:choose>
                            </div>
                            <div class="header__nav-username"><b>${userLogged.username}</b></div>
-                           <a href="#" class="search-switch"><img
+                           <a href="${pageContext.request.contextPath}/shop" class="search-switch"><img
                                  src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>
                            <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png"
-                                 alt=""> <span>0</span></a>
+                                 alt="${pageContext.request.contextPath}/cart"> <span>${cart.cartItems.size()}</span></a>
                            <%-- <a href="cartdetail?username=${userLogged.username}&type=" view""><img
                                  src="assets/img/icon/cart.png" alt=""> <span></span></a>--%>
-                              <div class="price">$0.00</div>
+                              <div class="price">${cart.total}</div>
                         </c:when>
                         <c:otherwise>
                            <a href="login">Sign/Sign Up</a>
