@@ -86,10 +86,10 @@ public class UserOrderService {
     String action;
     String actionTitle;
 
-    // Fake user login
-    User user = new UserDAO().get("quangtv");
-    HttpSession mySession = req.getSession(true);
-    mySession.setAttribute("userLogged", user);
+    HttpSession session = req.getSession();
+    User user = (User)session.getAttribute("userLogged");
+
+
     if (user != null) {
       try {
         // Get data from request
@@ -136,6 +136,11 @@ public class UserOrderService {
             cartItemDAO.delete(cartItemId);
           }
 
+          //
+          CartDAO cartDAO = new CartDAO();
+          Cart cart = cartDAO.findByUser(user.getUsername());
+          cart.setTotal(0);
+          cartDAO.update(cart);
           // Reduce the number of product
           ProductDAO productDAO = new ProductDAO();
           OrderItemDAO orderItemDAO = new OrderItemDAO();

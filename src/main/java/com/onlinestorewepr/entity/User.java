@@ -24,7 +24,6 @@ public class User {
    private String address;
    @Column
    private String email;
-
    @Column
    private String image;
 
@@ -89,6 +88,13 @@ public class User {
    public void setPhone(String phone) {
       this.phone = phone;
    }
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
 
    public String getGender() {
       return gender;
@@ -105,12 +111,7 @@ public class User {
    public void setAddress(String address) {
       this.address = address;
    }
-   public String getEmail() {
-      return email;
-   }
-   public void setEmail(String email) {
-      this.email = email;
-   }
+
    public String getImage() {
       return image;
    }

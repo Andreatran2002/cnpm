@@ -109,12 +109,22 @@
                 <td class="quantity__item">
                   <div class="quantity">
                     <div class="pro-qty-2">
-                      <input class="line-quantity"  name="input_quantity" type="number" min="0" value="${cartItem.quantity}">
+                      <input class="line-quantity" onchange="(e => updateItem(${cartItem.id}, e.target.value))(event)" name="input_quantity" type="number" min="0" value="${cartItem.quantity}">
                     </div>
                   </div>
                 </td>
                 <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
-                <td class="cart__close"><i class="fa fa-close" onclick="deleteCartItem(${cartItem.id})"></i></td>
+                <td class="cart__close">
+                  <form
+                          onsubmit="return confirm('Are you sure to delete this item?');"
+                          action="<%request.getContextPath();%>/cart-item/delete"
+                          method="post"
+                  >
+                    <input type="hidden" name="id" value="${cartItem.id}">
+                    <button>
+                      <i class="fa fa-close" ></i>
+                    </button>
+                  </form></td>
               </tr>
             </c:forEach>
             </tbody>

@@ -2,6 +2,8 @@ package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
+import com.onlinestorewepr.dao.CartDAO;
+import com.onlinestorewepr.entity.*;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -94,8 +96,6 @@ public class UserService {
             }
             req.setAttribute("messageRegisterFail",message);
             req.setAttribute("action","signup");
-            req.setAttribute("action", "signup");
-
             req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
 
@@ -257,8 +257,11 @@ public class UserService {
         }
         else {
             //Create session when login is successful
+            Cart cart = new  CartDAO().findByUser(user.getUsername());
+
             HttpSession session = req.getSession();
             session.setAttribute("userLogged",user);
+            session.setAttribute("cart",cart);
             //Check Remember me to create Cookie
             if(isRememberMe)
             {
@@ -266,6 +269,7 @@ public class UserService {
             }
 //            Object objRedirectURL = session.getAttribute("redirectURL");
             session.setMaxInactiveInterval(1000);
+
 //            if (objRedirectURL != null) {
 //                String redirectURL = (String) objRedirectURL;
 //                session.removeAttribute("redirectURL");
@@ -273,8 +277,7 @@ public class UserService {
 //            } else {
 //                showProfile();
 //            }
-            resp.sendRedirect("/web/index.jsp");
-
+            resp.sendRedirect("/");
         }
     }
 

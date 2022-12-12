@@ -91,6 +91,7 @@
                   <h6 class="mb-0">Phone</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
+
                   <input type="text" class="form-control" id="phone" name="phone" value="${userLogged.phone}">
                 </div>
               </div>
@@ -99,14 +100,16 @@
                   <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
+
                   <input type="email" class="form-control" id="email" name="email" value="${userLogged.email}">
-                </div>
+ga                </div>
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Gender</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
+
                   <input type="text" class="form-control" id="customer-sex" name="sex" value="${userLogged.gender}">
                 </div>
               </div>
@@ -136,6 +139,7 @@
                           style="width: 200px;"
                           src="${pageContext.request.contextPath}/${userLogged.image}"
                   >
+>>>>>>> 14b1298f16ab9dc4893ec010591ba2edd4df1bdf
                 </div>
               </div>
               <div class="row">
