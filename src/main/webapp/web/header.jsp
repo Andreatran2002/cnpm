@@ -103,9 +103,6 @@
                                  src="assets/img/icon/cart.png" alt=""> <span></span></a>--%>
                               <div class="price">$0.00</div>
                         </c:when>
-                        <c:otherwise>
-                           <a href="login">Sign/Sign Up</a>
-                        </c:otherwise>
                      </c:choose>
                   </div>
                </div>

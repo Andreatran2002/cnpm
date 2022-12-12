@@ -2,18 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<<<<<<< HEAD
    <title>Sign In/Sign Up</title>
-   <link rel="stylesheet" href="./assets/css/authentication.css">
-=======
-   <title>Đăng nhập/Đăng ký</title>
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/authentication.css">
->>>>>>> main
 </head>
 <body>
 <div class="wrapper">
    <div class="cont s--${action}">
-      <form class="form sign-in" method="post" action="login">
+      <form class="form sign-in" method="post" action="${pageContext.request.contextPath}/login">
          <h2>WELCOME TO MALE FASHION</h2>
          <div class="input-control">
             <input name="username" id="name" type="text" placeholder="Username" value="${username}"/>
@@ -44,7 +39,7 @@
                <span class="m--in">Sign in</span>
             </div>
          </div>
-         <form class="form sign-up" method="post" action="register">
+         <form class="form sign-up" method="post" action="${pageContext.request.contextPath}/register">
             <h2>SIGN UP FOR A MALE FASHION ACCOUNT</h2>
             <div class="input-control">
                <input name="fullName" id="nameRe" type="text" placeholder="Fullname"/>

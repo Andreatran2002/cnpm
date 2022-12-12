@@ -1,10 +1,6 @@
 package com.onlinestorewepr.service;
 
-import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
-import com.onlinestorewepr.entity.CartItem;
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
@@ -18,21 +14,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-<<<<<<< HEAD
-=======
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
->>>>>>> main
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -106,11 +93,9 @@ public class UserService {
                 message = "Please choose gender!";
             }
             req.setAttribute("messageRegisterFail",message);
-<<<<<<< HEAD
             req.setAttribute("action","signup");
-=======
             req.setAttribute("action", "signup");
->>>>>>> main
+
             req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
         }
 
@@ -281,7 +266,6 @@ public class UserService {
             }
 //            Object objRedirectURL = session.getAttribute("redirectURL");
             session.setMaxInactiveInterval(1000);
-<<<<<<< HEAD
 //            if (objRedirectURL != null) {
 //                String redirectURL = (String) objRedirectURL;
 //                session.removeAttribute("redirectURL");
@@ -290,16 +274,7 @@ public class UserService {
 //                showProfile();
 //            }
             resp.sendRedirect("/web/index.jsp");
-=======
-            if (objRedirectURL != null) {
-                String redirectURL = (String) objRedirectURL;
-                session.removeAttribute("redirectURL");
-                resp.sendRedirect("/home");
-            } else {
-              // showProfile();//
 
-            }
->>>>>>> main
         }
     }
 
@@ -344,8 +319,6 @@ public class UserService {
             e.printStackTrace();
         }
     }
-
-
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
         User user = (User) req.getSession().getAttribute("userLogged");
