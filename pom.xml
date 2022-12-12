@@ -40,6 +40,7 @@
          <version>1.4</version>
       </dependency>
 
+
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate-core</artifactId>
@@ -56,19 +57,28 @@
          <version>2.10</version>
       </dependency>
       <dependency>
+<<<<<<< HEAD
          <groupId>javax.mail</groupId>
          <artifactId>mail</artifactId>
          <version>1.4.7</version>
       </dependency>
+
       <dependency>
          <groupId>com.sun.mail</groupId>
          <artifactId>javax.mail</artifactId>
          <version>1.5.5</version>
       </dependency>
+
+
       <dependency>
          <groupId>com.sun.mail</groupId>
          <artifactId>jakarta.mail</artifactId>
          <version>1.6.4</version>
+=======
+         <groupId>com.sun.mail</groupId>
+         <artifactId>javax.mail</artifactId>
+         <version>1.6.2</version>
+>>>>>>> main
       </dependency>
    </dependencies>
    <build>
