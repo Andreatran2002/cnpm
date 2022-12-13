@@ -1,9 +1,7 @@
 package com.onlinestorewepr.service;
 
-import com.onlinestorewepr.dao.CategoryDAO;
 import com.onlinestorewepr.dao.OrderDAO;
 import com.onlinestorewepr.dao.UserDAO;
-import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Order;
 import com.onlinestorewepr.util.MessageUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -177,5 +175,22 @@ public class OrderService {
         orders = orderDAO.getAll();
 
         return orders;
+    }
+    public void updateOrderStatus(int id,String status) {
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = orderDAO.get(id);
+        String message = "", messageType = "";
+        if (order != null) {
+            try {
+                if (!status.isEmpty())
+                    order.setStatus(status);
+                orderDAO.update(order);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            message = String.format("Order with id %s does not exist", id);
+            messageType = "danger";
+        }
     }
 }

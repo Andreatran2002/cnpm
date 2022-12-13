@@ -1,5 +1,8 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.dao.OrderDAO;
+import com.onlinestorewepr.dao.OrderItemDAO;
+import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
@@ -307,6 +310,13 @@ public class UserService {
     }
 
     public void showProfile() throws ServletException, IOException {
+        OrderDAO orderDAO = new OrderDAO();
+        OrderItemDAO itemDAO = new OrderItemDAO();
+        ProductDAO productDAO = new ProductDAO();
+        req.setAttribute("orderDAO",orderDAO);
+        req.setAttribute("ItemDAO",itemDAO);
+        req.setAttribute("productDAO",productDAO);
+
         User userLogged = (User)req.getSession().getAttribute("userLogged");
         User user = new UserDAO().get(userLogged.getUsername());
         req.setAttribute("user", user);

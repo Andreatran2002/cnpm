@@ -55,7 +55,7 @@
          </a>
          <ul class="menu-sub">
             <li class="menu-item" id="menu-account-profile">
-               <a href="${pageContext.request.contextPath}/admin/account-profile.jsp" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/profile" class="menu-link">
                   <div data-i18n="Account">Profile</div>
                </a>
             </li>
