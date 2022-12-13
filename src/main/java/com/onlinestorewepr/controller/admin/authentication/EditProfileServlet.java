@@ -1,16 +1,17 @@
 package com.onlinestorewepr.controller.admin.authentication;
 
 import com.onlinestorewepr.service.AdminService;
-import com.onlinestorewepr.service.UserService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = {"/admin/edit-admin-profile","/edit-admin-profile"})
+@MultipartConfig
+@WebServlet(value = {"/admin/update-admin-profile","/update-admin-profile"})
 public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

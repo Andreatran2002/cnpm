@@ -1,12 +1,14 @@
 package com.onlinestorewepr.dao;
 
 import com.onlinestorewepr.entity.Order;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class OrderDAO {
@@ -84,5 +86,23 @@ public class OrderDAO {
          e.printStackTrace();
       }
       return order;
+   }
+   public List<Order> getOrderByUser(User user)
+   {
+      List<Order> orders = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         session.beginTransaction();
+         CriteriaBuilder builder = session.getCriteriaBuilder();
+         CriteriaQuery<Order> query = builder.createQuery(Order.class);
+         Root<Order> root = query.from(Order.class);
+         query.select(root); // SELECT
+         query.where(builder.equal(root.get("user"), user));
+         orders = session.createQuery(query).list();
+         session.getTransaction().commit();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return orders;
    }
 }

@@ -2,12 +2,17 @@ package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
+import com.onlinestorewepr.util.CommonUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AdminService {
     private UserDAO userDAO;
@@ -79,13 +84,44 @@ public class AdminService {
             resp.sendRedirect("/admin/index.jsp");
         }
     }
-
+    public void showProfile() throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF-8");
+        User adminLogged = (User)req.getSession().getAttribute("adminLogged");
+        User user = new UserDAO().get(adminLogged.getUsername());
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
+    }
     public void updateAdminProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
         User user = (User) req.getSession().getAttribute("adminLogged");
-        editAdminProfile(user);
+        String fullName = req.getParameter("name");
+        String phone = req.getParameter("phone");
+        String gender = req.getParameter("sex");
+        String address = req.getParameter("address");
+        Part part = req.getPart("image");
+
+        //Update image
+        if (!part.getSubmittedFileName().isEmpty()) {
+            String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            String now = CommonUtil.getImgDir();
+            String realPath = req.getServletContext().getRealPath("/adminAvatar" + now);
+            Path path = Paths.get(realPath);
+
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+            part.write(realPath + "/" + imageName);
+            String image = String.format("adminAvatar%s/%s", now, imageName);
+            System.out.println(image);
+            user.setImage(image);
+        }
+        //update other
+        user.setName(fullName);
+        user.setPhone(phone);
+        user.setGender(gender);
+        user.setAddress(address);
         userDAO.update(user);
-        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
+        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req, resp);
     }
     public void editAdminProfile(User user){
         String username = req.getParameter("username");

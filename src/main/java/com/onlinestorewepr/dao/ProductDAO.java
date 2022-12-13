@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class ProductDAO {
@@ -238,9 +239,24 @@ public class ProductDAO {
       } catch (Exception e) {
          e.printStackTrace();
       }
-
-
       return product;
    }
+   public Product getProductsByOrderItem(Product pr) {
+      Product product = new Product();
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         session.beginTransaction();
+         CriteriaBuilder builder = session.getCriteriaBuilder();
+         CriteriaQuery<Product> query = builder.createQuery(Product.class);
+         Root<Product> root = query.from(Product.class); // FROM User u
+         query.select(root); // SELECT
+         query.where(builder.equal(root.get("id"), pr.getId())); // WHERE u.id = 1
+         product = session.createQuery(query).uniqueResult();
 
+         session.getTransaction().commit();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return product;
+   }
 }
