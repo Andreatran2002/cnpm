@@ -1,6 +1,5 @@
 package com.onlinestorewepr.dao;
 
-import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
@@ -9,9 +8,6 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
@@ -86,7 +82,19 @@ public class ProductDAO {
       return products;
    }
 
+   public List<Product> getTopbyCategory(int CategoryID) {
+      List<Product> products = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Product c WHERE category.id = :CategoryID";
+         Query query = session.createQuery(HQL);
+         query.setParameter("CategoryID", CategoryID);
+         products = query.setMaxResults(4).getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
+      return products;
+   }
    public void update(Product product) {
       Transaction transaction = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {

@@ -2,27 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
-   <title>Đăng nhập/Đăng ký</title>
+   <title>Sign In/Sign Up</title>
+   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/authentication.css">
 </head>
 <body>
 <div class="wrapper">
    <div class="cont s--${action}">
-      <form class="form sign-in" method="post" action="login">
-         <h2>WELCOME TO MALE FASHION</h2>
+      <form class="form sign-in" method="post" action="${pageContext.request.contextPath}/login">
+         <h2 style="font-weight: 300;">WELCOME TO MALE FASHION STORE</h2>
          <div class="input-control">
-            <input name="username" id="name" type="text" placeholder="Username" value="${username}"/>
+            <input style="width: 100%;" name="username" id="name" type="text" placeholder="Username" value="${username}"/>
          </div>
          <div class="input-control">
-            <input name="password" id="pass" type="password" placeholder="Password" value="${password}"/>
+            <input style="width: 100%;" name="password" id="pass" type="password" placeholder="Password" value="${password}"/>
          </div>
          <div class="form-group text-center">
-            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-            <label for="remember"> Remember Me</label>
+            <input style="margin: 0 8px 0 2px;" type="checkbox" tabindex="3" class="" name="remember" id="remember">
+            <label for="remember">Remember Me</label>
+         </div>
+         <div class="form-group">
+            <a href="${pageContext.request.contextPath}/web/forgotPassword" class="forgot-pass">Forget password?</a>
          </div>
          <p class="message-text">${message}</p>
-         <a href="${pageContext.request.contextPath}/web/forgotPassword" class="forgot-pass">Forget password?</a>
          <button type="submit" class="submit">Sign In</button>
       </form>
       <div class="sub-cont">
@@ -33,15 +35,15 @@
             </div>
             <div class="img__text m--in">
                <h2>One of us?</h2>
-               <p>If you have already account,please sign in here!</p>
+               <p>If you have already account, please sign in here!</p>
             </div>
             <div class="img__btn">
                <span class="m--up">Sign up</span>
                <span class="m--in">Sign in</span>
             </div>
          </div>
-         <form class="form sign-up" method="post" action="register">
-            <h2>SIGN UP FOR A MALE FASHION ACCOUNT</h2>
+         <form class="form sign-up" method="post" action="${pageContext.request.contextPath}/register">
+            <h2 style="font-weight: 300; margin-bottom: 10px">SIGN UP FOR A MALE FASHION ACCOUNT</h2>
             <div class="input-control">
                <input name="fullName" id="nameRe" type="text" placeholder="Fullname"/>
             </div>

@@ -55,7 +55,11 @@
                          class="form-control border-info placeicon" required="required">
                 </div>
               </div>
-              <p class="text-danger" style="text-align: center;">${message}</p>
+              <c:if test="${message != null}">
+                <div class="col-sm-12 d-flex justify-content-center">
+                  <p class="text-${message.type}">${message.body}</p>
+                </div>
+              </c:if>
               <!-- Log in Button -->
               <div class="form-group row justify-content-center">
                 <div class="col-3 px-3 mt-3">

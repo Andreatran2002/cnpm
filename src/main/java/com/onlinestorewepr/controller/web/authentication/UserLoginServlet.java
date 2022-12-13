@@ -26,12 +26,14 @@ public class UserLoginServlet extends HttpServlet {
                if(i.getName().equals("password")){
                    request.setAttribute("password",i.getValue());
                    System.out.print(i.getValue());
-
                }
-
            }
        }
-        request.getRequestDispatcher("/web/authentication.jsp").forward(request,response);
+        if (request.getSession().getAttribute("userLogged") != null) {
+            response.sendRedirect(request.getContextPath() + "/home");
+        } else {
+            request.getRequestDispatcher("/web/authentication.jsp").forward(request, response);
+        }
     }
 
     @Override
