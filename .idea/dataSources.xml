@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="onlinestore_wepr_cnpm@localhost" uuid="e2eba2e6-f830-45e0-acfd-2e5d53ea0711">
+    <data-source source="LOCAL" name="onlinestore_wepr@localhost" uuid="d3970353-2af3-4cdb-b5c1-c627225c3922">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/onlinestore_wepr_cnpm</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/onlinestore_wepr</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

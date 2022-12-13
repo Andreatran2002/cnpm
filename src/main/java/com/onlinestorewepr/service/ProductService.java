@@ -16,14 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProductService {
   private HttpServletRequest req;
@@ -192,7 +188,22 @@ public class ProductService {
     req.setAttribute("action", "update");
     req.getRequestDispatcher("/admin/update-product.jsp").forward(req, resp);
   }
+  public void getProductDetail() throws ServletException, IOException {
+    ProductDAO productdao = new ProductDAO();
+    int id = Integer.parseInt(req.getParameter("id"));
+    int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
+    Product product = productdao.get(id);
+    List<Product> products = get4ProdcutbyCategory(categoryID);
+    req.setAttribute("product", product );
+    req.setAttribute("products", products);
 
+    req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
+  }
+  public List<Product> get4ProdcutbyCategory(int CategoryID) {
+    List<Product> products = null;
+    products = productDAO.getTopbyCategory(CategoryID);
+    return products;
+  }
   public void UpdateProduct() throws ServletException, IOException {
     String messageBody = "", messageType = "";
     int id = Integer.parseInt(req.getParameter("id"));

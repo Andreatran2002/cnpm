@@ -39,12 +39,13 @@ public class AdminService {
         String password = req.getParameter("password");
 
         User user = authenticate(username,password);
+        User userCreated = userDAO.get(username);
         String errMessage = "";
         boolean hasError = false;
 
         if(username == null ||password==null || username.length()==0 || password.length()==0){
             hasError= true;
-            errMessage = "Please enter Username & Password!";
+            errMessage = "Username & Password cannot be empty!";
         }
         else {
             try{
@@ -52,6 +53,11 @@ public class AdminService {
                 {
                     hasError = true;
                     errMessage = "Username or Password is incorrect!";
+                }
+                if (userCreated == null)
+                {
+                    hasError = true;
+                    errMessage = "Account does not exist!";
                 }
             }
             catch (Exception e){
@@ -70,7 +76,7 @@ public class AdminService {
             HttpSession session = req.getSession();
             session.setAttribute("adminLogged",user);
             session.setMaxInactiveInterval(1000);
-           resp.sendRedirect("/admin/index.jsp");
+            resp.sendRedirect("/admin/index.jsp");
         }
     }
 

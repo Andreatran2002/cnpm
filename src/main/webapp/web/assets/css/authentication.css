@@ -9,6 +9,7 @@
 body {
    font-family: "Nunito Sans", sans-serif;
    font-size: 18px;
+   font-weight: 300;
    -webkit-font-smoothing: antialiased;
    background: #e0d2b0;
 }
@@ -183,9 +184,13 @@ h2 {
 .input-control {
    display: flex;
    width: 400px;
-   margin: 6px auto 0;
+   margin: 8px auto 0;
    padding: 8px 24px;
    border: 1px solid #ccc;
+}
+
+.input-control input {
+   width: 100%;
 }
 
 .input-control.radio {
@@ -211,17 +216,15 @@ input {
    margin-top: 5px;
    padding-bottom: 5px;
    font-size: 16px;
-   width: 80%;
 }
 
 .forgot-pass {
-   margin-top: 15px;
-   text-align: center;
+   margin-left: 24px;
    font-size: 15px;
    color: #5e2516;
 }
 .submit {
-   margin: 28px auto;
+   margin: 20px auto;
    background: #d4af7a;
    text-transform: uppercase;
 }
@@ -275,19 +278,19 @@ input {
    color: red;
    font-size: 15px;
 }
-.message-text-success{
+.message-text-success {
    margin-top: 17px;
    align-items: center;
    text-align: center;
    color: green;
    font-size: 15px;
 }
-.form-group{
+.form-group {
+   width: 400px;
    display: flex;
    font-size: 16px;
-   color: brown;
    text-align: center;
    align-items: center;
-   justify-content: center;
    padding: 12px 0;
+   margin: 0 auto;
 }
