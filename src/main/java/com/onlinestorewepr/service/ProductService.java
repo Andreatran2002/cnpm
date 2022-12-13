@@ -318,30 +318,30 @@ public class ProductService {
     switch (price){
       case "1":
         from=0;
-        to = 200000;
+        to = 50;
         break;
       case "2":
-        from = 200000;
-        to = 500000;
+        from = 50;
+        to = 100;
         break;
 
       case "3":
-        from = 500000;
-        to = 2000000;
+        from = 100;
+        to = 150;
         break;
 
       case "4":
-        from = 2000000;
-        to = 5000000;
+        from = 150;
+        to = 200;
         break;
 
       case "5":
-        from = 5000000;
-        to = 10000000;
+        from = 200;
+        to = 250;
         break;
 
       case "6":
-        from = 10000000;
+        from = 250;
         to = 999999999;
         break;
 
