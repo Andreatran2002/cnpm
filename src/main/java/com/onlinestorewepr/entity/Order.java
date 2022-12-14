@@ -16,9 +16,7 @@ public class Order {
    private String phone;
    private String address;
    private Date created;
-   private int subTotal;
-   private int shippingFee;
-   private int total;
+   private Double total;
    private String note;
    private String payment;
    private String status;
@@ -35,13 +33,11 @@ public class Order {
 
    }
 
-   public Order(String name, String phone, String address, Date created, int subTotal, int shippingFee, int total, String note, String payment, String status, User user, List<OrderItem> orderItems) {
+   public Order(String name, String phone, String address, Date created, Double total, String note, String payment, String status, User user, List<OrderItem> orderItems) {
       this.name = name;
       this.phone = phone;
       this.address = address;
       this.created = created;
-      this.subTotal = subTotal;
-      this.shippingFee = shippingFee;
       this.total = total;
       this.note = note;
       this.payment = payment;
@@ -96,27 +92,11 @@ public class Order {
       this.created = created;
    }
 
-   public int getSubTotal() {
-      return subTotal;
-   }
-
-   public void setSubTotal(int subTotal) {
-      this.subTotal = subTotal;
-   }
-
-   public int getShippingFee() {
-      return shippingFee;
-   }
-
-   public void setShippingFee(int shippingFee) {
-      this.shippingFee = shippingFee;
-   }
-
-   public int getTotal() {
+   public double getTotal() {
       return total;
    }
 
-   public void setTotal(int total) {
+   public void setTotal(double total) {
       this.total = total;
    }
 
@@ -152,7 +132,7 @@ public class Order {
       this.user = user;
    }
 
-   public Order(String name, String phone, String address, Date created, int total, String note, String payment, String status, User user) {
+   public Order(String name, String phone, String address, Date created, Double total, String note, String payment, String status, User user) {
       this.name = name;
       this.phone = phone;
       this.address = address;

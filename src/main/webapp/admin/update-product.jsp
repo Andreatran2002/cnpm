@@ -43,14 +43,12 @@
             <div class="col-xxl">
               <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                  <h5 class="mb-0">Update <strong>MaleFashion Hoodie</strong> Details</h5>
+                  <h5 class="mb-0">Update Product Details</h5>
                   <a href="${pageContext.request.contextPath}/admin/product" class="btn btn-outline-primary">Back</a>
-                 </div>
+                </div>
                 <div class="card-body">
                   <form
-                          onsubmit="return confirm('Are you sure to update this product?');"
-
-                          method="post"
+                      method="post"
                       action="${pageContext.request.contextPath}/admin/product/${action}"
                       enctype="multipart/form-data"
                   >
@@ -204,33 +202,33 @@
 <script src="${pageContext.request.contextPath}/admin/assets/js/main.js"></script>
 
 <script>
-    // Active Menu Item
-    document.getElementById('menu-managements').classList.add('active', 'open')
-    document.getElementById('menu-managements-products').classList.add('active')
+  // Active Menu Item
+  document.getElementById('menu-managements').classList.add('active', 'open')
+  document.getElementById('menu-managements-products').classList.add('active')
 
-    // Press Enter to submit form
-    document.getElementById('brand').addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault()
-            document.querySelector('button[type="submit"]').click()
-        }
-    })
-
-    // Load default img if error
-    let img = document.getElementById('preview-img')
-    img.addEventListener('error', (ev) => {
-        img.setAttribute('src', "/admin/assets/img/default-product-img.png")
-    })
-
-    // Preview image before upload
-    const imgInput = document.getElementById("image")
-    const previewImage = document.getElementById("preview-img")
-    imgInput.onchange = (evt) => {
-        const [file] = imgInput.files
-        if (file) {
-            previewImage.src = URL.createObjectURL(file)
-        }
+  // Press Enter to submit form
+  document.getElementById('brand').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      document.querySelector('button[type="submit"]').click()
     }
+  })
+
+  // Load default img if error
+  let img = document.getElementById('preview-img')
+  img.addEventListener('error', (ev) => {
+    img.setAttribute('src', "/admin/assets/img/default-product-img.png")
+  })
+
+  // Preview image before upload
+  const imgInput = document.getElementById("image")
+  const previewImage = document.getElementById("preview-img")
+  imgInput.onchange = (evt) => {
+    const [file] = imgInput.files
+    if (file) {
+      previewImage.src = URL.createObjectURL(file)
+    }
+  }
 </script>
 </body>
 </html>

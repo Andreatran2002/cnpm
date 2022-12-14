@@ -14,13 +14,13 @@ public class UpdateCategoryServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     CategoryService categoryService = new CategoryService(req, resp);
-    categoryService.ShowUpdateCategory();
+    categoryService.showUpdateCategory();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
     CategoryService categoryService = new CategoryService(req, resp);
-    categoryService.UpdateCategory();
+    categoryService.updateCategory();
   }
 }

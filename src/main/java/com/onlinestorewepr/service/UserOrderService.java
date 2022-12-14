@@ -86,10 +86,9 @@ public class UserOrderService {
     String action;
     String actionTitle;
 
-    HttpSession session = req.getSession();
+    // Fake user login
+    HttpSession session = req.getSession(true);
     User user = (User)session.getAttribute("userLogged");
-
-
     if (user != null) {
       try {
         // Get data from request
@@ -99,20 +98,16 @@ public class UserOrderService {
         String email = req.getParameter("email");
         String note = req.getParameter("note");
         String[] cartItemIds = req.getParameterValues("cartItem");
-        int subTotal = Integer.parseInt(req.getParameter("sub-total"));
-        int shippingFee = Integer.parseInt(req.getParameter("shipping-fee"));
-        int total = Integer.parseInt(req.getParameter("total"));
+        double total = Double.parseDouble(req.getParameter("total"));
         String payment = req.getParameter("payment-mode");
 
         boolean isValidData = !fullname.isEmpty() &&
-                              !phone.isEmpty() &&
-                              !address.isEmpty() &&
-                              !email.isEmpty() &&
-                              cartItemIds.length > 0 &&
-                              subTotal >= 0 &&
-                              total >= 0 &&
-                              shippingFee >= 0 &&
-                              !payment.isEmpty();
+            !phone.isEmpty() &&
+            !address.isEmpty() &&
+            !email.isEmpty() &&
+            cartItemIds.length > 0 &&
+            total >= 0 &&
+            !payment.isEmpty();
 
         if (isValidData) {
           List<OrderItem> orderItems = new ArrayList<>();
@@ -126,7 +121,7 @@ public class UserOrderService {
             orderItems.add(orderItem);
           }
 
-          Order order = new Order(fullname, phone, address, new Date(), subTotal, shippingFee, total, note, payment, "created", user, orderItems);
+          Order order = new Order(fullname, phone, address, new Date(), total, note, payment, "created", user, orderItems);
           orderDAO.insert(order);
 
           // Delete the corresponding cartItem
@@ -136,11 +131,6 @@ public class UserOrderService {
             cartItemDAO.delete(cartItemId);
           }
 
-          //
-          CartDAO cartDAO = new CartDAO();
-          Cart cart = cartDAO.findByUser(user.getUsername());
-          cart.setTotal(0);
-          cartDAO.update(cart);
           // Reduce the number of product
           ProductDAO productDAO = new ProductDAO();
           OrderItemDAO orderItemDAO = new OrderItemDAO();
@@ -149,6 +139,7 @@ public class UserOrderService {
             orderItemDAO.update(orderItem);
             Product product = orderItem.getProduct();
             product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+            product.setSold(product.getSold() + 1);
             productDAO.update(product);
           }
 
@@ -162,7 +153,7 @@ public class UserOrderService {
           actionTitle = "Go to order management page";
 
           // Send email notify
-          String emailSubject = "New Order (#" + order.getId() + ") from Male Fashion Store for " + order.getTotal() + "đ";
+          String emailSubject = "New Order (#" + order.getId() + ") from Male Fashion Store for & " + order.getTotal();
           StringBuilder emailBody = new StringBuilder("*** This is an automated message - please do not reply directly to this email ***\n");
           emailBody.append("Customer: ").append(fullname).append("\n");
           emailBody.append("Phone: ").append(phone).append("\n");
@@ -170,7 +161,8 @@ public class UserOrderService {
           emailBody.append("Your order details:");
 
           for (OrderItem orderItem : orderItems) {
-            emailBody.append("\n - ").append(orderItem.getProduct().getName()).append(" x ").append(orderItem.getQuantity());
+            String data = "\n - " + orderItem.getProduct().getName() + " " + orderItem.getProduct().getColor() + " " + orderItem.getProduct().getSize() + " x " + orderItem.getQuantity();
+            emailBody.append(data);
           }
           emailBody.append("\nThank you for ordering!");
 

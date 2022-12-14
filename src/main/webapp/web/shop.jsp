@@ -219,21 +219,15 @@
                <c:forEach items="${products}" var="product" varStatus="status">
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="product__item ${product.discount>0?"sale":""}">
-                        <div class="product__item__pic set-bg">
-                           <img class="" src="${product.image}" style="object-fit: contain"/>
-
+                        <div class="product__item__pic set-bg" style="display: flex; justify-content: center">
+                           <a href="shop-details?id=${product.id}&CategoryID=${product.category.id}" style="text-align: center">
+                              <img  style="height: 100%;" src="${pageContext.request.contextPath}/${product.image}" alt="product-image">
+                           </a>
                         </div>
 
                         <div class="product__item__text">
                            <h6>${product.name}</h6>
                            <a href="#" class="add-cart" onclick="addtocart(${product.id})">+ Add To Cart</a>
-                           <div class="rating">
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                           </div>
                            <h5>${product.price}</h5>
                            <div class="product__color__select">
 

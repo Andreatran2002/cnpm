@@ -79,12 +79,12 @@
                     <td>${product.discount}</td>
                     <td>${product.available}</td>
                     <td>
-                      <a href="<%request.getContextPath();%>/admin/product/update?id=${product.id}">Change</a>
+                      <a href="${pageContext.request.contextPath}/admin/product/update?id=${product.id}">Change</a>
                     </td>
                     <td>
                       <form
                           onsubmit="return confirm('Are you sure to delete this item?');"
-                          action="<%request.getContextPath();%>/admin/product/delete"
+                          action="${pageContext.request.contextPath}/admin/product/delete"
                           method="post"
                       >
                         <input type="hidden" name="id" value="${product.id}">
@@ -135,8 +135,8 @@
 <!-- Page JS -->
 <!-- Active Menu Item -->
 <script>
-    document.getElementById('menu-managements').classList.add('active', 'open')
-    document.getElementById('menu-managements-products').classList.add('active')
+  document.getElementById('menu-managements').classList.add('active', 'open')
+  document.getElementById('menu-managements-products').classList.add('active')
 </script>
 </body>
 </html>

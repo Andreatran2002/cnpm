@@ -24,6 +24,12 @@
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/owl.carousel.min.css" type="text/css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
+
+   <style>
+      input {
+         color: black !important;
+      }
+   </style>
 </head>
 
 <body>
@@ -54,7 +60,7 @@
 <section class="checkout spad">
    <div class="container">
       <div class="checkout__form">
-         <form action="${pageContext.request.contextPath}/order/add" method="post">
+         <form action="${pageContext.request.contextPath}/order/add" method="post" id="checkout-form">
             <div class="row">
                <div class="col-lg-6 col-md-6">
                   <h6 class="checkout__title">Billing Details</h6>
@@ -85,21 +91,17 @@
                      <div class="checkout__order__products">Product <span>Total</span></div>
                      <ul class="checkout__total__products">
                         <c:forEach items="${cartItems}" var="cartItem">
-                        <li class="order-item">
-                           <input type="hidden" name="cartItem" value="${cartItem.id}">
-                           ${cartItem.quantity} x ${cartItem.product.name}
-                           <span>
-                                 ${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity}
-                           </span>
-                        </li>
+                           <li class="order-item">
+                              <input type="hidden" name="cartItem" value="${cartItem.id}">
+                                 ${cartItem.quantity} x ${cartItem.product.name}
+                              <span>
+                                    ${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity}
+                              </span>
+                           </li>
                         </c:forEach>
                      </ul>
                      <ul class="checkout__total__all">
-                        <input type="hidden" name="sub-total">
-                        <input type="hidden" name="shipping-fee">
                         <input type="hidden" name="total">
-                        <li>Subtotal <span id="sub-total"></span></li>
-                        <li>Shipping fee <span id="shipping-fee"></span></li>
                         <li>Total <span style="font-size: 18px; font-weight: 800;" id="total"></span></li>
                      </ul>
                      <div class="checkout__input__checkbox">
