@@ -71,8 +71,8 @@ public class ProductService {
       String name = req.getParameter("name");
       String image = "temp";
       String description = req.getParameter("description");
-      int price = Integer.parseInt(req.getParameter("price"));
-      int discount = Integer.parseInt(req.getParameter("discount"));
+      Double price = Double.parseDouble(req.getParameter("price"));
+      Double discount = Double.parseDouble(req.getParameter("discount"));
       int quantity = Integer.parseInt(req.getParameter("quantity"));
       String size = req.getParameter("size");
       String color = req.getParameter("color");
@@ -139,13 +139,14 @@ public class ProductService {
       Product product = new Product();
       Part part = req.getPart("image");
       readData(product);
+      product.setSold(0);
       if (product.isPropertiesValid()) {
         try {
           // Save image
           String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
           String now = CommonUtil.getImgDir();
           String realPath = req.getServletContext().getRealPath("/images" + now);
-          // Check if path exist, if not, create a new one
+          // Check if paths exist; if not, create a new one
           Path path = Paths.get(realPath);
           if (!Files.exists(path)) {
             Files.createDirectories(path);
@@ -160,7 +161,7 @@ public class ProductService {
           messageType = "success";
         } catch (Exception ex) {
           ex.printStackTrace();
-          messageBody = "An error occurred when update product's info! Please try again";
+          messageBody = "An error occurred when updating product's info! Please try again";
           messageType = "danger";
         }
       } else {
@@ -210,9 +211,10 @@ public class ProductService {
     Product existedProduct = productDAO.get(id);
     Product product = new Product();
     readData(product);
+    product.setSold(existedProduct.getSold());
     if (product.isPropertiesValid() && existedProduct != null) {
       try {
-        // If upload another image, assign the new and delete the old
+        // Assign the new image and delete the old if you upload another image.
         Part part = req.getPart("image");
         if (!part.getSubmittedFileName().isEmpty()) {
           String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
@@ -255,6 +257,7 @@ public class ProductService {
     String messageBody = "", messageType = "";
     int id = Integer.parseInt(req.getParameter("id"));
     if (id != 0) {
+      System.out.println("Id: "+id);
       Product product = productDAO.get(id);
       if (product != null) {
         if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
@@ -296,7 +299,7 @@ public class ProductService {
     HttpSession session = req.getSession();
     Cart cart = cartDAO.findByUser(user.getUsername());
 
-    int from = 0 , to = 999999999;
+    double from = 0.0 , to = 999999999.0;
     if (key== null){
       key= "";
     }

@@ -147,12 +147,12 @@ public class ProductDAO {
       count = products.size();
       return products;
    }
-   public List<Product> getProductPaging(int offset, int limit, String cateid , String size ,String name , int from, int to , int orderType ) {
+   public List<Product> getProductPaging(int offset, int limit, String cateid , String size ,String name , double from, double to , int orderType ) {
       List<Product> products = null;
       Query query = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "";
-         if (cateid !=""){
+         if (cateid != ""){
             switch (orderType ){
                case 0 :
                   HQL = "select c from Product c where c.category.id= :cateid and c.name like :name and  c.size like :size and c.price >= :price_from and c.price < :price_to ORDER BY c.id";
@@ -215,9 +215,7 @@ public class ProductDAO {
    public Product get(int id) {
       Product product = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
          product = session.get(Product.class, id);
-
       } catch (Exception e) {
          e.printStackTrace();
       }

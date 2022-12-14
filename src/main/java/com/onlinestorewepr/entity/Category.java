@@ -8,19 +8,13 @@ import java.util.List;
 public class Category {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
-   private String description;
-
    public Category() {
    }
 
-   public Category(String name, String description) {
+   public Category(String name) {
       this.name = name;
-      this.description = description;
    }
 
    @OneToMany(mappedBy = "category")
@@ -40,14 +34,6 @@ public class Category {
 
    public void setName(String name) {
       this.name = name;
-   }
-
-   public String getDescription() {
-      return description;
-   }
-
-   public void setDescription(String description) {
-      this.description = description;
    }
 
    public List<Product> getProducts() {

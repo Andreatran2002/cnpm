@@ -10,7 +10,7 @@ public class OrderItem {
    @Column
    private int id;
    @Column
-   private int price;
+   private Double price;
    @Column
    private int quantity;
 
@@ -30,11 +30,11 @@ public class OrderItem {
       this.id = id;
    }
 
-   public int getPrice() {
+   public Double getPrice() {
       return price;
    }
 
-   public void setPrice(int price) {
+   public void setPrice(Double price) {
       this.price = price;
    }
 

@@ -54,7 +54,6 @@
                 <div class="card-body">
                   <form
                       method="post"
-                      onsubmit="return confirm('Are you sure to update this category?');"
                       action="${pageContext.request.contextPath}/admin/category/${action}"
                   >
                     <div class="row mb-3">
@@ -75,18 +74,6 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="category-description">Description</label>
-                      <div class="col-sm-10">
-                        <textarea
-                            aria-label="Hi, Do you have a moment to talk Joe?"
-                            aria-describedby="basic-icon-default-message2"
-                            class="form-control"
-                            id="category-description"
-                            name="description"
-                            placeholder="Enter description"
-                            required
-                        >${category.description}</textarea>
-                      </div>
                       <c:if test="${message != null}">
                         <div class="col-sm-12 d-flex justify-content-end my-3">
                           <p class="text-${message.type}">${message.body}</p>

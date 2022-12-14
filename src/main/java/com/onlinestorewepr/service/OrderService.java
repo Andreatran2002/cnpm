@@ -63,7 +63,7 @@ public class OrderService {
     }
 
 
-    public void createOrder(String name, String phone, String address, int total, String note, String payment, String status, String username) {
+    public void createOrder(String name, String phone, String address, Double total, String note, String payment, String status, String username) {
         String message="", messageType="";
         try {
             Order order = new Order(name, phone,address, new Date() ,total,note,payment,status, userDAO.get(username));

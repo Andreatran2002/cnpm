@@ -7,26 +7,14 @@ import java.util.List;
 @Table(name = "users")
 public class User {
    @Id
-   @Column
    private String username;
-
-   @Column
    private String password;
-   @Column
    private boolean isAdmin;
-   @Column
    private String name;
-   @Column
    private String phone;
-   @Column
    private String gender;
-   @Column
    private String address;
-   @Column
    private String email;
-
-
-   @Column
    private String image;
 
    @OneToOne(cascade = CascadeType.ALL)
@@ -37,6 +25,13 @@ public class User {
    private List<Order> orders;
 
    public User() {}
+   public User(String username, String password, boolean isAdmin, String name, Cart cart) {
+      this.username = username;
+      this.password = password;
+      this.isAdmin = isAdmin;
+      this.name = name;
+      this.cart = cart;
+   }
 
    public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, String email, Cart cart, List<Order> orders) {
       this.username = username;

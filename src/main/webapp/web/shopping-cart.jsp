@@ -98,11 +98,11 @@
                     <h6>${cartItem.product.name} </h6>
                     <h6>${cartItem.product.color} ${cartItem.product.size}</h6>
                     <c:if test="${cartItem.product.discount != 0}">
-                      <span style="font-size: 18px; font-weight: 700;">${cartItem.product.discount}đ</span>
-                      <span style="text-decoration: line-through; color: gray;">${cartItem.product.price}đ</span>
+                      <span style="font-size: 18px; font-weight: 700;">$${cartItem.product.discount}</span>
+                      <span style="text-decoration: line-through; color: gray;">$${cartItem.product.price}</span>
                     </c:if>
                     <c:if test="${cartItem.product.discount == 0}">
-                      <h5>${cartItem.product.price}đ</h5>
+                      <h5>$${cartItem.product.price}</h5>
                     </c:if>
                   </div>
                 </td>
@@ -113,7 +113,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
+                <td class="cart__price">$${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity}</td>
                 <td class="cart__close">
                   <form
                           onsubmit="return confirm('Are you sure to delete this item?');"

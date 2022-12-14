@@ -39,27 +39,26 @@ public class CategoryService {
   public void AddCategory() throws ServletException, IOException {
     String messageBody, messageType;
     String name = req.getParameter("name").trim();
-    String description = req.getParameter("description").trim();
 
-    if (!name.isEmpty() && !description.isEmpty()) {
+    if (!name.isEmpty()) {
       // Check if a category with the same name already exists in DB
       if (categoryDAO.findByName(name) == null) {
         try {
-          Category category = new Category(name, description);
+          Category category = new Category(name);
           categoryDAO.insert(category);
           messageBody = "A new category was created successfully!";
           messageType = "success";
         } catch (Exception e) {
           e.printStackTrace();
-          messageBody = "An error occurred when creating a new category! Please try again";
+          messageBody = "An error occurred when creating a new category! Please try again.";
           messageType = "danger";
         }
       } else {
-        messageBody = String.format("A category with name %s already exists! Please choose another name", name);
+        messageBody = String.format("A category with the name %s already exists! Please choose another name.", name);
         messageType = "danger";
       }
     } else {
-      messageBody = "Name and description cannot be empty!";
+      messageBody = "Name and description cannot be left blank!";
       messageType = "danger";
     }
     message.setBody(messageBody);
@@ -70,7 +69,7 @@ public class CategoryService {
     req.getRequestDispatcher("/admin/update-category.jsp").forward(req, resp);
   }
 
-  public void ShowUpdateCategory() throws ServletException, IOException {
+  public void showUpdateCategory() throws ServletException, IOException {
     int id = req.getParameter("id") == null ? 0 : Integer.parseInt(req.getParameter("id"));
     Category category = categoryDAO.get(id);
     req.setAttribute("action", "update");
@@ -79,21 +78,18 @@ public class CategoryService {
     req.getRequestDispatcher("/admin/update-category.jsp").forward(req, resp);
   }
 
-  public void UpdateCategory() throws ServletException, IOException {
-    Category category = null;
+  public void updateCategory() throws ServletException, IOException {
     String messageBody = "", messageType = "";
     int id = req.getParameter("id") == null ? 0 : Integer.parseInt(req.getParameter("id"));
     String name = req.getParameter("name").trim();
-    String description = req.getParameter("description").trim();
 
-    if (id != 0 && !name.isEmpty() && !description.isEmpty()) {
-      category = categoryDAO.get(id);
+    if (id != 0 && !name.isEmpty()) {
+      Category category = categoryDAO.get(id);
       if (category != null) {
         try {
           category.setName(name);
-          category.setDescription(description);
           categoryDAO.update(category);
-          messageBody = "Category's info was changed successfully!";
+          messageBody = "The category's info was changed successfully!";
           messageType = "success";
         } catch (Exception e) {
           e.printStackTrace();
@@ -106,34 +102,33 @@ public class CategoryService {
       }
     }
     else {
-      messageBody = "All fields cannot be empty!";
+      messageBody = "All fields cannot be left blank!";
       messageType = "danger";
     }
     message.setBody(messageBody);
     message.setType(messageType);
 
     req.setAttribute("message", message);
-    req.setAttribute("category", category);
     req.getRequestDispatcher("/admin/update-category.jsp").forward(req, resp);
   }
 
   public void DeleteCategory() throws ServletException, IOException {
-    String messageBody = "", messageType = "";
+    String messageBody, messageType;
     int id = Integer.parseInt(req.getParameter("id"));
     if (id != 0) {
       Category category = categoryDAO.get(id);
       if (category != null) {
         if (category.getProducts().isEmpty()) {
           categoryDAO.delete(id);
-          messageBody = "Category was deleted successfully!";
+          messageBody = "The category was successfully deleted!";
           messageType = "primary";
         } else {
-          messageBody = "Cannot delete this category, this category has currently contains some products.";
+          messageBody = "Cannot delete this category, there are currently some products in this category.";
           messageType = "danger";
         }
       }
       else {
-        messageBody = "Category doesn't exist";
+        messageBody = "Category doesn't exist.";
         messageType = "danger";
       }
     }
