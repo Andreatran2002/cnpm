@@ -59,6 +59,7 @@
          <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
                <ul>
+                  <li id="menu-seller"><a href="${pageContext.request.contextPath}/seller/home">Sales Channel</a></li>
                   <li id="menu-home"><a href="${pageContext.request.contextPath}/home">Home</a></li>
                   <li id="menu-shop"><a href="${pageContext.request.contextPath}/shop">Shop</a></li>
                   <li id="menu-contact"><a href="${pageContext.request.contextPath}/web/contact.jsp">Contacts</a></li>

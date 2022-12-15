@@ -16,12 +16,11 @@ public class AdminService {
     HttpServletResponse resp;
     HttpServletRequest req;
 
-    public AdminService(HttpServletRequest req, HttpServletResponse resp)
-    {
+    public AdminService(HttpServletRequest req, HttpServletResponse resp) {
         this.req = req;
         this.resp = resp;
         userDAO = new UserDAO();
-        serviceResult= new ServiceResult();
+        serviceResult = new ServiceResult();
     }
 
     public User authenticate(String username, String password) {
@@ -38,56 +37,51 @@ public class AdminService {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        User user = authenticate(username,password);
+        User user = authenticate(username, password);
         User userCreated = userDAO.get(username);
         String errMessage = "";
         boolean hasError = false;
 
-        if(username == null ||password==null || username.length()==0 || password.length()==0){
-            hasError= true;
+        if (username == null || password == null || username.length() == 0 || password.length() == 0) {
+            hasError = true;
             errMessage = "Username & Password cannot be empty!";
-        }
-        else {
-            try{
-                if (user == null)
-                {
+        } else {
+            try {
+                if (user == null) {
                     hasError = true;
                     errMessage = "Username or Password is incorrect!";
                 }
-                if (userCreated == null)
-                {
+                if (userCreated == null) {
                     hasError = true;
                     errMessage = "Account does not exist!";
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 hasError = true;
                 errMessage = e.getMessage();
             }
         }
 
-        if(hasError)
-        {
-            req.setAttribute("message",errMessage);
-            req.getRequestDispatcher("/admin/login.jsp").forward(req,resp);
-        }
-        else {
+        if (hasError) {
+            req.setAttribute("message", errMessage);
+            req.getRequestDispatcher("/admin/login.jsp").forward(req, resp);
+        } else {
             HttpSession session = req.getSession();
-            session.setAttribute("adminLogged",user);
+            session.setAttribute("adminLogged", user);
             session.setMaxInactiveInterval(1000);
             resp.sendRedirect("/admin/index.jsp");
         }
     }
 
-    public void updateAdminProfile() throws ServletException, IOException{
+    public void updateAdminProfile() throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         User user = (User) req.getSession().getAttribute("adminLogged");
         editAdminProfile(user);
         userDAO.update(user);
-        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req,resp);
+        req.getRequestDispatcher("/admin/account-profile.jsp").forward(req, resp);
     }
-    public void editAdminProfile(User user){
+
+    public void editAdminProfile(User user) {
         String username = req.getParameter("username");
         String name = req.getParameter("name");
         String password = req.getParameter("password");
