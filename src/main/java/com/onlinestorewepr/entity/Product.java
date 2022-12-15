@@ -29,6 +29,11 @@ public class Product {
    @Column
    private String brand;
    @Column
+   private int sellerId;
+
+   @Column
+   private int sold=0;
+   @Column
    private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
@@ -184,5 +189,21 @@ public class Product {
           !this.size.isEmpty() &&
           !this.color.isEmpty() &&
           !this.brand.isEmpty());
+   }
+
+   public int getSold() {
+      return sold;
+   }
+
+   public void setSold(int sold) {
+      this.sold = sold;
+   }
+
+   public int getSellerId() {
+      return sellerId;
+   }
+
+   public void setSellerId(int sellerId) {
+      this.sellerId = sellerId;
    }
 }

@@ -72,6 +72,7 @@ public class ProductService {
       String image = "temp";
       String description = req.getParameter("description");
       int price = Integer.parseInt(req.getParameter("price"));
+      int sellerId = Integer.parseInt(req.getParameter("sellerId"));
       int discount = Integer.parseInt(req.getParameter("discount"));
       int quantity = Integer.parseInt(req.getParameter("quantity"));
       String size = req.getParameter("size");
@@ -81,6 +82,7 @@ public class ProductService {
       product.setAvailable(available);
       product.setCategory(category);
       product.setName(name);
+      product.setSellerId(sellerId);
       product.setImage(image);
       product.setDescription(description);
       product.setPrice(price);
@@ -191,9 +193,8 @@ public class ProductService {
   public void getProductDetail() throws ServletException, IOException {
     ProductDAO productdao = new ProductDAO();
     int id = Integer.parseInt(req.getParameter("id"));
-    int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
     Product product = productdao.get(id);
-    List<Product> products = get4ProdcutbyCategory(categoryID);
+    List<Product> products = get4ProdcutbyCategory(product.getCategory().getId());
     req.setAttribute("product", product );
     req.setAttribute("products", products);
 
@@ -369,53 +370,6 @@ public class ProductService {
     req.setAttribute("categories", categories);
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
-//  public void GetProductAjax() throws IOException {
-//
-//    String exist = req.getParameter("exist");
-//    int amount = 0 ;
-//    if (exist!= null){
-//      amount = Integer.parseInt(exist);
-//    }
-//    resp.setCharacterEncoding("UTF-8");
-//    List<Product> products = productDAO.getProductPaging(amount, 9);
-//
-//
-//    PrintWriter out = resp.getWriter();
-//        for (Product product : products) {
-//            out.println("       <div class=\"col-lg-4 col-md-6 col-sm-6\">\n" +
-//                    "                     <div class=\"product__item "+(product.getDiscount()>0?"sale":"") +"\">\n" +
-//                    "                        <div class=\"product__item__pic set-bg\" data-setbg=\"./web/assets/img/product/product-2.jpg\">\n" +
-//                    "                           <ul class=\"product__hover\">\n" +
-//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/heart.png\" alt=\"\"></a></li>\n" +
-//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/compare.png\" alt=\"\"> <span>Compare</span></a>\n" +
-//                    "                              </li>\n" +
-//                    "                              <li><a href=\"#\"><img src=\"./web/assets/img/icon/search.png\" alt=\"\"></a></li>\n" +
-//                    "                           </ul>\n" +
-//                    "                        </div>\n" +
-//                    "                        <div class=\"product__item__text\">\n" +
-//                    "                           <h6>"+product.getName()+"</h6>\n" +
-//                    "                           <a href=\"#\" class=\"add-cart\">+ Add To Cart</a>\n" +
-//                    "                           <div class=\"rating\">\n" +
-//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-//                    "                              <i class=\"fa fa-star-o\"></i>\n" +
-//                    "                           </div>\n" +
-//                    "                           <h5>"+product.getPrice()+"</h5>\n" +
-//                    "                           <div class=\"product__color__select\">\n" +
-//                    "\n" +
-//                    "                              <label class=\"active "+product.getColor()+"\" for=\"pc-5\">\n" +
-//                    "                                 <input type=\"radio\" id=\"pc-5\">\n" +
-//                    "                              </label>\n" +
-//                    "\n" +
-//                    "                           </div>\n" +
-//                    "                        </div>\n" +
-//                    "                     </div>\n" +
-//                    "                  </div>");
-//        }
-//
-//  }
 
   public void FilterProduct(){
     String exist = req.getParameter("exist");

@@ -61,7 +61,7 @@
                <ul>
                   <li id="menu-home"><a href="${pageContext.request.contextPath}/home">Home</a></li>
                   <li id="menu-shop"><a href="${pageContext.request.contextPath}/shop">Shop</a></li>
-                  <li id="menu-contact"><a href="${pageContext.request.contextPath}/web/contact.jsp">Contacts</a></li>
+                  <li id="menu-contact"><a href="${pageContext.request.contextPath}/contact">Contacts</a></li>
                </ul>
             </nav>
          </div>

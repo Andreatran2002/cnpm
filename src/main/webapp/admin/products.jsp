@@ -100,9 +100,9 @@
                 </c:forEach>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-center my-3">
-                <a href="${pageContext.request.contextPath}/admin/product/add" type="submit" class="btn btn-primary">Add new</a>
-              </div>
+<%--              <div class="d-flex justify-content-center my-3">--%>
+<%--                <a href="${pageContext.request.contextPath}/admin/product/add" type="submit" class="btn btn-primary">Add new</a>--%>
+<%--              </div>--%>
             </div>
           </div>
         </div>

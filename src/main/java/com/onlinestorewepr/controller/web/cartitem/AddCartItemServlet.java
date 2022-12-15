@@ -26,7 +26,6 @@ public class AddCartItemServlet extends HttpServlet {
         System.out.println("Cart-item : "+user.getUsername());
 
         cartService.createCartItem(user.getUsername());
-
     }
 
     @Override
