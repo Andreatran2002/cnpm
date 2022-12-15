@@ -26,6 +26,10 @@ public class Product {
    @JoinColumn(name = "categoryId")
    private Category category;
 
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
+   private Seller seller;
+
    @OneToMany(mappedBy = "product")
    private List<CartItem> cartItems;
 

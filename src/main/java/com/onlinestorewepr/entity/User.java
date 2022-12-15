@@ -21,6 +21,10 @@ public class User {
    @JoinColumn(name = "cartId", referencedColumnName = "id")
    private Cart cart;
 
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
+   private Seller seller;
+
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private List<Order> orders;
 
@@ -60,6 +64,14 @@ public class User {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public Seller getSeller() {
+      return seller;
+   }
+
+   public void setSeller(Seller seller) {
+      this.seller = seller;
    }
 
    public boolean isAdmin() {
