@@ -1,6 +1,6 @@
-package com.onlinestorewepr.controller.seller.product;
+package com.onlinestorewepr.controller.web.order;
 
-import com.onlinestorewepr.service.ProductService;
+import com.onlinestorewepr.service.UserOrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = {"/seller/product"})
-public class ProductServlet extends HttpServlet {
+@WebServlet( "/order")
+public class OrderServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productService = new ProductService(req, resp);
-    productService.ListProductsInSeller();
+    UserOrderService userOrderService = new UserOrderService(req, resp);
+    userOrderService.showOrderPage();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doGet(req, resp);
   }
 }

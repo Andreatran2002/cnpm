@@ -37,13 +37,13 @@
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="mb-0">Update Orders Details</h5>
-                      <a href="${pageContext.request.contextPath}/admin/orders" class="btn btn-outline-primary">Back</a>
+                      <a href="${pageContext.request.contextPath}/seller/orders" class="btn btn-outline-primary">Back</a>
                     </div>
                     <div class="card-body">
                       <form method="post"
                             onsubmit="return confirm('Are you sure to update this order?');"
 
-                            action="${pageContext.request.contextPath}/admin/${action}-order?id=${order.id}" enctype="multipart/form-data">
+                            action="${pageContext.request.contextPath}/seller/${action}-order?id=${order.id}" enctype="multipart/form-data">
                         <div class="row mb-3">
                           <div class="col-sm-10">
                             <input class="form-control" id="id" name="id" placeholder="ID" type="hidden" value="${order.id}"/>

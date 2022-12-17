@@ -16,13 +16,13 @@ public class UpdateProductServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     ProductService productService = new ProductService(req, resp);
-    productService.ShowUpdateProduct();
+    productService.ShowUpdateProductFromSeller();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
     ProductService productService = new ProductService(req, resp);
-    productService.UpdateProduct();
+    productService.UpdateProductFromSeller();
   }
 }

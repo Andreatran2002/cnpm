@@ -44,6 +44,7 @@ public class ProductDAO {
         return products;
     }
 
+
     public List<Product> getBySeller(int selelrid) {
         List<Product> products = null;
 

@@ -39,13 +39,11 @@ public class SellerService {
         this.resp = resp;
         this.sellerDAO = new SellerDAO();
         this.message = new MessageUtil();
-    }
-
-    public SellerService() {
         userDAO = new UserDAO();
         sellerDAO = new SellerDAO();
         serviceResult = new ServiceResult();
     }
+
 
 
     public void showProfile() throws ServletException, IOException {
@@ -54,6 +52,40 @@ public class SellerService {
         req.setAttribute("seller", seller);
         resp.setContentType("text/html;charset=UTF-8");
         req.getRequestDispatcher("/seller/profile.jsp").forward(req,resp);
+    }
+    public void RegisterSeller() throws ServletException, IOException {
+        try{
+            HttpSession session = req.getSession();
+            User user = (User) session.getAttribute("userLogged");
+            if (user!= null){
+                if (user!= null){
+                    Seller seller = new Seller();
+                    seller.setSellerName(user.getUsername());
+                    seller.setUser(user);
+                    seller.setStatus(1);
+                    seller.setImage("asset/default.png");
+
+                    sellerDAO.insert(seller);
+//                    System.out.print();
+//                    User savedUser = userDAO.get(seller.getUser().getUsername());
+
+                    user.setSeller(sellerDAO.getBySellerName(seller.getSellerName()));
+
+                    userDAO.update(user);
+                    req.getRequestDispatcher("/logout").forward(req,resp);
+
+                }
+            }
+            else {
+                req.getRequestDispatcher("/").forward(req,resp);
+            }
+
+        }catch (Exception e){
+            req.getRequestDispatcher("/").forward(req,resp);
+            e.printStackTrace();
+        }
+
+
     }
 
 

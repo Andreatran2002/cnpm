@@ -1,11 +1,13 @@
 package com.onlinestorewepr.dao;
 
 import com.onlinestorewepr.entity.Cart;
+import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.entity.Seller;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -41,6 +43,22 @@ public class SellerDAO {
                 transaction.rollback();
             }
         }
+    }
+    public Seller getBySellerName(String name){
+        Seller seller = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String HQL = "SELECT c FROM Seller c WHERE c.sellerName = :name";
+            Query query = session.createQuery(HQL);
+            query.setParameter("name", name);
+            List<Seller> sellers = query.getResultList();
+            if (!sellers.isEmpty()) {
+                seller = sellers.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return seller;
     }
 
     public void delete(int id) {

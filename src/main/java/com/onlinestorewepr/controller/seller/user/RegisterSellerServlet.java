@@ -1,4 +1,8 @@
-package com.onlinestorewepr.controller.seller.authentication;
+package com.onlinestorewepr.controller.seller.user;
+
+
+import com.onlinestorewepr.service.ProductService;
+import com.onlinestorewepr.service.SellerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,16 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet( name = "LogoutSellerServlet", value = {"/seller/seller-logout"})
-public class SellerLogoutServlet extends HttpServlet {
+@WebServlet(value = {"/registerseller"})
+public class RegisterSellerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        SellerService sellerService = new SellerService(req, resp);
+        sellerService.RegisterSeller();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().removeAttribute("sellerLogged");
-        req.getRequestDispatcher("/seller/login-seller").forward(req,resp);
+        doGet(req, resp);
     }
 }
+

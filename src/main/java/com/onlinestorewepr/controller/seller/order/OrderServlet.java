@@ -14,7 +14,7 @@ public class OrderServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     OrderService orderService = new OrderService(req,resp);
-    orderService.ListOrder();
+    orderService.ListOrderFromSeller();
   }
 
 }

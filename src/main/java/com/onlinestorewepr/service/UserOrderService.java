@@ -50,6 +50,26 @@ public class UserOrderService {
     this.orderDAO = new OrderDAO();
     this.messageUtil = new MessageUtil();
   }
+  public void showOrderPage() throws IOException {
+
+    HttpSession session = req.getSession();
+    User user = (User)session.getAttribute("userLogged");
+    if (user != null) {
+      try {
+        List<Order> orders = orderDAO.getByUser(user.getUsername());
+
+
+        req.setAttribute("orders", orders);
+        req.getRequestDispatcher("/web/orders.jsp").forward(req, resp);
+
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+    else {
+      resp.sendRedirect("/login");
+    }
+  }
 
   public void viewCheckout() throws IOException {
     // Fake user login
@@ -102,12 +122,12 @@ public class UserOrderService {
         String payment = req.getParameter("payment-mode");
 
         boolean isValidData = !fullname.isEmpty() &&
-            !phone.isEmpty() &&
-            !address.isEmpty() &&
-            !email.isEmpty() &&
-            cartItemIds.length > 0 &&
-            total >= 0 &&
-            !payment.isEmpty();
+                !phone.isEmpty() &&
+                !address.isEmpty() &&
+                !email.isEmpty() &&
+                cartItemIds.length > 0 &&
+                total >= 0 &&
+                !payment.isEmpty();
 
         if (isValidData) {
           List<OrderItem> orderItems = new ArrayList<>();

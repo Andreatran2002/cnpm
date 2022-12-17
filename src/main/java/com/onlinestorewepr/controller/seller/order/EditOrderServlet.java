@@ -15,14 +15,14 @@ public class EditOrderServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     OrderService orderService = new OrderService(req,resp);
-    orderService.ShowEditOrderServlet();
+    orderService.ShowEditOrderFromSeller();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     OrderService orderService = new OrderService(req,resp);
-    orderService.UpdateOrder();
+    orderService.UpdateOrderFromSeller();
   }
 
 }

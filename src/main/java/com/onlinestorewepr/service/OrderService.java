@@ -5,6 +5,7 @@ import com.onlinestorewepr.dao.OrderDAO;
 import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Order;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.MessageUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -14,6 +15,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +44,16 @@ public class OrderService {
         req.setAttribute("orders", orders);
         req.getRequestDispatcher("/admin/orders.jsp").forward(req, resp);
     }
+    public void ListOrderFromSeller() throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("userLogged");
+
+        List<Order> orders = orderDAO.getOrderFromSelelr(user.getSeller().getSellerId());
+        System.out.println(orders);
+
+        req.setAttribute("orders", orders);
+        req.getRequestDispatcher("/seller/orders.jsp").forward(req, resp);
+    }
     public void ShowEditOrderServlet() throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         if (id != 0) {
@@ -51,6 +63,16 @@ public class OrderService {
         }
 
         req.getRequestDispatcher("/admin/update-order.jsp").forward(req, resp);
+    }
+public void ShowEditOrderFromSeller() throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        if (id != 0) {
+            Order order = orderDAO.get(id);
+            req.setAttribute("order", order);
+            req.setAttribute("action", "edit");
+        }
+
+        req.getRequestDispatcher("/seller/update-order.jsp").forward(req, resp);
     }
 
 
@@ -135,6 +157,37 @@ public class OrderService {
             }
             orderDAO.update(order);
             resp.sendRedirect(req.getContextPath() + "/admin/orders");
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        } catch (Exception e) {e.printStackTrace();}
+
+    }
+    public void UpdateOrderFromSeller() {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Order order = orderDAO.get(id);
+        DiskFileItemFactory diskFileItemFactory = new
+                DiskFileItemFactory();
+        ServletFileUpload servletFileUpload = new
+                ServletFileUpload(diskFileItemFactory);
+        servletFileUpload.setHeaderEncoding("UTF-8");
+        try {
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            List<FileItem> items = servletFileUpload.parseRequest(req);
+            for (FileItem item : items) {
+                if (item.getFieldName().equals("order-phone")) {
+                    order.setPhone(item.getString("UTF-8"));
+                }
+                if (item.getFieldName().equals("order-address")) {
+                    order.setAddress(item.getString("UTF-8"));
+                }
+                if (item.getFieldName().equals("order-status")) {
+                    order.setStatus(item.getString("UTF-8"));
+                }
+            }
+            orderDAO.update(order);
+            resp.sendRedirect(req.getContextPath() + "/seller/orders");
         } catch (FileUploadException e) {
             e.printStackTrace();
         } catch (Exception e) {e.printStackTrace();}

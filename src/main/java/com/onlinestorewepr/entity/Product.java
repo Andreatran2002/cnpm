@@ -15,12 +15,14 @@ public class Product {
    private String description;
    private Double price;
    private Integer quantity;
-   private Integer sold;
+   private Integer sold= 0 ;
    private Double discount;
    private String size;
    private String color;
    private String brand;
-   private Boolean available=false;
+
+   @Column
+   private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "categoryId")
@@ -105,10 +107,6 @@ public class Product {
 
    public void setQuantity(Integer quantity) {
       this.quantity = quantity;
-   }
-
-   public Integer getSold() {
-      return sold;
    }
 
    public void setSold(Integer sold) {
@@ -199,5 +197,21 @@ public class Product {
           !this.size.isEmpty() &&
           !this.color.isEmpty() &&
           !this.brand.isEmpty());
+   }
+
+   public int getSold() {
+      return sold;
+   }
+
+   public void setSold(int sold) {
+      this.sold = sold;
+   }
+
+   public Seller getSeller() {
+      return seller;
+   }
+
+   public void setSeller(Seller seller) {
+      this.seller = seller;
    }
 }

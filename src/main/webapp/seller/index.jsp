@@ -563,7 +563,6 @@
             </div>
             <!-- / Content -->
 
-            <jsp:include page="${pageContext.request.contextPath}/seller/footer.jsp" />
             </div>
             <!-- Content wrapper -->
          </div>
