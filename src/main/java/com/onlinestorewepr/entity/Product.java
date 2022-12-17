@@ -8,37 +8,29 @@ import java.util.List;
 public class Product {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
    private String image="";
    @Column(columnDefinition = "LONGTEXT")
    private String description;
-   @Column
-   private int price;
-   @Column
-   private int quantity;
-   @Column
-   private int discount;
-   @Column
+   private Double price;
+   private Integer quantity;
+   private Integer sold= 0 ;
+   private Double discount;
    private String size;
-   @Column
    private String color;
-   @Column
    private String brand;
-   @Column
-   private int sellerId;
 
-   @Column
-   private int sold=0;
    @Column
    private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "categoryId")
    private Category category;
+
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
+   private Seller seller;
 
    @OneToMany(mappedBy = "product")
    private List<CartItem> cartItems;
@@ -47,7 +39,7 @@ public class Product {
    private List<OrderItem> orderItems;
 
 
-   public Product(String name, String image, String description, int price, int quantity, int discount, String size, String color, String brand, boolean status, Category category) {
+   public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean status, Category category) {
       this.name = name;
       this.description = description;
       this.price = price;
@@ -65,7 +57,7 @@ public class Product {
 
    }
 
-   public int getId() {
+   public long getId() {
       return id;
    }
 
@@ -97,11 +89,11 @@ public class Product {
       this.description = description;
    }
 
-   public int getPrice() {
+   public Double getPrice() {
       return price;
    }
 
-   public void setPrice(int price) {
+   public void setPrice(Double price) {
       this.price = price;
    }
 
@@ -113,11 +105,27 @@ public class Product {
       this.quantity = quantity;
    }
 
-   public int getDiscount() {
+   public void setQuantity(Integer quantity) {
+      this.quantity = quantity;
+   }
+
+   public void setSold(Integer sold) {
+      this.sold = sold;
+   }
+
+   public Boolean getAvailable() {
+      return available;
+   }
+
+   public void setAvailable(Boolean available) {
+      this.available = available;
+   }
+
+   public Double getDiscount() {
       return discount;
    }
 
-   public void setDiscount(int discount) {
+   public void setDiscount(Double discount) {
       this.discount = discount;
    }
 
@@ -199,11 +207,11 @@ public class Product {
       this.sold = sold;
    }
 
-   public int getSellerId() {
-      return sellerId;
+   public Seller getSeller() {
+      return seller;
    }
 
-   public void setSellerId(int sellerId) {
-      this.sellerId = sellerId;
+   public void setSeller(Seller seller) {
+      this.seller = seller;
    }
 }

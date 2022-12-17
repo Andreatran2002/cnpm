@@ -7,36 +7,35 @@ import java.util.List;
 @Table(name = "users")
 public class User {
    @Id
-   @Column
    private String username;
-
-   @Column
    private String password;
-   @Column
    private boolean isAdmin;
-   @Column
    private String name;
-   @Column
    private String phone;
-   @Column
    private String gender;
-   @Column
    private String address;
-   @Column
    private String email;
-
-
-   @Column
    private String image;
 
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "cartId", referencedColumnName = "id")
    private Cart cart;
 
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
+   private Seller seller;
+
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private List<Order> orders;
 
    public User() {}
+   public User(String username, String password, boolean isAdmin, String name, Cart cart) {
+      this.username = username;
+      this.password = password;
+      this.isAdmin = isAdmin;
+      this.name = name;
+      this.cart = cart;
+   }
 
    public User(String username, String password, boolean isAdmin, String name, String phone, String gender, String address, String email, Cart cart, List<Order> orders) {
       this.username = username;
@@ -65,6 +64,14 @@ public class User {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public Seller getSeller() {
+      return seller;
+   }
+
+   public void setSeller(Seller seller) {
+      this.seller = seller;
    }
 
    public boolean isAdmin() {

@@ -1,6 +1,8 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.dao.CartDAO;
 import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
@@ -219,6 +221,11 @@ public class UserService {
             userNew.setEmail(email);
             userDAO.insert(userNew);
 
+            Cart cart = new Cart(0.0, userNew);
+            new CartDAO().insert(cart);
+            userNew.setCart(cart);
+            userDAO.update(userNew);
+
             //Inform success in form
             message= "Create success! Sign in to get started";
             req.setAttribute("action","signup");
@@ -365,6 +372,7 @@ public class UserService {
         req.setAttribute("accounts", accounts);
         req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
     }
+
     public void ShowEditUser()throws ServletException, IOException{
         String username = req.getParameter("username");
         if (username != null) {

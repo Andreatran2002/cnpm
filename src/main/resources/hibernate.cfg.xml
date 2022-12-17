@@ -8,7 +8,6 @@
       <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/onlinestore_wepr?useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8</property>
       <property name="hibernate.connection.username">root</property>
       <property name="hibernate.connection.password">123Phuongvy</property>
-
       <property name="hibernate.show_sql">true</property>
       <!-- SQL dialect -->
       <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
@@ -29,6 +28,7 @@
       <mapping class="com.onlinestorewepr.entity.OrderItem" />
       <mapping class="com.onlinestorewepr.entity.Product" />
       <mapping class="com.onlinestorewepr.entity.User" />
+      <mapping class="com.onlinestorewepr.entity.Seller" />
 
    </session-factory>
 </hibernate-configuration>

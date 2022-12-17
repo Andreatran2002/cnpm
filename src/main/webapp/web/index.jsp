@@ -312,9 +312,7 @@
 </section>
 <!-- Latest Blog Section End -->
 
-<!-- Footer Section Begin -->
-<jsp:include page="footer.jsp" />
-<!-- Footer Section End -->
+
 
 <!-- Search Begin -->
 <div class="search-model">

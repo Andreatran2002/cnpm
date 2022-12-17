@@ -54,6 +54,8 @@
             <th style="width: 10%; overflow: hidden; text-overflow: ellipsis;">Phone</th>
             <th style="width: 10%; overflow: hidden; text-overflow: ellipsis;">Gender</th>
             <th style="width: 20%; overflow: hidden; text-overflow: ellipsis;">Address</th>
+            <th style="width: 20%; overflow: hidden; text-overflow: ellipsis;">Is Seller</th>
+
             <th style="width: 10%;"></th>
         </tr>
         </thead>
@@ -68,6 +70,8 @@
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.phone}</td>
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.gender}</td>
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.address}</td>
+                <td style="overflow: hidden; text-overflow: ellipsis;">${account.seller!= null}</td>
+
                 <td><a href="${pageContext.request.contextPath}/admin/accounts/update?username=${account.username}">Change</a></td>
 
             </tr>

@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
         let price = Number(trEle.dataset.price)
         let discount = Number(trEle.dataset.discount)
         trEle.setAttribute('data-quantity', quantity.toString())
-        trEle.querySelector('.cart__price').innerHTML = (discount === 0 ? price * quantity : discount * quantity) + ' đ'
+        trEle.querySelector('.cart__price').innerHTML = '$ ' + (discount === 0 ? price * quantity : discount * quantity)
         calcCartTotal()
       })
     })
@@ -42,9 +42,9 @@ window.addEventListener('load', () => {
     })
     total = provisional - discount
 
-    provisionalElm.innerText = provisional + ' đ'
-    discountElm.innerText = -discount + ' đ'
-    totalElm.innerText = total + ' đ'
+    provisionalElm.innerText = '$ ' + provisional
+    discountElm.innerText = '- $ ' + discount
+    totalElm.innerText = '$ ' + total
   }
 
   // Checkout

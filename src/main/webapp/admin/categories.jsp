@@ -29,7 +29,7 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <h4 class="py-3 mb-4">
-            <a href="${pageContext.request.contextPath}/index.jsp">Managements > </a>
+            <a href="${pageContext.request.contextPath}/admin/index.jsp">Managements > </a>
             <span class="fw-bold">Categories</span>
           </h4>
           <div class="card">
@@ -43,7 +43,6 @@
                 <tr>
                   <th style="width: 5%;">Index</th>
                   <th style="width: 25%;">Name</th>
-                  <th style="width: 50%; overflow: hidden; text-overflow: ellipsis;">Description</th>
                   <th style="width: 10%;"></th>
                   <th style="width: 10%;"></th>
                 </tr>
@@ -55,7 +54,6 @@
                     <td>
                       <strong>${category.name}</strong>
                     </td>
-                    <td style="overflow: hidden; text-overflow: ellipsis;">${category.description}</td>
                     <td><a href="${pageContext.request.contextPath}/admin/category/update?id=${category.id}">Change</a></td>
                     <td>
                       <form

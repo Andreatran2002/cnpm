@@ -42,6 +42,23 @@
                      </c:if>
                      <c:if test="${sessionScope.userLogged != null}">
                         <a href="${pageContext.request.contextPath}/logout">Sign out</a>
+                        <c:if test="${sessionScope.userLogged.seller != null }">
+                           <a href="${pageContext.request.contextPath}/seller/">Sale Management</a>
+                        </c:if>
+                        <c:if test="${sessionScope.userLogged.seller == null }">
+                     <form
+                             method="post"
+                             enctype="multipart/form-data"
+                             onsubmit="return confirm('Are you sure to register as a seller ?');"
+                             action="${pageContext.request.contextPath}/registerseller"
+                     >
+
+                              <button type="submit" >Want to be a seller?</button>
+
+
+                     </form>
+                        </c:if>
+
                      </c:if>
                   </div>
                </div>
@@ -62,6 +79,8 @@
                   <li id="menu-home"><a href="${pageContext.request.contextPath}/home">Home</a></li>
                   <li id="menu-shop"><a href="${pageContext.request.contextPath}/shop">Shop</a></li>
                   <li id="menu-contact"><a href="${pageContext.request.contextPath}/contact">Contacts</a></li>
+                  <li id="menu-order"><a href="${pageContext.request.contextPath}/order">Your orders</a></li>
+
                </ul>
             </nav>
          </div>
@@ -85,3 +104,4 @@
    }
 </script>
 <!-- Header Section End -->
+

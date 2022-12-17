@@ -62,9 +62,9 @@
       <div class="container">
          <div class="row d-flex justify-content-center">
             <div class="col-lg-8">
-               <form action="${pageContext.request.contextPath}/web/buy" method="post">
+               <form action="${pageContext.request.contextPath}/cart-item/add" method="post">
                   <div class="product__details__text">
-                     <input name="ProductId" value="${p.id}" hidden>
+                     <input name="productid" value="${p.id}" hidden>
                      <h4>${p.name}</h4>
                      <c:if test="${p.discount != 0}">
                         <h3>$${p.discount} <span>$${p.price}</span></h3>
@@ -84,17 +84,21 @@
                         <div class="product__details__option__color">
                            <span>Color: <strong>${p.color}</strong></span>
                         </div>
+
                         <div style="display: inline-block; margin-left: 50px;">
                            <c:if test="${p.quantity > 0}">In stock: <strong>${p.quantity}</strong></c:if>
                            <c:if test="${p.quantity == 0}">
                               <span>Status: <strong>${p.quantity != 0 ? '<span class="text-success">Stocking</span>' : '<span class="text-danger">Out of stock</span>'}</strong></span>
                            </c:if>
                         </div>
+                        <div style="display: inline-block; margin-left: 50px;">
+                           <span>Seller: <strong>${p.seller.sellerName}</strong></span>
+                        </div>
                      </div>
                      <div class="product__details__cart__option">
                         <div class="quantity">
                            <div class="pro-qty">
-                              <input name="quantity" type="text" value="1">
+                              <input  name="quantity" type="text" value="1" id="quantity-input">
                            </div>
                         </div>
                         <button type="submit" class="primary-btn">add to cart</button>
@@ -103,6 +107,13 @@
                </form>
             </div>
          </div>
+<%--         <div class="row">--%>
+<%--            <div class="col-lg-12">--%>
+<%--               <img src="${product.seller.image}" alt="seller-avatar" class="rounded-circle" width="150">--%>
+<%--               <p>${product.seller.sellerName}</p>--%>
+<%--            </div>--%>
+<%--         </div>--%>
+
          <div class="row">
             <div class="col-lg-12">
                <div class="product__details__tab">
@@ -130,7 +141,7 @@
    <div class="container">
       <div class="row">
          <div class="col-lg-12">
-            <h3 class="related-title">Related Product</h3>
+            <h3 class="related-title">Products From Seller ${p.seller.sellerName}</h3>
          </div>
       </div>
       <div class="row">

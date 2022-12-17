@@ -1,8 +1,6 @@
 package com.onlinestorewepr.service;
 
-import com.onlinestorewepr.dao.CartDAO;
-import com.onlinestorewepr.dao.CategoryDAO;
-import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.dao.*;
 import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
@@ -22,19 +20,23 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class ProductService {
-  private HttpServletRequest req;
-  private HttpServletResponse resp;
-  private ProductDAO productDAO;
-  private CategoryDAO categoryDAO;
-  private CartDAO cartDAO ;
-  private MessageUtil message;
+    private HttpServletRequest req;
+    private HttpServletResponse resp;
+    private ProductDAO productDAO;
+    private CategoryDAO categoryDAO;
+    private CartDAO cartDAO;
+    private SellerDAO sellerDAO;
+    private MessageUtil message;
+    private UserDAO userDAO;
 
   public ProductService(HttpServletRequest req, HttpServletResponse resp) {
     this.req = req;
     this.resp = resp;
+    this.userDAO = new UserDAO();
     this.productDAO = new ProductDAO();
     this.categoryDAO = new CategoryDAO();
     this.cartDAO = new CartDAO();
+    this.sellerDAO = new SellerDAO();
     this.message = new MessageUtil();
   }
 
@@ -67,22 +69,23 @@ public class ProductService {
       int categoryId = Integer.parseInt(req.getParameter("category-id"));
       CategoryDAO categoryDAO = new CategoryDAO();
       Category category = categoryDAO.get(categoryId);
+      User seller = userDAO.get(req.getParameter("username"));
       boolean available = req.getParameter("available") == null || (req.getParameter("available").equals("1"));
       String name = req.getParameter("name");
       String image = "temp";
       String description = req.getParameter("description");
-      int price = Integer.parseInt(req.getParameter("price"));
-      int sellerId = Integer.parseInt(req.getParameter("sellerId"));
-      int discount = Integer.parseInt(req.getParameter("discount"));
+      double price = Integer.parseInt(req.getParameter("price"));
+      double discount = Integer.parseInt(req.getParameter("discount"));
       int quantity = Integer.parseInt(req.getParameter("quantity"));
       String size = req.getParameter("size");
       String color = req.getParameter("color");
       String brand = req.getParameter("brand");
-
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("userLogged");
       product.setAvailable(available);
       product.setCategory(category);
+      product.setSeller(user.getSeller());
       product.setName(name);
-      product.setSellerId(sellerId);
       product.setImage(image);
       product.setDescription(description);
       product.setPrice(price);
@@ -92,93 +95,19 @@ public class ProductService {
       product.setColor(color);
       product.setBrand(brand);
     } catch (Exception ex) {
-      ex.printStackTrace();
+        ex.printStackTrace();
+    }}
+
+    public void ShowUpdateProductFromSeller() throws ServletException, IOException {
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> categories = categoryDAO.getAll();
+        int id = req.getParameter("id") == null ? 0 : Integer.parseInt(req.getParameter("id"));
+        Product product = productDAO.get(id);
+        req.setAttribute("product", product);
+        req.setAttribute("categories", categories);
+        req.setAttribute("action", "update");
+        req.getRequestDispatcher("/seller/update-product.jsp").forward(req, resp);
     }
-  }
-
-  public void ListProducts() throws ServletException, IOException {
-    List<Product> products = productDAO.getAll();
-    System.out.println(products);
-
-    if (products != null) {
-      products.sort((o1, o2) -> {
-        int compareValue = o1.getName().compareTo(o2.getName());
-        return (Integer.compare(compareValue, 0));
-      });
-    }
-    req.setAttribute("products", products);
-    req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
-  }
-
-  public void ShowAddProduct() throws ServletException, IOException {
-    CategoryDAO categoryDAO = new CategoryDAO();
-    List<Category> categories = categoryDAO.getAll();
-    if (categories != null) {
-      categories.sort((o1, o2) -> {
-        int compareValue = o1.getName().compareTo(o2.getName());
-        return (Integer.compare(compareValue, 0));
-      });
-    }
-    req.setAttribute("action", "add");
-    req.setAttribute("categories", categories);
-    req.getRequestDispatcher("/admin/update-product.jsp").forward(req, resp);
-  }
-  public void ShowHomePage() throws ServletException, IOException {
-    ProductDAO productDAO = new ProductDAO();
-
-    req.setAttribute("action", "add");
-    req.setAttribute("bestSellers", productDAO.getBestSeller());
-    req.setAttribute("newArrivals", productDAO.getNewArrival());
-    req.setAttribute("hotSales", productDAO.getHotSale());
-
-    req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
-
-  }
-
-  public void AddProduct() throws ServletException, IOException {
-    String messageBody = "", messageType = "";
-    try {
-      Product product = new Product();
-      Part part = req.getPart("image");
-      readData(product);
-      if (product.isPropertiesValid()) {
-        try {
-          // Save image
-          String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-          String now = CommonUtil.getImgDir();
-          String realPath = req.getServletContext().getRealPath("/images" + now);
-          // Check if path exist, if not, create a new one
-          Path path = Paths.get(realPath);
-          if (!Files.exists(path)) {
-            Files.createDirectories(path);
-          }
-          part.write(realPath + "/" + imageName);
-          String image = String.format("images%s/%s", now, imageName);
-          product.setImage(image);
-          // ------------------
-
-          productDAO.insert(product);
-          messageBody = "A new product was created successfully!";
-          messageType = "success";
-        } catch (Exception ex) {
-          ex.printStackTrace();
-          messageBody = "An error occurred when update product's info! Please try again";
-          messageType = "danger";
-        }
-      } else {
-        messageBody = "All fields cannot be empty!";
-        messageType = "danger";
-      }
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      messageBody = "An error occurred when transfer data! Please try again";
-      messageType = "danger";
-    }
-    message.setBody(messageBody);
-    message.setType(messageType);
-    req.setAttribute("message", message);
-    ShowAddProduct();
-  }
 
   public void ShowUpdateProduct() throws ServletException, IOException {
     CategoryDAO categoryDAO = new CategoryDAO();
@@ -191,101 +120,267 @@ public class ProductService {
     req.getRequestDispatcher("/admin/update-product.jsp").forward(req, resp);
   }
   public void getProductDetail() throws ServletException, IOException {
-    ProductDAO productdao = new ProductDAO();
-    int id = Integer.parseInt(req.getParameter("id"));
-    Product product = productdao.get(id);
-    List<Product> products = get4ProdcutbyCategory(product.getCategory().getId());
-    req.setAttribute("product", product );
-    req.setAttribute("products", products);
+      ProductDAO productdao = new ProductDAO();
+      int id = Integer.parseInt(req.getParameter("id"));
+      int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
+      Product product = productdao.get(id);
+      List<Product> products = getBySeller(product.getSeller().getSellerId());
+      req.setAttribute("product", product );
+      req.setAttribute("products", products);
 
-    req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
-  }
-  public List<Product> get4ProdcutbyCategory(int CategoryID) {
-    List<Product> products = null;
-    products = productDAO.getTopbyCategory(CategoryID);
-    return products;
-  }
-  public void UpdateProduct() throws ServletException, IOException {
-    String messageBody = "", messageType = "";
-    int id = Integer.parseInt(req.getParameter("id"));
-    Product existedProduct = productDAO.get(id);
-    Product product = new Product();
-    readData(product);
-    if (product.isPropertiesValid() && existedProduct != null) {
-      try {
-        // If upload another image, assign the new and delete the old
-        Part part = req.getPart("image");
-        if (!part.getSubmittedFileName().isEmpty()) {
-          String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-          String now = CommonUtil.getImgDir();
-          String realPath = req.getServletContext().getRealPath("/images" + now);
-          Path path = Paths.get(realPath);
-          if (!Files.exists(path)) {
-            Files.createDirectories(path);
-          }
-          part.write(realPath + "/" + imageName);
-          String image = String.format("images%s/%s", now, imageName);
-          product.setImage(image);
+      req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
 
-          // Delete existed image
-          CommonUtil.deleteDir(req.getServletContext().getRealPath(existedProduct.getImage()));
-        } else {
-          // if not upload, keep the existed image
-          product.setImage(existedProduct.getImage());
+  }
+    public void ListProducts() throws ServletException, IOException {
+        List<Product> products = productDAO.getAll();
+        System.out.println(products);
+
+        if (products != null) {
+            products.sort((o1, o2) -> {
+                int compareValue = o1.getName().compareTo(o2.getName());
+                return (Integer.compare(compareValue, 0));
+            });
         }
-        product.setId(id);
-        productDAO.update(product);
-        messageBody = "Product's info was changed successfully!";
-        messageType = "success";
-      } catch (Exception ex) {
-        messageBody = "An error occurred when creating a new product! Please try again";
-        messageType = "danger";
-        ex.printStackTrace();
-      }
-    } else {
-      messageBody = "All fields cannot be empty!";
-      messageType = "danger";
+        req.setAttribute("products", products);
+        req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
     }
-    message.setBody(messageBody);
-    message.setType(messageType);
-    req.setAttribute("message", message);
-    ShowUpdateProduct();
-  }
+    public void ListProductsInSeller() throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("userLogged");
+      if (user.getSeller()== null){
+          req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
+      }
+        List<Product> products = productDAO.getBySeller(user.getSeller().getSellerId());
 
-  public void DeleteProduct() throws ServletException, IOException {
-    String messageBody = "", messageType = "";
-    int id = Integer.parseInt(req.getParameter("id"));
-    if (id != 0) {
-      Product product = productDAO.get(id);
-      if (product != null) {
-        if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
-          // delete image
-          CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
-          productDAO.delete(id);
-          messageBody = "Product was deleted successfully!";
-          messageType = "primary";
-        } else {
-          messageBody = "Cannot delete this category, this product is already in some cart or order.";
-          messageType = "danger";
+        if (products != null) {
+            products.sort((o1, o2) -> {
+                int compareValue = o1.getName().compareTo(o2.getName());
+                return (Integer.compare(compareValue, 0));
+            });
         }
-      }
-      else {
-        messageBody = "Product doesn't exist";
-        messageType = "danger";
-      }
+        req.setAttribute("products", products);
+        req.getRequestDispatcher("/seller/products.jsp").forward(req, resp);
     }
-    else {
-      messageBody = "Id doesn't exist";
-      messageType = "danger";
-    }
-    message.setBody(messageBody);
-    message.setType(messageType);
 
-    req.setAttribute("message", message);
-    req.setAttribute("title", "Delete Information");
-    req.setAttribute("action", "/admin/product");
-    req.getRequestDispatcher("/admin/information.jsp").forward(req, resp);
-  }
+
+    public void ShowAddProduct() throws ServletException, IOException {
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> categories = categoryDAO.getAll();
+        if (categories != null) {
+            categories.sort((o1, o2) -> {
+                int compareValue = o1.getName().compareTo(o2.getName());
+                return (Integer.compare(compareValue, 0));
+            });
+        }
+        req.setAttribute("action", "add");
+        req.setAttribute("categories", categories);
+        req.getRequestDispatcher("/seller/update-product.jsp").forward(req, resp);
+    }
+
+    public void ShowHomePage() throws ServletException, IOException {
+        ProductDAO productDAO = new ProductDAO();
+
+        req.setAttribute("action", "add");
+        req.setAttribute("bestSellers", productDAO.getBestSeller());
+        req.setAttribute("newArrivals", productDAO.getNewArrival());
+        req.setAttribute("hotSales", productDAO.getHotSale());
+
+        req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
+
+    }
+
+    public void AddProduct() throws ServletException, IOException {
+        String messageBody = "", messageType = "";
+        try {
+            Product product = new Product();
+            Part part = req.getPart("image");
+            readData(product);
+            product.setSold(0);
+            if (product.isPropertiesValid()) {
+                try {
+                    // Save image
+                    String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    String now = CommonUtil.getImgDir();
+                    String realPath = req.getServletContext().getRealPath("/images" + now);
+                    // Check if paths exist; if not, create a new one
+                    Path path = Paths.get(realPath);
+                    if (!Files.exists(path)) {
+                        Files.createDirectories(path);
+                    }
+                    part.write(realPath + "/" + imageName);
+                    String image = String.format("images%s/%s", now, imageName);
+                    product.setImage(image);
+                    // ------------------
+
+                    productDAO.insert(product);
+                    messageBody = "A new product was created successfully!";
+                    messageType = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    messageBody = "An error occurred when updating product's info! Please try again";
+                    messageType = "danger";
+                }
+            } else {
+                messageBody = "All fields cannot be empty!";
+                messageType = "danger";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            messageBody = "An error occurred when transfer data! Please try again";
+            messageType = "danger";
+        }
+        message.setBody(messageBody);
+        message.setType(messageType);
+        req.setAttribute("message", message);
+        ShowAddProduct();
+    }
+
+
+
+
+
+    public List<Product> get4ProdcutbyCategory(int CategoryID) {
+        List<Product> products = null;
+        products = productDAO.getTopbyCategory(CategoryID);
+        return products;
+    }
+    public List<Product> getBySeller(int sellerId) {
+        List<Product> products = null;
+        products = productDAO.getBySeller(sellerId);
+        return products;
+    }
+
+    public void UpdateProductFromSeller() throws ServletException, IOException {
+        String messageBody = "", messageType = "";
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product existedProduct = productDAO.get(id);
+        Product product = new Product();
+        readData(product);
+        product.setSold(existedProduct.getSold());
+        if (product.isPropertiesValid() && existedProduct != null) {
+            try {
+                // Assign the new image and delete the old if you upload another image.
+                Part part = req.getPart("image");
+                if (!part.getSubmittedFileName().isEmpty()) {
+                    String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    String now = CommonUtil.getImgDir();
+                    String realPath = req.getServletContext().getRealPath("/images" + now);
+                    Path path = Paths.get(realPath);
+                    if (!Files.exists(path)) {
+                        Files.createDirectories(path);
+                    }
+                    part.write(realPath + "/" + imageName);
+                    String image = String.format("images%s/%s", now, imageName);
+                    product.setImage(image);
+
+                    // Delete existed image
+                    CommonUtil.deleteDir(req.getServletContext().getRealPath(existedProduct.getImage()));
+                } else {
+                    // if not upload, keep the existed image
+                    product.setImage(existedProduct.getImage());
+                }
+                product.setId(id);
+                productDAO.update(product);
+                messageBody = "Product's info was changed successfully!";
+                messageType = "success";
+            } catch (Exception ex) {
+                messageBody = "An error occurred when creating a new product! Please try again";
+                messageType = "danger";
+                ex.printStackTrace();
+            }
+        } else {
+            messageBody = "All fields cannot be empty!";
+            messageType = "danger";
+        }
+        message.setBody(messageBody);
+        message.setType(messageType);
+        req.setAttribute("message", message);
+        ShowUpdateProductFromSeller();
+    }
+
+    public void UpdateProduct() throws ServletException, IOException {
+        String messageBody = "", messageType = "";
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product existedProduct = productDAO.get(id);
+        Product product = new Product();
+        readData(product);
+        product.setSold(existedProduct.getSold());
+        if (product.isPropertiesValid() && existedProduct != null) {
+            try {
+                // Assign the new image and delete the old if you upload another image.
+                Part part = req.getPart("image");
+                if (!part.getSubmittedFileName().isEmpty()) {
+                    String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    String now = CommonUtil.getImgDir();
+                    String realPath = req.getServletContext().getRealPath("/images" + now);
+                    Path path = Paths.get(realPath);
+                    if (!Files.exists(path)) {
+                        Files.createDirectories(path);
+                    }
+                    part.write(realPath + "/" + imageName);
+                    String image = String.format("images%s/%s", now, imageName);
+                    product.setImage(image);
+
+                    // Delete existed image
+                    CommonUtil.deleteDir(req.getServletContext().getRealPath(existedProduct.getImage()));
+                } else {
+                    // if not upload, keep the existed image
+                    product.setImage(existedProduct.getImage());
+                }
+                product.setId(id);
+                productDAO.update(product);
+                messageBody = "Product's info was changed successfully!";
+                messageType = "success";
+            } catch (Exception ex) {
+                messageBody = "An error occurred when creating a new product! Please try again";
+                messageType = "danger";
+                ex.printStackTrace();
+            }
+        } else {
+            messageBody = "All fields cannot be empty!";
+            messageType = "danger";
+        }
+        message.setBody(messageBody);
+        message.setType(messageType);
+        req.setAttribute("message", message);
+        ShowUpdateProduct();
+    }
+
+    public void DeleteProduct() throws ServletException, IOException {
+        String messageBody = "", messageType = "";
+        int id = Integer.parseInt(req.getParameter("id"));
+        if (id != 0) {
+            System.out.println("Id: " + id);
+            Product product = productDAO.get(id);
+            if (product != null) {
+                if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
+                    // delete image
+                    CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
+                    productDAO.delete(id);
+                    messageBody = "Product was deleted successfully!";
+                    messageType = "primary";
+                } else {
+                    messageBody = "Cannot delete this category, this product is already in some cart or order.";
+                    messageType = "danger";
+                }
+            } else {
+                messageBody = "Product doesn't exist";
+                messageType = "danger";
+            }
+        } else {
+            messageBody = "Id doesn't exist";
+            messageType = "danger";
+        }
+        message.setBody(messageBody);
+        message.setType(messageType);
+
+        req.setAttribute("message", message);
+        req.setAttribute("title", "Delete Information");
+        req.setAttribute("action", "/admin/product");
+        req.getRequestDispatcher("/admin/information.jsp").forward(req, resp);
+    }
+
+
   public void GetProductPage() throws ServletException, IOException {
     String key = req.getParameter("key");
     String page = req.getParameter("page");
@@ -371,9 +466,9 @@ public class ProductService {
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
 
-  public void FilterProduct(){
-    String exist = req.getParameter("exist");
+    public void FilterProduct() {
+        String exist = req.getParameter("exist");
 //    String exist = req.getParameter("exist");
 
-  }
+    }
 }

@@ -10,7 +10,7 @@ public class Cart {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column
    private int id;
-   private int total;
+   private Double total=0.0;
 
    @OneToOne(mappedBy = "cart")
    private User user;
@@ -18,7 +18,7 @@ public class Cart {
    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
    private List<CartItem> cartItems;
 
-   public Cart(int total, User user) {
+   public Cart(Double total, User user) {
       this.total = total;
       this.user = user;
    }
@@ -35,11 +35,11 @@ public class Cart {
       this.id = id;
    }
 
-   public int getTotal() {
+   public Double getTotal() {
       return total;
    }
 
-   public void setTotal(int total) {
+   public void setTotal(Double total) {
       this.total = total;
    }
 

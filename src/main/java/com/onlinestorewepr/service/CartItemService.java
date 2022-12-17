@@ -65,8 +65,9 @@ public class CartItemService {
                          item = new CartItem(Integer.parseInt(quantity), product, cart);
                         cartItemDAO.insert(item);
                     }
-                    cart.setTotal(cart.getTotal()+Integer.parseInt(quantity)*item.getProduct().getPrice());
+                    cart.setTotal(cart.getTotal()+Double.parseDouble(quantity)*item.getProduct().getPrice());
                     cartDAO.update(cart);
+                    resp.sendRedirect(req.getContextPath() + "/cart");
 
 
                 } else {
