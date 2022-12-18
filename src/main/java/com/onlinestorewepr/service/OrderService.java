@@ -48,12 +48,12 @@ public class OrderService {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("userLogged");
 
-        List<Order> orders = orderDAO.getOrderFromSelelr(user.getSeller().getSellerId());
-        System.out.println(orders);
+        List<Order> orders = orderDAO.getOrderFromSeller(user.getSeller().getSellerId());
 
         req.setAttribute("orders", orders);
         req.getRequestDispatcher("/seller/orders.jsp").forward(req, resp);
     }
+
     public void ShowEditOrderServlet() throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         if (id != 0) {

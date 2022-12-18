@@ -59,7 +59,7 @@
                           </strong></td>
                           <td>${order.total}</td>
                           <td ><span class="badge bg-label-success me-1">${order.status}</span></td>
-                          <td><a href="${pageContext.request.contextPath}/admin/edit-order?id=${order.id}">Change</a></td>
+                          <td><a href="${pageContext.request.contextPath}/admin/edit-order?id=${order.id}">Detail</a></td>
                       </tr>
                   </c:forEach>
 

@@ -13,10 +13,12 @@
          </c:if>o
       </div>
    </div>
+
    <div class="offcanvas__nav__option">
       <a href="#" class="search-switch"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>
       <a href="${pageContext.request.contextPath}/cart"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png" alt=""> <span>0</span></a>
    </div>
+
    <div id="mobile-menu-wrap"></div>
    <div class="offcanvas__text">
       <p>Free shipping, 30-day return or refund guarantee.</p>

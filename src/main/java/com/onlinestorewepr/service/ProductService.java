@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class ProductService {
+public class    ProductService {
     private HttpServletRequest req;
     private HttpServletResponse resp;
     private ProductDAO productDAO;
@@ -131,6 +131,7 @@ public class ProductService {
       req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
 
   }
+
     public void ListProducts() throws ServletException, IOException {
         List<Product> products = productDAO.getAll();
         System.out.println(products);
@@ -256,7 +257,7 @@ public class ProductService {
         Product existedProduct = productDAO.get(id);
         Product product = new Product();
         readData(product);
-        product.setSold(existedProduct.getSold());
+        product.setSold(0);
         if (product.isPropertiesValid() && existedProduct != null) {
             try {
                 // Assign the new image and delete the old if you upload another image.

@@ -6,212 +6,207 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 public class Product {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int id;
-   private String name;
-   private String image="";
-   @Column(columnDefinition = "LONGTEXT")
-   private String description;
-   private Double price;
-   private Integer quantity;
-   private Integer sold= 0 ;
-   private Double discount;
-   private String size;
-   private String color;
-   private String brand;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private String image = "";
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
+    private Double price;
+    private Integer quantity;
+    private Integer sold = 0;
+    private Double discount;
+    private String size;
+    private String color;
+    private String brand;
+    @Column
+    private boolean available = false;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId")
+    private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems;
 
-   @Column
-   private boolean available=false;
+    public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean status, Category category, Seller seller) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.image = image;
+        this.size = size;
+        this.color = color;
+        this.brand = brand;
+        this.available = status;
+        this.category = category;
+        this.seller = seller;
+    }
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "categoryId")
-   private Category category;
+    public Product() {
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
-   private Seller seller;
+    }
 
-   @OneToMany(mappedBy = "product")
-   private List<CartItem> cartItems;
+    public long getId() {
+        return id;
+    }
 
-   @OneToMany(mappedBy = "product")
-   private List<OrderItem> orderItems;
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
-   public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean status, Category category) {
-      this.name = name;
-      this.description = description;
-      this.price = price;
-      this.quantity = quantity;
-      this.discount = discount;
-      this.image = image;
-      this.size = size;
-      this.color = color;
-      this.brand = brand;
-      this.available = status;
-      this.category = category;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public Product() {
+    public String getImage() {
+        return image;
+    }
 
-   }
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-   public long getId() {
-      return id;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-   public void setId(int id) {
-      this.id = id;
-   }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public Double getPrice() {
+        return price;
+    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-   public String getImage() {
-      return image;
-   }
+    public int getQuantity() {
+        return quantity;
+    }
 
-   public void setImage(String image) {
-      this.image = image;
-   }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-   public String getDescription() {
-      return description;
-   }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+    public void setSold(Integer sold) {
+        this.sold = sold;
+    }
 
-   public Double getPrice() {
-      return price;
-   }
+    public Boolean getAvailable() {
+        return available;
+    }
 
-   public void setPrice(Double price) {
-      this.price = price;
-   }
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 
-   public int getQuantity() {
-      return quantity;
-   }
+    public Double getDiscount() {
+        return discount;
+    }
 
-   public void setQuantity(int quantity) {
-      this.quantity = quantity;
-   }
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
-   public void setQuantity(Integer quantity) {
-      this.quantity = quantity;
-   }
+    public String getSize() {
+        return size;
+    }
 
-   public void setSold(Integer sold) {
-      this.sold = sold;
-   }
+    public void setSize(String size) {
+        this.size = size;
+    }
 
-   public Boolean getAvailable() {
-      return available;
-   }
+    public String getColor() {
+        return color;
+    }
 
-   public void setAvailable(Boolean available) {
-      this.available = available;
-   }
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-   public Double getDiscount() {
-      return discount;
-   }
+    public String getBrand() {
+        return brand;
+    }
 
-   public void setDiscount(Double discount) {
-      this.discount = discount;
-   }
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-   public String getSize() {
-      return size;
-   }
+    public boolean isAvailable() {
+        return available;
+    }
 
-   public void setSize(String size) {
-      this.size = size;
-   }
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
-   public String getColor() {
-      return color;
-   }
+    public Category getCategory() {
+        return category;
+    }
 
-   public void setColor(String color) {
-      this.color = color;
-   }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-   public String getBrand() {
-      return brand;
-   }
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
 
-   public void setBrand(String brand) {
-      this.brand = brand;
-   }
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
 
-   public boolean isAvailable() {
-      return available;
-   }
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
 
-   public void setAvailable(boolean available) {
-      this.available = available;
-   }
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
 
-   public Category getCategory() {
-      return category;
-   }
+    // Validate data
+    public boolean isPropertiesValid() {
+        return (this.category != null &&
+                !this.name.isEmpty() &&
+                !this.image.isEmpty() &&
+                !this.description.isEmpty() &&
+                this.price > 0 &&
+                this.discount >= 0 &&
+                this.quantity >= 0 &&
+                !this.size.isEmpty() &&
+                !this.color.isEmpty() &&
+                !this.brand.isEmpty());
+    }
 
-   public void setCategory(Category category) {
-      this.category = category;
-   }
+    public int getSold() {
+        return sold;
+    }
 
-   public List<CartItem> getCartItems() {
-      return cartItems;
-   }
+    public void setSold(int sold) {
+        this.sold = sold;
+    }
 
-   public void setCartItems(List<CartItem> cartItems) {
-      this.cartItems = cartItems;
-   }
+    public Seller getSeller() {
+        return seller;
+    }
 
-   public List<OrderItem> getOrderItems() {
-      return orderItems;
-   }
-
-   public void setOrderItems(List<OrderItem> orderItems) {
-      this.orderItems = orderItems;
-   }
-
-   // Validate data
-   public boolean isPropertiesValid() {
-      return (this.category != null &&
-          !this.name.isEmpty() &&
-          !this.image.isEmpty() &&
-          !this.description.isEmpty() &&
-          this.price > 0 &&
-          this.discount >= 0 &&
-          this.quantity >= 0 &&
-          !this.size.isEmpty() &&
-          !this.color.isEmpty() &&
-          !this.brand.isEmpty());
-   }
-
-   public int getSold() {
-      return sold;
-   }
-
-   public void setSold(int sold) {
-      this.sold = sold;
-   }
-
-   public Seller getSeller() {
-      return seller;
-   }
-
-   public void setSeller(Seller seller) {
-      this.seller = seller;
-   }
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 }

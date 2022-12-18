@@ -25,7 +25,18 @@
          <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                <div class="avatar avatar-online">
-                  <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                  <c:choose>
+                     <c:when test="${sessionScope.userLogged.image!=null}"><img
+                             alt="Image Profile"
+                             src="${pageContext.request.contextPath}/${sessionScope.userLogged.image}"
+                             class="rounded-circle" width="150">
+                     </c:when>
+                     <c:otherwise><img
+                             src="assets/img/avatars/no-image.png"
+                             alt="" class="rounded-circle"
+                             width="150">
+                     </c:otherwise>
+                  </c:choose>
                </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -34,11 +45,22 @@
                      <div class="dropdown-item d-flex">
                         <div class="flex-shrink-0 me-3">
                            <div class="avatar avatar-online">
-                              <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <c:choose>
+                                 <c:when test="${sessionScope.userLogged.image!=null}"><img
+                                         alt="Image Profile"
+                                         src="${pageContext.request.contextPath}/${sessionScope.userLogged.image}"
+                                         class="rounded-circle" width="150">
+                                 </c:when>
+                                 <c:otherwise><img
+                                         src="assets/img/avatars/no-image.png"
+                                         alt="Image profile" class="rounded-circle"
+                                         width="150">
+                                 </c:otherwise>
+                              </c:choose>
                            </div>
                         </div>
                         <div class="flex-grow-1">
-                           <span class="fw-semibold d-block">Admin</span>
+                           <span class="fw-semibold d-block">${sessionScope.userLogged.username}</span>
                            <small class="text-muted">admin</small>
                         </div>
                      </div>

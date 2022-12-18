@@ -27,6 +27,13 @@ public class Seller {
         this.status = status;
     }
 
+    public Seller(String sellerName, String image, Integer status, User user) {
+        this.sellerName = sellerName;
+        this.image = image;
+        this.status = status;
+        this.user = user;
+    }
+
     public Seller(Integer sellerId, String sellerName, String image, Integer status, User user) {
         this.sellerId = sellerId;
         this.sellerName = sellerName;

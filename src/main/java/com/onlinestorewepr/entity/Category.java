@@ -10,15 +10,15 @@ public class Category {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private int id;
    private String name;
+   @OneToMany(mappedBy = "category")
+   private List<Product> products;
+
    public Category() {
    }
 
    public Category(String name) {
       this.name = name;
    }
-
-   @OneToMany(mappedBy = "category")
-   private List<Product> products;
 
    public int getId() {
       return id;

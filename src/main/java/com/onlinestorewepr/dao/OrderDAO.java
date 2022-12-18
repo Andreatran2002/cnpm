@@ -57,11 +57,11 @@ public class OrderDAO {
       }
       return orders;
    }
-   public List<Order> getOrderFromSelelr(int sellerId){
+   public List<Order> getOrderFromSeller(int sellerId){
       List<Order> orders = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT Order FROM OrderItem c inner join Order on Order.id = c.order.id inner join Product  p on p.id = c.product.id where p.seller.id = :sellerId  group by Order.id";
+         String HQL = "SELECT Order FROM OrderItem c inner join Order on Order.id = c.order.id inner join Product p on p.id = c.product.id where p.seller.id = :sellerId  group by Order.id";
          Query query = session.createQuery(HQL);
          query.setParameter("sellerId", 1);
          orders = query.getResultList();

@@ -20,11 +20,11 @@
 <body>
    <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-         <jsp:include page="${pageContext.request.contextPath}/admin/menu.jsp" />
+         <jsp:include page="menu.jsp" />
 
          <!-- Layout container -->
          <div class="layout-page">
-            <jsp:include page="${pageContext.request.contextPath}/admin/navbar.jsp" />
+            <jsp:include page="./navbar.jsp" />
 
             <!-- Content wrapper -->
             <div class="content-wrapper">

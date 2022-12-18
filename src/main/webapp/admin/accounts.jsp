@@ -72,7 +72,7 @@
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.address}</td>
                 <td style="overflow: hidden; text-overflow: ellipsis;">${account.seller!= null}</td>
 
-                <td><a href="${pageContext.request.contextPath}/admin/accounts/update?username=${account.username}">Change</a></td>
+                <td><a href="${pageContext.request.contextPath}/admin/accounts/update?username=${account.username}">Lock</a></td>
 
             </tr>
         </c:forEach>
